@@ -1,8 +1,7 @@
-package com.vmware.springwebapp.controller;
+package com.vmware.retail.controller;
 
-import com.vmware.springwebapp.domain.Product;
-import com.vmware.springwebapp.repository.ProductRepository;
-import lombok.AllArgsConstructor;
+import com.vmware.retail.domain.Product;
+import com.vmware.retail.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
 /**

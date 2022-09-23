@@ -1,7 +1,7 @@
-package com.vmware.springwebapp.controller;
+package com.vmware.retail.controller;
 
-import com.vmware.springwebapp.domain.Product;
-import com.vmware.springwebapp.repository.ProductRepository;
+import com.vmware.retail.domain.Product;
+import com.vmware.retail.repository.ProductRepository;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

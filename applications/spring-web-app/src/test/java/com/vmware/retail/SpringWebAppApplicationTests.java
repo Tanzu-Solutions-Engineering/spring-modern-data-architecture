@@ -1,6 +1,5 @@
-package com.vmware.springwebapp;
+package com.vmware.retail;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

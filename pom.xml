@@ -10,6 +10,7 @@
     <version>1.0.0</version>
     <name>spring-modern-data-architecture-parent</name>
     <modules>
+        <module>components/retail-domain</module>
         <module>applications/spring-web-app</module>
     </modules>
     <build>
