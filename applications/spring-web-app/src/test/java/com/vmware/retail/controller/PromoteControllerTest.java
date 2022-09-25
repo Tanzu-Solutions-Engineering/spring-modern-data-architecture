@@ -25,7 +25,9 @@ class PromoteControllerTest
     private PromotionRepository repository;
     @Mock
     private RedisTemplate<String, Promotion> template;
-    private Promotion expected = new Promotion("1", toList(new Product("productId","productName")));
+    private Promotion expected = new Promotion("1",
+            "new stuff",
+            toList(new Product("productId","productName")));
 
     @Test
     void given_promote_When_savePromotion_Then_getPromote_returns_Saved()

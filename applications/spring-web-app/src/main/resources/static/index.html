@@ -1,4 +1,58 @@
-<ul>
-    <li><a href="/swagger-ui.html">Swagger-UI</a></li>
-    <li><a href="/api-docs">Api-docs</a></li>
-</ul>
+<html>
+    <head>
+        <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script>
+                   //Web Sockets
+        var socket = new SockJS('/gs-guide-websocket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        var userName = "nyla";
+
+        stompClient.subscribe('/topic/customerPromotions/'+userName, function (promotionResponse) {
+
+                var promotion = JSON.parse(promotionResponse.body);
+                addPromotion(promotion);
+            });
+    });
+
+    function urlify(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+        })
+    }
+
+    function addPromotion(promotion)
+    {
+        var tableContent = document.getElementById("promotions");
+
+        var newMessage= promotion.marketingMessage;
+        if(tableContent.innerHTML.indexOf(newMessage) > -1)
+        	return false;
+
+        $('#promotions').prepend('<tr> ' +
+                '<td><div">'+ urlify(newMessage) + '</div></td>' +
+                '<td">&nbsp;</td> </tr>');
+    }
+        </script>
+    </head>
+
+    <body>
+        <ul>
+            <li><a href="/swagger-ui.html">Swagger-UI</a></li>
+            <li><a href="/api-docs">Api-docs</a></li>
+        </ul>
+
+        <hr/>
+
+        <table id="promotions">
+        </table>
+
+    </body>
+
+</html>
