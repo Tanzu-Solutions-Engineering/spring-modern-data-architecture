@@ -1,3 +1,7 @@
+.idea/
+.jekyll-cache/
+_site/
+Gemfile.lock
 target/
 pom.xml.tag
 pom.xml.releaseBackup

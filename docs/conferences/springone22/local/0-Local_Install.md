@@ -37,3 +37,15 @@ Or see online Installation documentation here
 
 
 See [PostgreSQL Downloads](https://www.postgresql.org/download/)
+
+
+# Java 17(OpenJDK@17) Installation
+
+See install Java 17 Mac script for installation in the following location
+
+- deployments/local/scripts/data-services/java/install-java-17.sh
+
+Or see online Installation documentation here
+
+
+See [OpenJDK17 Downloads](https://jdk.java.net/archive/)
