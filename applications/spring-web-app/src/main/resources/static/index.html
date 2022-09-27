@@ -53,6 +53,41 @@
         <table id="promotions">
         </table>
 
-    </body>
+        <hr/>
+        <table id="customerFavorites">
 
+        </table>
+
+    </body>
+<script>
+
+    $(document).ready(
+    function() {
+    	var sse = new EventSource('customer/favorites/favorite/nyla');
+
+        sse.onmessage = function(message) {
+
+        	//console.log("data: "+message.data);
+       	var customerFavorites= JSON.parse(message.data);
+       	var tableContent = document.getElementById("customerFavorites");
+
+
+
+        var productQuantity;
+        for (let x in customerFavorites.favorites) {
+           productQuantity = customerFavorites.favorites[x];
+
+            if(tableContent.innerHTML.indexOf(productQuantity.product.name) > -1)
+        	    continue; //already exist
+
+            $('#customerFavorites').prepend('<tr> ' +
+                '<td><div">'+ productQuantity.product.name + '</div></td>' +
+                '<td">&nbsp;</td> </tr>');
+        }
+
+
+       }
+   }
+);
+</script>
 </html>
