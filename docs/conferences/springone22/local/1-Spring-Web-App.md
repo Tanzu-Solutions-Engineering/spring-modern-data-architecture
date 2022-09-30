@@ -5,12 +5,6 @@
 
 ```
 cd ~/spring-modern-data-architecture/data-services/gemfire/vmware-gemfire-9.15.0/bin
-./gfsh
-
-
-
-
-```shell
 cp -r ~/spring-modern-data-architecture/data-services/gemfire/gemfire-for-redis-apps-1.0.1 /tmp
  ./gfsh
 ```

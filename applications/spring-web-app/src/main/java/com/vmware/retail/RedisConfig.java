@@ -41,34 +41,15 @@ public class RedisConfig
     private String redisUrl;
 
     @Bean
-    public TaskExecutor taskExecutor()
-    {
-        return new ThreadPoolTaskExecutor();
-    }
-
-
-    @Bean
     ReactiveRedisTemplate<String, CustomerFavorites> reactiveRedisTemplate(LettuceConnectionFactory factory,
                                                                            RedisSerializer<Object> serializer) {
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
                                                                             .commandTimeout(Duration.ofSeconds(2))
                                                                             .shutdownTimeout(Duration.ZERO)
                                                                             .build();
-//        var factory  = new LettuceConnectionFactory(LettuceConnectionFactory.createRedisConfiguration(redisUrl));
         RedisSerializationContext<String,CustomerFavorites> context = (RedisSerializationContext)RedisSerializationContext.fromSerializer(serializer);
         return new ReactiveRedisTemplate<String,CustomerFavorites>(factory, context);
     }
-
-//    @Bean("reactiveRedisConnectionFactory")
-//    public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
-//
-//        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-//                                                                            .commandTimeout(Duration.ofSeconds(2))
-//                                                                            .shutdownTimeout(Duration.ZERO)
-//                                                                            .build();
-//
-//        return new LettuceConnectionFactory(LettuceConnectionFactory.createRedisConfiguration(redisUrl));
-//    }
 
     @Bean
     public RedisSerializer redisSerializer()

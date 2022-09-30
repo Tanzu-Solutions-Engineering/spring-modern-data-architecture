@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script>
+
+
+
+
+    function urlify(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+        })
+    }
+
+    function addPromotion(promotion)
+    {
+        var tableContent = document.getElementById("promotions");
+
+        var newMessage= promotion.marketingMessage;
+        if(tableContent.innerHTML.indexOf(newMessage) > -1)
+        	return false;
+
+        $('#promotions').prepend('<tr> ' +
+                '<td><div">'+ urlify(newMessage) + '</div></td>' +
+                '<td">&nbsp;</td> </tr>');
+    }
+        </script>
+    </head>
+
+    <body>
+        <ul>
+            <li><a href="/swagger-ui.html">Swagger-UI</a></li>
+            <li><a href="/api-docs">Api-docs</a></li>
+        </ul>
+
+        <hr/>
+
+        <table id="promotions">
+        </table>
+
+        <hr/>
+        <table id="customerFavorites">
+
+        </table>
+
+    </body>
+<script>
+
+    $(document).ready(
+    function() {
+    	var sse = new EventSource('customer/favorites/favorite/nyla');
+
+        sse.onmessage = function(message) {
+
+        	//console.log("data: "+message.data);
+       	var customerFavorites= JSON.parse(message.data);
+       	var tableContent = document.getElementById("customerFavorites");
+
+
+
+        var productQuantity;
+        for (let x in customerFavorites.favorites) {
+           productQuantity = customerFavorites.favorites[x];
+
+            if(tableContent.innerHTML.indexOf(productQuantity.product.name) > -1)
+        	    continue; //already exist
+
+            $('#customerFavorites').prepend('<tr> ' +
+                '<td><div">'+ productQuantity.product.name + '</div></td>' +
+                '<td">&nbsp;</td> </tr>');
+        }
+
+
+       }
+   }
+);
+</script>
+</html>

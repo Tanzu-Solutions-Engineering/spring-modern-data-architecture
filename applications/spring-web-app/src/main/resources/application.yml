@@ -1,0 +1,19 @@
+spring:
+  config:
+    import: "optional:configserver:"
+  redis:
+#    redis-sentinel://[password@]host[:port][,host2[:port2]][/databaseNumber]#sentinelMasterId for using Redis Sentinel
+#    url: redis-sentinel://localhost:6379
+    url: redis://localhost:6379
+    port: 6379
+    lettuce:
+      pool:
+        min-idle: 1
+        enabled: true
+    client-name: ${spring.application.name}
+retail:
+  promotion:
+    destination: "/secured/user/queue/specific-user"
+    listener:
+      pattern:
+        topic: "*"
