@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class CustomerFavoritesControllerTest
+class SaveCustomerFavoritesControllerTest
 {
     @Mock
     private CustomerFavoriteRepository repository;
@@ -31,7 +31,7 @@ class CustomerFavoritesControllerTest
     private TreeSet<ProductQuantity> expectedProductQuantities = new TreeSet<ProductQuantity>();
     private CustomerFavorites expectedCustomerFavorites = new CustomerFavorites("user",expectedProductQuantities);
 
-    private CustomerFavoritesController subject;
+    private SaveCustomerFavoritesController subject;
     private ThreadFactory factory = Executors.defaultThreadFactory();
 
     @BeforeEach
@@ -41,7 +41,7 @@ class CustomerFavoritesControllerTest
                 new Product(3L,"pname"),
                 expectedQuantity));
 
-        subject = new CustomerFavoritesController(repository,
+        subject = new SaveCustomerFavoritesController(repository,
                 factory);
     }
 
