@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: retail-analytics-app
+  config:
+    import: "optional:configserver:http://localhost:8888/"
+  redis:
+  jpa:
+    show-sql: true
+  cloud:
+#    function.definition: calculateFavoritesConsumer;orderConsumer
+    function:
+      definition: calculateFavoritesConsumer;orderConsumer
+    stream:
+      bindings:
+        calculateFavoritesConsumer-in-0:
+          destination: retail.calculateFavorites
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+        orderConsumer-in-0:
+          destination: retail.orderConsumer
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+      rabbit:
+        default:
+          group: myQueue
+          requiredGroups: true
+          dlqQuorum:
+            enabled:  true
+          quorum:
+            enabled: true
+        bindings:
+          orderConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
+          calculateFavoritesConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
