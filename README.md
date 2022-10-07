@@ -3,7 +3,6 @@
 
 120 min session / 75 attendee max per workshop
 
-
 # Modern Data Architecture with Spring 
 
 Most applications are not useful without data. Come and see how easy it is to integrate, analyze and consume data using Spring.
