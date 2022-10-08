@@ -1,7 +1,6 @@
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/postgres"
-    username : postgres
-    password : ${POSTGRES_DB_PASSWORD}
+    username : retail
   redis:
     url: "redis://localhost:6379"

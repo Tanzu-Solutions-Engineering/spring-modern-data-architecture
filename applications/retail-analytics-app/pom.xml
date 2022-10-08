@@ -38,7 +38,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.nyla-solutions</groupId>
+			<artifactId>nyla.solutions.core</artifactId>
+			<version>1.5.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>

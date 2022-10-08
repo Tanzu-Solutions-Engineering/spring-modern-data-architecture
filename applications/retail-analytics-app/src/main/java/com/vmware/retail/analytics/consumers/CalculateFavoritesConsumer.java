@@ -30,6 +30,13 @@ public class CalculateFavoritesConsumer implements Consumer<CustomerIdentifier> 
         var customerId = customerIdentifier.customerId();
         var customerFavorites = productRepository.findCustomerFavoritesByCustomerIdAndTopCount(customerId, topCount);
 
-         redisTemplate.opsForValue().set(customerId,customerFavorites);
+         redisTemplate.opsForValue().set(toCustomerIdKey(customerId),customerFavorites);
+    }
+
+    protected String toCustomerIdKey(String customerId) {
+        return new StringBuilder().append(CustomerFavorites.class.getName())
+                .append(":")
+                .append(customerId)
+                .toString();
     }
 }
