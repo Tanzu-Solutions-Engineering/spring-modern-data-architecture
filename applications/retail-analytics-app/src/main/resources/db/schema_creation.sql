@@ -8,34 +8,34 @@ quantity integer not null, primary key (id));
 
 INSERT INTO public.customer_order_entity
 (id, customer_id, product_id, quantity)
-VALUES(1, 'g01', 'sku1', 4);
+VALUES(1, 'nyla', 'sku1', 4);
 
-INSERT INTO public.customer_order_entity
+INSERT INTO customer_order_entity
 (id, customer_id, product_id, quantity)
-VALUES(2, 'g01', 'sku2', 3);
+VALUES(2, 'nyla', 'sku2', 3);
 
-INSERT INTO public.customer_order_entity
+INSERT INTO customer_order_entity
 (id, customer_id, product_id, quantity)
-VALUES(3, 'g01', 'sku3', 50);
+VALUES(3, 'nyla', 'sku3', 50);
 
-INSERT INTO public.customer_order_entity
+INSERT INTO customer_order_entity
 (id, customer_id, product_id, quantity)
-VALUES(4, 'g01', 'sku1', 2);
+VALUES(4, 'nyla', 'sku1', 2);
 
 create table products(
 id text PRIMARY KEY,
 DATA JSONB);
 
 
-INSERT INTO public.products(id, data)
+INSERT INTO products(id, data)
 VALUES ('sku1','{"id" : "sku1", "name" : "Peanut butter"}');
 
-INSERT INTO public.products(id, data)
+INSERT INTO products(id, data)
 VALUES ('sku2','{"id" : "sku2", "name" : "Jelly"}');
 
-INSERT INTO public.products(id, data)
+INSERT INTO products(id, data)
 VALUES ('sku3','{"id" : "sku3", "name" : "Bread"}');
 
 
-INSERT INTO public.products(id, data)
+INSERT INTO products(id, data)
 VALUES ('sku4','{"id" : "sku4", "name" : "Milk"}');

@@ -38,7 +38,7 @@ class SaveCustomerFavoritesControllerTest
     void setUp()
     {
         expectedProductQuantities.add(new ProductQuantity(
-                new Product(3L,"pname"),
+                new Product("3L","pname"),
                 expectedQuantity));
 
         subject = new SaveCustomerFavoritesController(repository,

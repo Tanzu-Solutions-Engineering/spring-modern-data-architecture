@@ -3,7 +3,9 @@ spring:
     name: retail-analytics-app
   config:
     import: "optional:configserver:http://localhost:8888/"
-  redis:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    username : retail
   jpa:
     show-sql: true
   cloud:
