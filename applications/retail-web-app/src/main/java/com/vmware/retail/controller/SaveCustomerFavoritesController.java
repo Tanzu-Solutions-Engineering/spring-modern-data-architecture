@@ -46,7 +46,6 @@ public class SaveCustomerFavoritesController
     }
 
 
-
     @PostMapping("favorite")
     public void saveCustomerFavorites(@RequestBody CustomerFavorites customerFavorites)
     {
