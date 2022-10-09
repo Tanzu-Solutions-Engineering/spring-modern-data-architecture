@@ -121,6 +121,11 @@
             <artifactId>retail-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.vmware</groupId>
+            <artifactId>retail-repositories-caching</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 	<dependencyManagement>
 		<dependencies>

@@ -1,5 +1,6 @@
 package com.vmware.retail.analytics.consumers;
 
+import com.vmware.retail.analytics.repository.CustomerFavoriteRepository;
 import com.vmware.retail.analytics.repository.ProductRepository;
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.customer.CustomerIdentifier;
@@ -12,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,23 +33,24 @@ class CalculateFavoritesConsumerTest {
 
     private int top3 = 3;
 
+    @Mock
+    private CustomerFavoriteRepository customerFavoriteRepository;
+
     @BeforeEach
     void setUp() {
-        subject = new CalculateFavoritesConsumer(redisTemplate, productRepository,top3);
+        subject = new CalculateFavoritesConsumer(customerFavoriteRepository, productRepository,top3);
     }
 
     @Test
     void given_customer_when_accept_then_cacheFavorites() {
         String customerId = "u01";
 
-        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-
-        var subject = new CalculateFavoritesConsumer(redisTemplate, productRepository,top3);
+        var subject = new CalculateFavoritesConsumer(customerFavoriteRepository, productRepository,top3);
         CustomerIdentifier customIdentifier = new CustomerIdentifier(customerId);
 
         subject.accept(customIdentifier);
 
-        verify(redisTemplate).opsForValue();
+        verify(customerFavoriteRepository).save(any());
         verify(productRepository).findCustomerFavoritesByCustomerIdAndTopCount(customerId,top3);
     }
 

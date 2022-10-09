@@ -29,6 +29,7 @@ import java.util.function.Consumer;
  * @author Gregory Green
  */
 @Configuration
+@EnableRedisRepositories
 public class RedisConfig
 {
 

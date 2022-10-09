@@ -33,22 +33,9 @@ public class ReadCustomerFavoritesController
 
     private final CustomerFavoriteRepository repository;
 
-
     private final ThreadFactory factory;
 
     private static final Logger logger = LoggerFactory.getLogger(ReadCustomerFavoritesController.class);
-
-    @SneakyThrows
-//    @Async("taskExecutor")
-
-    public SseEmitter findBySseId(@PathVariable String id)
-    {
-        SseEmitter sseEmitter = new SseEmitter();
-        sseEmitter.send(SseEmitter.event().data(repository.findById(id)));
-        return sseEmitter;
-    }//
-
-
 
     public ReadCustomerFavoritesController(CustomerFavoriteRepository repository,
                                            @Qualifier("webSocketThreadFactory")
@@ -57,7 +44,6 @@ public class ReadCustomerFavoritesController
         this.factory = factory;
     }
 
-//    @GetMapping("/stream-sse")
     @GetMapping("favorite/{id}")
     public Flux<ServerSentEvent<CustomerFavorites>> streamEvents(@PathVariable String id) {
         logger.info("id: {}",id);
@@ -65,33 +51,9 @@ public class ReadCustomerFavoritesController
         Scheduler scheduler = Schedulers.newParallel(5,factory);
         return Flux.interval(Duration.ofSeconds(1),scheduler)
                 .map(sequence -> ServerSentEvent.<CustomerFavorites> builder()
-//                        .id(String.valueOf(sequence))
-//                        .event("periodic-event")
                         .data(repository.findById(id).orElse(null))
                         .build());
     }
-
-   // @GetMapping(value = "favorite/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    //@Async("taskExecutor")
-    public Flux<ResponseEntity<ServerSentEvent<CustomerFavorites>>> findById(@PathVariable String id)
-    {
-        Scheduler scheduler = Schedulers.newParallel(5,factory);
-        var flux = Flux.interval(Duration.ofSeconds(5),scheduler)
-
-                .map(sequence -> {
-                            var favorites = repository.findById(id).orElse(null);
-                            logger.info("favorites: {}",favorites);
-                            var builder = ServerSentEvent
-                                    .builder(favorites);
-                            var sse = builder.build();
-                            return ResponseEntity.ok()
-                            .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_EVENT_STREAM_VALUE).body(sse);
-                        }
-                );
-
-        return flux;
-    }
-
     @PostMapping("favorite")
     public void saveCustomerFavorites(@RequestBody CustomerFavorites customerFavorites)
     {
