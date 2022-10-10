@@ -2,6 +2,7 @@ package com.vmware.retail.analytics.consumers;
 
 import com.vmware.retail.analytics.repository.CustomerFavoriteRepository;
 import com.vmware.retail.analytics.repository.ProductRepository;
+import com.vmware.retail.analytics.service.CustomerAnalyticService;
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.customer.CustomerIdentifier;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,44 +21,24 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CalculateFavoritesConsumerTest {
-
-
     @Mock
-    private RedisTemplate<String, CustomerFavorites> redisTemplate;
-
-    @Mock
-    private ProductRepository productRepository;
-    @Mock
-    private ValueOperations<String, CustomerFavorites> valueOperations;
+    private CustomerAnalyticService customerAnalyticService;
     private CalculateFavoritesConsumer subject;
-
-    private int top3 = 3;
-
-    @Mock
-    private CustomerFavoriteRepository customerFavoriteRepository;
 
     @BeforeEach
     void setUp() {
-        subject = new CalculateFavoritesConsumer(customerFavoriteRepository, productRepository,top3);
+        subject = new CalculateFavoritesConsumer(customerAnalyticService);
     }
 
     @Test
     void given_customer_when_accept_then_cacheFavorites() {
         String customerId = "u01";
 
-        var subject = new CalculateFavoritesConsumer(customerFavoriteRepository, productRepository,top3);
         CustomerIdentifier customIdentifier = new CustomerIdentifier(customerId);
 
         subject.accept(customIdentifier);
 
-        verify(customerFavoriteRepository).save(any());
-        verify(productRepository).findCustomerFavoritesByCustomerIdAndTopCount(customerId,top3);
+        verify(customerAnalyticService).constructFavorites(any());
     }
 
-    @Test
-    void given_customerId_when_ToKey_Then_formatAsNeeded() {
-        String expected = "g01";
-        var actual = subject.toCustomerIdKey(expected);
-        assertEquals(CustomerFavorites.class.getName()+":"+expected, actual);
-    }
 }
