@@ -5,3 +5,7 @@ spring:
     url: "redis://localhost:6379"
   jpa:
     show-sql: true
+retail:
+  favorites:
+    top:
+      count: 3

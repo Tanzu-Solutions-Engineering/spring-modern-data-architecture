@@ -47,3 +47,7 @@ spring:
               dlqQuorum:
                 enabled: true
               prefetch: 10000
+retail:
+  favorites:
+    top:
+      count: 3
