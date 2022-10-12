@@ -1,20 +1,30 @@
 package com.vmware.retail.analytics.entity;
 
+import com.vmware.retail.domain.ProductQuantity;
 import com.vmware.retail.domain.order.ProductOrder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "customer_orders")
-public record CustomerOrderEntity(
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class CustomerOrderEntity
+{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long id,
-        Long orderId,
-        String customerId,
+        private long id;
+
+        private Long orderId;
+
+        private String customerId;
+
         @Embedded
-        ProductOrder productQuantity) {
-    public CustomerOrderEntity(Long orderId, String customerId, ProductOrder po) {
-        this(null, orderId, customerId, po);
-    }
+        private ProductOrderEntity productOrder;
 }

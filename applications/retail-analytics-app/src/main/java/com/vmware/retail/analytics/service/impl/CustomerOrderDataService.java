@@ -1,6 +1,7 @@
 package com.vmware.retail.analytics.service.impl;
 
 import com.vmware.retail.analytics.entity.CustomerOrderEntity;
+import com.vmware.retail.analytics.entity.ProductOrderEntity;
 import com.vmware.retail.analytics.repository.CustomerOrderRepository;
 import com.vmware.retail.analytics.service.CustomerAnalyticService;
 import com.vmware.retail.analytics.service.CustomerOrderService;
@@ -19,13 +20,17 @@ public class CustomerOrderDataService implements CustomerOrderService {
 
     @Override
     @Transactional
-    public void saveOrder(CustomerOrder customerOrder){
+    public void saveOrder(CustomerOrder customerOrder) {
         repository.saveAll(customerOrder.productOrders().stream()
-                .map(po -> new CustomerOrderEntity(
-                        customerOrder.id(),
-                        customerOrder.customerIdentifier().customerId(),
-                        po
-                )).toList());
+                .map(po -> CustomerOrderEntity
+                        .builder()
+                        .orderId(
+                                customerOrder.id())
+                        .customerId(
+                                customerOrder.customerIdentifier().customerId())
+                        .productOrder(new ProductOrderEntity(po.productId(), po.quantity())
+                        ).build()
+                ).toList());
 
         customerAnalyticService.constructFavorites(customerOrder.customerIdentifier());
         customerAnalyticService.publishPromotion(customerOrder);
