@@ -41,7 +41,7 @@ public class ProductJdbcRepository implements ProductRepository {
             from products p, 
                (SELECT sum(quantity) total_quantity, 
                     product_id 
-            FROM customer_order_entity 
+            FROM customer_orders 
             WHERE customer_id = ? 
             GROUP BY product_id order by total_quantity 
             DESC 

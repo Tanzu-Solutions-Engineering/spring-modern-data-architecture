@@ -64,15 +64,49 @@ open http://localhost:15672
 Steps
 
 - Login with default guest/guest
-- Goto Exchanges -> retail.calculateFavorites
+- Goto Exchanges -> retail.orderConsumer
 - Click publish message
 
-Publish the following JSON
+Publish the following JSON an order
 
+- Buy Peanut Butter and Jelly
+- 
 ```json
- { "customerId" : "nyla"}
+  {"id":1,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku2","quantity":1}
+  ]}
+```
+
+- Buy Bread  
+-
+```json
+  {"id":2,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku3","quantity":1}
+  ]}
 ```
 
 
+- Buy Milk
+
+```json
+  {"id":3,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1}
+  ]}
+```
+
+- Buy Milk, Peanut and butter
+
+```json
+  {"id":4,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1},
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku2","quantity":1}
+  ]}
+```
 
 
