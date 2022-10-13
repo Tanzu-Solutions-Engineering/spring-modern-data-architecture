@@ -33,17 +33,14 @@
 
     function addPromotion(promotion)
     {
-        console.log("Adding Promotion: " + promotion.marketingMessage);
 
         var tableContent = document.getElementById("promotions");
-
         var newMessage= promotion.marketingMessage;
+
         if(tableContent.innerHTML.indexOf(newMessage) > -1)
         	return false;
 
         $('#promotions').prepend(promotionDisplay(newMessage));
-
-        console.log(promotionDisplay(newMessage));
     }
 
     function promotionDisplay(message) {
@@ -82,9 +79,7 @@
 
     $(document).ready(
     function() {
-
-        console.log("Ready!")
-    	var sse = new EventSource('customer/favorites/favorite/nyla');
+        var sse = new EventSource('customer/favorites/favorite/nyla');
 
         sse.onmessage = function(message) {
 
