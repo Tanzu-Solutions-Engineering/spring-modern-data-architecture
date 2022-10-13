@@ -1,5 +1,6 @@
 package com.vmware.retail.analytics.repository;
 
+import com.vmware.retail.analytics.repository.jdbc.ProductJdbcRepository;
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.Product;
 import com.vmware.retail.domain.order.ProductOrder;

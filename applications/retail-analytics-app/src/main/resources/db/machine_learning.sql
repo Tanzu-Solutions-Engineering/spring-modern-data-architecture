@@ -1,3 +1,4 @@
+delete from customer_orders;
 
 INSERT INTO products(id, data)
 VALUES ('sku1','{"id" : "sku1", "name" : "Peanut butter"}');
@@ -87,6 +88,19 @@ and cast(top_associations.times_bought_together as double precision)/
 cast(count_by_product.product_cnt as  double precision) > 0.4
 and  p.id = top_associations.original_SKU 
 
+
+-- ==== version 3
+SELECT data, total_quantity
+            from products p, 
+               (SELECT sum(quantity) total_quantity, 
+                    product_id 
+            FROM customer_orders 
+            WHERE customer_id = '?' 
+            GROUP BY product_id order by total_quantity 
+            DESC 
+            FETCH FIRST 10 rows only) top_orders
+            WHERE p.id = top_orders.product_id;
+           
 
 GRANT pg_read_all_data ON TABLE products TO postgres;
 

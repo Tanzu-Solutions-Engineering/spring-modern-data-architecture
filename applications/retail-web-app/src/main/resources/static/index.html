@@ -32,13 +32,19 @@
         var tableContent = document.getElementById("promotions");
 
         var newMessage= promotion.marketingMessage;
-        if(tableContent.innerHTML.indexOf(newMessage) > -1)
-        	return false;
 
-        $('#promotions').prepend('<tr> ' +
-                '<td><div">'+ urlify(newMessage) + '</div></td>' +
-                '<td">&nbsp;</td> </tr>');
-    }
+        tableContent.innerHTML = "<p>Based on your previous order, you may also be interested in the following:</p><ul>";
+
+         var product = {};
+         for (let x in promotion.products) {
+            product = promotion.products[x];
+
+            $('#promotions').append('<li>'+product.name + '</li>');
+
+         }
+
+         $('#promotions').append("</ul>");
+        }
         </script>
     </head>
 
@@ -50,10 +56,13 @@
 
         <hr/>
 
-        <table id="promotions">
-        </table>
+        <div id="promotions">
+        </div>
 
         <hr/>
+
+        <p>These appear to be your favorite</p>
+
         <table id="customerFavorites">
 
         </table>
@@ -70,6 +79,7 @@
         	//console.log("data: "+message.data);
        	var customerFavorites= JSON.parse(message.data);
        	var tableContent = document.getElementById("customerFavorites");
+       	tableContent.innerHTML = ""; //TODO: should optimize this to not redraw everytime
 
 
 
