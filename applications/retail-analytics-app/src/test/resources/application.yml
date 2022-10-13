@@ -1,4 +1,6 @@
 spring:
+  liquibase:
+    enabled: false
   datasource:
     url: "jdbc:h2:mem:testdb"
   redis:
