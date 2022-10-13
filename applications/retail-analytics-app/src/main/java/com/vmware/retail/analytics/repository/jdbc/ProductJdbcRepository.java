@@ -1,7 +1,8 @@
-package com.vmware.retail.analytics.repository;
+package com.vmware.retail.analytics.repository.jdbc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vmware.retail.analytics.repository.ProductRepository;
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.Product;
 import com.vmware.retail.domain.ProductQuantity;
@@ -73,10 +74,8 @@ public class ProductJdbcRepository implements ProductRepository {
         // Postgres does set an exact count limit
 
         final String sql = """
-                select p.data,top_associations.original_SKU,
-                  top_associations.bought_with,top_associations.times_bought_together,
-                 count_by_product.product_cnt,
-                 cast(top_associations.times_bought_together as double precision)/cast(count_by_product.product_cnt as  double precision) as probability
+            select distinct p.data
+            --,top_associations.original_SKU,top_associations.bought_with,top_associations.times_bought_together, count_by_product.product_cnt, cast(top_associations.times_bought_together as double precision)/cast(count_by_product.product_cnt as  double precision) as probability
                 from (
                 SELECT c.original_SKU as original_SKU, c.bought_with as bought_with, count(*) as times_bought_together
                 FROM (
@@ -95,7 +94,7 @@ public class ProductJdbcRepository implements ProductRepository {
                 where count_by_product.product_id = top_associations.original_SKU
                 and cast(top_associations.times_bought_together as double precision)/
                 cast(count_by_product.product_cnt as  double precision) > :confidence
-                and  p.id = top_associations.original_SKU
+                and  p.id = top_associations.bought_with
                 """;
 
 
