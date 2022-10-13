@@ -1,6 +1,10 @@
 <html>
     <head>
         <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="styles/promotions-styles.css">
+
+
         <script src="/webjars/sockjs-client/sockjs.min.js"></script>
         <script src="/webjars/stomp-websocket/stomp.min.js"></script>
         <script src="/webjars/jquery/jquery.min.js"></script>
@@ -29,15 +33,28 @@
 
     function addPromotion(promotion)
     {
+        console.log("Adding Promotion: " + promotion.marketingMessage);
+
         var tableContent = document.getElementById("promotions");
 
         var newMessage= promotion.marketingMessage;
         if(tableContent.innerHTML.indexOf(newMessage) > -1)
         	return false;
 
-        $('#promotions').prepend('<tr> ' +
-                '<td><div">'+ urlify(newMessage) + '</div></td>' +
-                '<td">&nbsp;</td> </tr>');
+        $('#promotions').prepend(promotionDisplay(newMessage));
+
+        console.log(promotionDisplay(newMessage));
+    }
+
+    function promotionDisplay(message) {
+        return "<a href = '" + urlify(message) + "'>" +
+                    "<div class = 'promotion'>" +
+                        "<div><h3>" + message + "</h3></div>" +
+                        "<div class = 'promotion-action'>Try Now" +
+                            "<i class='material-icons'>chevron_right</i>" +
+                        "</div>" +
+                    "</div>"
+                "</a>";
     }
         </script>
     </head>
@@ -47,11 +64,13 @@
             <li><a href="/swagger-ui.html">Swagger-UI</a></li>
             <li><a href="/api-docs">Api-docs</a></li>
         </ul>
-
         <hr/>
 
-        <table id="promotions">
-        </table>
+        <div class = "promotions-header"><h2>Promotions</h2></div>
+        <div class = "promotions-container" id = "promotions">
+
+        </div>
+
 
         <hr/>
         <table id="customerFavorites">
@@ -63,15 +82,15 @@
 
     $(document).ready(
     function() {
+
+        console.log("Ready!")
     	var sse = new EventSource('customer/favorites/favorite/nyla');
 
         sse.onmessage = function(message) {
 
-        	//console.log("data: "+message.data);
+        console.log("data: "+message.data);
        	var customerFavorites= JSON.parse(message.data);
        	var tableContent = document.getElementById("customerFavorites");
-
-
 
         var productQuantity;
         for (let x in customerFavorites.favorites) {
