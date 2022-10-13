@@ -18,7 +18,7 @@ start locator --name=locator --locators=127.0.0.1[10334] --bind-address=127.0.0.
 start server --name=redisServer1   --locators=127.0.0.1[10334]  --server-port=40404 --bind-address=127.0.0.1 --hostname-for-clients=127.0.0.1 --start-rest-api=true --http-service-bind-address=127.0.0.1 --http-service-port=9090  --J=-Dgemfire-for-redis-port=6379 --J=-Dgemfire-for-redis-enabled=true --classpath=/tmp/gemfire-for-redis-apps-1.0.1/lib/*  
 ```
 
-# Start Wen Application
+# Start Web Application
 
 ## Build applications
 
