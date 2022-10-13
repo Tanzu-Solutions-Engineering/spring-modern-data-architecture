@@ -10,4 +10,6 @@ public interface ProductRepository {
     CustomerFavorites findCustomerFavoritesByCustomerIdAndTopCount(String customerId,int topCount);
 
     List<Product> findFrequentlyBoughtTogether(List<ProductOrder> productOrders);
+
+    void saveProducts(List<Product> products);
 }

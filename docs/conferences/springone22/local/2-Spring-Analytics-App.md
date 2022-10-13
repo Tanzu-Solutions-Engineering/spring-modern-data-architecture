@@ -55,7 +55,31 @@ java -DCRYPTION_KEY=CHANGEMEKEY -jar applications/retail-analytics-app/target/re
 ```
 
 
-# Testing Customer Favorites
+# Testing Load Products
+
+
+```shell
+open http://localhost:15672
+```
+
+Steps
+
+- Login with default guest/guest
+- Goto Exchanges -> retail.saveProductConsumer
+- Click publish message
+
+
+
+```json
+[
+  {"id" : "sku1", "name" : "Peanut butter"},
+  {"id" : "sku2", "name" : "Jelly"},
+  {"id" : "sku3", "name" : "Bread"},
+  {"id" : "sku4", "name" : "Milk"}
+]
+```
+
+# Testing Customer Orders
 
 ```shell
 open http://localhost:15672
@@ -67,7 +91,24 @@ Steps
 - Goto Exchanges -> retail.orderConsumer
 - Click publish message
 
+
+
+
+
 Publish the following JSON an order
+
+
+
+- Buy Milk, Peanut and butter
+
+```json
+  {"id":4,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1},
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku2","quantity":1}
+  ]}
+```
 
 - Buy Peanut Butter and Jelly
 - 
@@ -98,15 +139,5 @@ Publish the following JSON an order
   ]}
 ```
 
-- Buy Milk, Peanut and butter
-
-```json
-  {"id":4,"customerIdentifier":{"customerId":"nyla"},
-  "productOrders":[
-    {"productId":"sku4","quantity":1},
-    {"productId":"sku1","quantity":1},
-    {"productId":"sku2","quantity":1}
-  ]}
-```
 
 

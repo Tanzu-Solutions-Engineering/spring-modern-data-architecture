@@ -54,9 +54,4 @@ public class ReadCustomerFavoritesController
                         .data(repository.findById(id).orElse(null))
                         .build());
     }
-    @PostMapping("favorite")
-    public void saveCustomerFavorites(@RequestBody CustomerFavorites customerFavorites)
-    {
-        repository.save(customerFavorites);
-    }
 }

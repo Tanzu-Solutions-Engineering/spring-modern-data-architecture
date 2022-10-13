@@ -8,7 +8,10 @@ import com.vmware.retail.domain.Product;
 import com.vmware.retail.domain.ProductQuantity;
 import com.vmware.retail.domain.order.ProductOrder;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import nyla.solutions.core.patterns.jdbc.Sql;
+import nyla.solutions.core.util.Organizer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,6 +26,7 @@ import static nyla.solutions.core.util.Organizer.toMap;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ProductJdbcRepository implements ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -101,6 +105,8 @@ public class ProductJdbcRepository implements ProductRepository {
         Map<String, ?> map = toMap("productIds", productOrders.stream().map( po -> po.productId()).toList(),
                 "confidence",confidence);
 
+        log.info(" Sql: {} productOrders: {} confidence > {} ",sql,productOrders,confidence);
+
 
         RowMapper<Product> rowMapper = (rs , rowNum) -> {
             try {
@@ -111,6 +117,30 @@ public class ProductJdbcRepository implements ProductRepository {
         };
 
         return this.namedParameterJdbcTemplate.query(sql,map, rowMapper);
+    }
+
+    @SneakyThrows
+    @Override
+    public void saveProducts(List<Product> products) {
+
+        final var insertSql = """
+                INSERT INTO products(id, data) 
+                VALUES (:id,to_json(:data::json))
+                ON CONFLICT (id)
+                DO
+                   UPDATE SET data = to_json(:data::json);
+                """;
+
+        log.info("sql {} inputs: {}",insertSql,products);
+
+        Map<String, ?>[] maps = new Map[products.size()];
+
+        int i = 0;
+        for (Product p: products) {
+            maps[i++] = toMap("id",p.id(),"data", objectMapper.writeValueAsString(p));
+        }
+
+        namedParameterJdbcTemplate.batchUpdate(insertSql,maps);
     }
 
 }
