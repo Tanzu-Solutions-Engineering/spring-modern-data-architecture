@@ -1,0 +1,51 @@
+:root {
+    --spring-blue: #34b8d6;
+    --spring-green: #24bf4b;
+    --spring-black: #1b1f23;
+    --spring-off-black: #262a2d;
+    --spring-light-grey: #babbbd;
+    --vmware-purple: #553ea3;
+    --white: white;
+
+    --gradient-bg-right: linear-gradient(
+        to right,
+        var(--spring-green) 0%,
+        var(--spring-green) 70%,
+        #242c2c 70%,
+        #242c2c 100%
+    );
+
+}
+.promotions-container a {
+    color: var(--white);
+}
+
+.promotions-container a:hover {
+    text-decoration: none;
+}
+
+.promotion {
+    background-color: var(--spring-blue);
+    color: var(--white);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    padding: 15px;
+    text-transform: capitalize;
+}
+
+.promotion-action {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+}
+.promotion-action i {
+    font-size: 15px;
+}
+.promotions-header {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
