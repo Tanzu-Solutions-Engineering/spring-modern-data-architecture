@@ -69,4 +69,14 @@ class ProductJdbcRepositoryTest {
 
         verify(namedParameterJdbcTemplate).query(anyString(),any(Map.class),any(RowMapper.class));
     }
+
+    @Test
+    void given_products_when_save_then_save_to_database() {
+        Product product = new Product("id","name");
+        List<Product> expected = asList(product);
+
+        this.subject.saveProducts(expected);
+
+        verify(namedParameterJdbcTemplate).batchUpdate(anyString(),any(Map[].class));
+    }
 }
