@@ -24,7 +24,7 @@ class PromotionListenerTest
     {
         var subject = new PromotionListener(simpMessagingTemplate);
         String id = "id";
-        Long productId = 3L;
+        String productId = "3L";
         String productName = "pname";
         Promotion promotion = new Promotion(id,
                 "new Stuff",

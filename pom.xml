@@ -11,6 +11,7 @@
     <name>spring-modern-data-architecture-parent</name>
     <modules>
         <module>components/retail-domain</module>
+        <module>components/retail-repositories-caching</module>
         <module>applications/retail-web-app</module>
         <module>applications/retail-analytics-app</module>
     </modules>

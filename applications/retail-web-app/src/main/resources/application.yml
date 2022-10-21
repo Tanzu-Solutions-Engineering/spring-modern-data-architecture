@@ -12,6 +12,9 @@ spring:
         enabled: true
     client-name: ${spring.application.name}
 retail:
+  favorites:
+    top:
+      count: 3
   promotion:
     destination: "/secured/user/queue/specific-user"
     listener:
