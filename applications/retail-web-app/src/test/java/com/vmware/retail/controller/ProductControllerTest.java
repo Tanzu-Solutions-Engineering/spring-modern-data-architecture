@@ -26,7 +26,7 @@ class ProductControllerTest
     void given_product_When_saveProduct_Then_GetProduct_Equals_Saved()
     {
         var product = JavaBeanGeneratorCreator.of(Product.class).create();
-        when(repository.findById(anyLong())).thenReturn(Optional.of(product));
+        when(repository.findById(anyString())).thenReturn(Optional.of(product));
 
         var subject = new ProductController(repository);
 

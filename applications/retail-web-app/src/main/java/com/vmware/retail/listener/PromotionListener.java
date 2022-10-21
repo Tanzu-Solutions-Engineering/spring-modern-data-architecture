@@ -10,11 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
-/**
- * PromotionListener
- *
- * @author Gregory Green
- */
+
 @Component
 public class PromotionListener
         implements Consumer<Promotion>

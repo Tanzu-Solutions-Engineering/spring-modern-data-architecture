@@ -27,7 +27,7 @@ class PromoteControllerTest
     private RedisTemplate<String, Promotion> template;
     private Promotion expected = new Promotion("1",
             "new stuff",
-            toList(new Product(3L,"productName")));
+            toList(new Product("3L","productName")));
 
     @Test
     void given_promote_When_savePromotion_Then_getPromote_returns_Saved()

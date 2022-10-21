@@ -20,7 +20,7 @@ public record ProductController(ProductRepository repository)
     }
 
     @GetMapping("product/{id}")
-    public Product getProductById(@PathVariable Long id)
+    public Product getProductById(@PathVariable String id)
     {
         return repository.findById(id).orElse(null);
     }

@@ -4,13 +4,25 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8888/"
   redis:
+    url: "redis://localhost:6379"
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    username : retail
   jpa:
+    generate-ddl: true
     show-sql: true
+    hibernate:
+      ddl-auto: update
+#      ddl-auto: create
+  liquibase:
+    change-log: "classpath:db/changelog/changelog-v1.sql"
   cloud:
 #    function.definition: calculateFavoritesConsumer;orderConsumer
     function:
-      definition: calculateFavoritesConsumer;orderConsumer
+      definition: calculateFavoritesConsumer;orderConsumer;saveProductConsumer
     stream:
+      default:
+        contentType: "application/json"
       bindings:
         calculateFavoritesConsumer-in-0:
           destination: retail.calculateFavorites
@@ -19,6 +31,11 @@ spring:
             concurrency: 1
         orderConsumer-in-0:
           destination: retail.orderConsumer
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+        saveProductConsumer-in-0:
+          destination: retail.saveProductConsumer
           group: ${spring.application.name}
           consumer:
             concurrency: 1
@@ -45,3 +62,14 @@ spring:
               dlqQuorum:
                 enabled: true
               prefetch: 10000
+          saveProductConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
+retail:
+  favorites:
+    top:
+      count: 3
