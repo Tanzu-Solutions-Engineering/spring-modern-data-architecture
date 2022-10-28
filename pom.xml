@@ -14,6 +14,7 @@
         <module>components/retail-repositories-caching</module>
         <module>applications/retail-web-app</module>
         <module>applications/retail-analytics-app</module>
+        <module>applications/retail-source-app</module>
     </modules>
     <build>
         <pluginManagement>
