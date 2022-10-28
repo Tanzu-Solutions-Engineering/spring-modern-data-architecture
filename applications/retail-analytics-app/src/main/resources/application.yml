@@ -30,7 +30,7 @@ spring:
           consumer:
             concurrency: 1
         orderConsumer-in-0:
-          destination: retail.orderConsumer
+          destination: retail.customer.orders
           group: ${spring.application.name}
           consumer:
             concurrency: 1
