@@ -1,8 +1,8 @@
 <html>
     <head>
-        <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--        <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="styles/promotions-styles.css">
+        <link rel="stylesheet" href="styles/styles.css">
 
 
         <script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -33,50 +33,73 @@
 
     function addPromotion(promotion)
     {
+       var promotionsPanel = document.getElementById("promotionsPanel");
 
-        var tableContent = document.getElementById("promotions");
-        tableContent.innerHTML = "<p>Based on your previous order, you may also be interested in the following:</p><ul>";
+       if(promotion == null || promotion.products.length == 0)
+        {
+            promotionsPanel.style = "display: none";
+            return;
+        }
+        else
+        {
+            promotionsPanel.style = "display: block";
+        }
 
+        var promotionContent = document.getElementById("promotions");
+        var promotionHTML = "<p>Based on your previous order, you may also be interested in the following:</p>";
          var product = {};
+
+         promotionHTML += "<table id='dataRows'>";
+         promotionHTML += "<tr><th>Product</th></tr>";
+
          for (let x in promotion.products) {
             product = promotion.products[x];
 
-            $('#promotions').append(promotionDisplay(product.name));
-
+            promotionHTML +="<tr><td>"+product.name+"</td></tr>";
          }
+
+         promotionHTML += "</table>";
+
+         promotionContent.innerHTML = promotionHTML;
+
         }
-
-    function promotionDisplay(message) {
-        return "<div class = 'promotion'>" +
-                        "<h3>" + message + "</h3>" +
-                    "</div>";
-    }
-
         </script>
     </head>
 
     <body>
+
+    <h1>Retail Application Demo</h1>
+
         <ul>
             <li><a href="/swagger-ui.html">Swagger-UI</a></li>
-            <li><a href="/api-docs">Api-docs</a></li>
         </ul>
-        <hr/>
 
-        <div class = "promotions-header"><h2>Promotions</h2></div>
-        <div class = "promotions-container" id = "promotions">
+        <div id="promotionsPanel" style="display: none">
+            <hr/>
 
+            <h2>Promotions</h2>
+
+            <div class="promotions-container" id="promotions">
+            </div>
         </div>
 
-        <hr/>
 
-        <p>These appear to be your favorite</p>
+        <div id="favoritesPanel" style="display: none">
+            <hr/>
+            <h2>Favorites</h2>
+            <p>These appear to be your favorite</p>
+            <div id="dataRows">
+                <table >
+                    <tr><th>Product</th></tr>
+                    <tbody id="customerFavorites">
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-        <table id="customerFavorites">
 
-        </table>
 
-    </body>
-<script>
+    <script>
 
     $(document).ready(
     function() {
@@ -90,15 +113,23 @@
        	tableContent.innerHTML = ""; //TODO: should optimize this to not redraw everytime
 
         var productQuantity;
+
+        if(customerFavorites != null && customerFavorites.favorites.length > 0 )
+        {
+           //show panel
+           var favoritesPanel = document.getElementById("favoritesPanel");
+           favoritesPanel.style  = "display: block";
+        }
+
+
         for (let x in customerFavorites.favorites) {
            productQuantity = customerFavorites.favorites[x];
 
             if(tableContent.innerHTML.indexOf(productQuantity.product.name) > -1)
         	    continue; //already exist
 
-            $('#customerFavorites').prepend('<tr> ' +
-                '<td><div">'+ productQuantity.product.name + '</div></td>' +
-                '<td">&nbsp;</td> </tr>');
+            $('#customerFavorites')
+            .prepend('<tr><td>'+ productQuantity.product.name + '</td></tr>');
         }
 
 
@@ -106,4 +137,5 @@
    }
 );
 </script>
+    </body>
 </html>
