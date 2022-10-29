@@ -21,6 +21,13 @@ Quit psql
 \q
 ```
 
+
+Login as retail user
+
+```shell
+psql -d postgres -U retail 
+```
+
 # Start Web Application
 
 Run application
@@ -40,10 +47,9 @@ open http://localhost:15672
 Steps
 
 - Login with default guest/guest
-- Goto Exchanges -> retail.saveProductConsumer
-- Click publish message
-
-
+- Goto Exchanges -> retail.products
+- REQUIRED: Add Header
+  - contentType=application/json
 
 ```json
 [
@@ -53,8 +59,10 @@ Steps
   {"id" : "sku4", "name" : "Milk"}
 ]
 ```
+- 
+- Click Publish Message
 
-# Testing Customer Orders
+# Customer Orders
 
 ```shell
 open http://localhost:15672
@@ -85,8 +93,52 @@ Publish the following JSON an order
   ]}
 ```
 
+
+Verify Products in Postgres psql with retail login user
+
+```shell
+psql -d postgres -U retail 
+```
+
+```sql
+ select * from products;
+```
+
+----------------------------
+## Reload Products from stream
+
+In psql
+
+```sql
+ delete from products;
+```
+
+Verify deleted (0 rows)
+
+```sql
+select * from products;
+```
+
+
+Kill analytics application
+
+
+Run application with replay flag
+
+```shell
+java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --rabbitmq.streaming.replay=true --spring.profiles.active=local 
+```
+
+Verify producted reloaded from RabbitMQ
+
+```sql
+select * from products;
+```
+
+
+--------------------
 - Buy Peanut Butter and Jelly
-- 
+
 ```json
   {"id":1,"customerIdentifier":{"customerId":"nyla"},
   "productOrders":[

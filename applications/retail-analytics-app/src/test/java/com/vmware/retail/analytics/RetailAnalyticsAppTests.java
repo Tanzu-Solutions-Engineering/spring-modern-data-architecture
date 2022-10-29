@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class RetailAnalyticsAppTests {
 
 	@BeforeAll
@@ -13,7 +13,7 @@ class RetailAnalyticsAppTests {
 		System.setProperty(Cryption.CRYPTION_KEY_PROP,"JUNIT_UNIT_KEY");
 	}
 
-	@Test
+//	@Test
 	void contextLoads() {
 	}
 

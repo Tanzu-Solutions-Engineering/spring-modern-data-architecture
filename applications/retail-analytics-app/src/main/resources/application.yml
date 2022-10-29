@@ -35,7 +35,7 @@ spring:
           consumer:
             concurrency: 1
         saveProductConsumer-in-0:
-          destination: retail.saveProductConsumer
+          destination: retail.products
           group: ${spring.application.name}
           consumer:
             concurrency: 1
@@ -65,7 +65,8 @@ spring:
           saveProductConsumer-in-0:
             consumer:
               autoBindDlq: true
-              quorum.enabled: true
+              quorum.enabled: false
+              containerType: stream
               dlqQuorum:
                 enabled: true
               prefetch: 10000
