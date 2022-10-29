@@ -51,7 +51,9 @@ public class RabbitConfig {
         var env = Environment.builder()
                 .host(hostname)
                 .username(username)
-                .password(password).build();
+                .password(password)
+                .clientProperty("id",applicationName)
+                .build();
 
         env.streamCreator().stream(streamName).create();
 
