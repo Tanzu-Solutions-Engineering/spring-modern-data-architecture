@@ -61,6 +61,7 @@ li a:hover {
 }
 
 #dataRows tr:nth-child(even){background-color: #f2f2f2;}
+#dataRows tr:nth-child(odd){color: #f2f2f2;}
 
 #dataRows tr:hover {background-color: #ddd;}
 
