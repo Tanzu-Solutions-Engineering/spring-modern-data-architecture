@@ -40,7 +40,7 @@ From root directory
 Run application
 
 ```shell
-java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar
+java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --retail.customer.id=$USERNAME
 ```
 
 Open Browser
@@ -49,3 +49,66 @@ Open Browser
 ```shell
 http://localhost:8080
 ```
+
+Post Customer Favorites
+
+
+```shell
+curl -X 'POST' \
+  'http://localhost:8080/customer/favorites/favorite' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "$USERNAME",
+  "favorites": [
+    {
+      "product": {
+        "id": "sku4",
+        "name": "Milk"
+      },
+      "quantity": 1
+    },
+   {
+      "product": {
+        "id": "sku3",
+        "name": "Bread"
+      },
+      "quantity": 1
+    },{
+     "product": {
+        "id": "sku1",
+        "name": "Peanut butter"
+      },
+      "quantity": 1
+    }
+  ]
+}'
+```
+
+View Customer Favorites on app
+
+Post Promotions
+
+
+```shell
+curl -X 'POST' \
+  'http://localhost:8080/promotions/promotion/publish' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "$USERNAME",
+  "marketingMessage": "string",
+  "products": [
+    {
+      "id": "sku2",
+      "name": "Jelly"
+    },
+    {
+      "id": "sku4",
+      "name": "Milk"
+    }
+  ]
+}'
+```
+
+View promotions on app
