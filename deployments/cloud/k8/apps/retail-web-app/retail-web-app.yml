@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run:  retail-web-app
+    app.kubernetes.io/name: retail-web-app
+  name:  retail-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  retail-web-app
+  template:
+    metadata:
+      labels:
+        name:  retail-web-app
+    spec:
+      containers:
+        - env:
+            - name: spring.redis.url
+              value: redis://gf-redis-service:6379
+          image: cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
+          name: retail-web-app
+          #          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-web-app-service
+spec:
+  selector:
+    name:  retail-web-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
