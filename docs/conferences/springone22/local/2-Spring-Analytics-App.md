@@ -1,3 +1,29 @@
+# Start RabbitMQ
+
+
+Start RabbitMQ
+
+```shell
+brew services start rabbitmq
+```
+
+Verify RabbitMQ running
+
+
+```shell
+ brew services list 
+```
+
+Example output
+
+```shell
+brew services list          
+Name     Status  User     File
+rabbitmq started gregoryg ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
+
+```
+
+
 # Start Postgres
 
 ```shell
@@ -28,6 +54,29 @@ Login as retail user
 psql -d postgres -U retail 
 ```
 
+Verify database access in psql
+
+```shell
+\dt
+```
+
+
+Sample output
+
+```shell
+postgres=> \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ postgres  | gregoryg | UTF8     | C       | C     | 
+ template0 | gregoryg | UTF8     | C       | C     | =c/gregoryg          +
+           |          |          |         |       | gregoryg=CTc/gregoryg
+ template1 | gregoryg | UTF8     | C       | C     | =c/gregoryg          +
+           |          |          |         |       | gregoryg=CTc/gregoryg
+
+
+```
+
 # Start Web Application
 
 Run application
@@ -36,6 +85,26 @@ Run application
 java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
 ```
 
+Expected Output
+
+```shell
+java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.4)
+
+
+2022-11-03 14:49:14.847  INFO 88078 --- [           main] c.v.retail.analytics.RetailAnalyticsApp  : Starting RetailAnalyticsApp v0.0.1-SNAPSHOT using Java 17.0.4.1 on gregoryg-a02.vmware.com with PID 88078 (/Users/Projects/VMware/Tanzu/Tan/Users/Projects/VMware/Tanzu/Tn-data-architecture/applicationsanzuData/Spring/dev/spring-modern-data-architecture/applications/retail-analytics-app/target/retail-analytics-app-0.0.1u/TanzuData/Spring/dev/spring-modern-data-architecture)
+...
+tics-app'
+2022-11-03 14:49:42.464  INFO 88078 --- [           main] c.v.retail.analytics.RetailAnalyticsApp  : Started RetailAnalyticsApp in 29.406 seconds (JVM running for 31.094)
+
+```
 
 # Testing Load Products
 
@@ -59,8 +128,10 @@ Steps
   {"id" : "sku4", "name" : "Milk"}
 ]
 ```
-- 
+
 - Click Publish Message
+
+This will load products into Postgres
 
 # Customer Orders
 
@@ -71,10 +142,8 @@ open http://localhost:15672
 Steps
 
 - Login with default guest/guest
-- Goto Exchanges -> retail.orderConsumer
+- Goto Exchanges -> retail.customer.orders
 - Click publish message
-
-
 
 
 
@@ -84,8 +153,10 @@ Publish the following JSON an order
 
 - Buy Milk, Peanut and butter
 
+Replace $USERNAME at needed
+
 ```json
-  {"id":4,"customerIdentifier":{"customerId":"nyla"},
+  {"id":4,"customerIdentifier":{"customerId":"$USERNAME"},
   "productOrders":[
     {"productId":"sku4","quantity":1},
     {"productId":"sku1","quantity":1},
