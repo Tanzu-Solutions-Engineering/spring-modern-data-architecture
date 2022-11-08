@@ -28,8 +28,9 @@ public class PromotionListener
         String user = promotion.id();
 
         String destination = "/topic/customerPromotions/"+user;
+        logger.info("Sending to destination: {} ",destination);
          messageTemple.convertAndSend(destination, promotion);
-        logger.info("promotion: {} ",promotion);
+        logger.info("SENT promotion: {} ",promotion);
 
     }
 }

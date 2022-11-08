@@ -1,0 +1,11 @@
+---
+apiVersion: sql.tanzu.vmware.com/v1
+kind: PostgresRestore
+metadata:
+  name: restore-sample
+spec:
+  sourceBackup:
+    name: backup-sample
+  targetInstance:
+    name: postgres-sample
+#  pointInTime:

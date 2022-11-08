@@ -2,5 +2,9 @@ spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/postgres"
     username : retail
+#  redis:
+#    url: "redis://localhost:6379"
   redis:
-    url: "redis://localhost:6379"
+    cluster:
+      #      Comma-delimited list of host:port pairs.
+      nodes: localhost:6379,localhost:6372

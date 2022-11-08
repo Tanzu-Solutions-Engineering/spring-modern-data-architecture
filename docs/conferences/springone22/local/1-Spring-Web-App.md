@@ -50,6 +50,7 @@ From root directory
 Run application
 
 ```shell
+cd /Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture
 java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --retail.customer.id=$USERNAME
 ```
 

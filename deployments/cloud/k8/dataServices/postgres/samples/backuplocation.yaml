@@ -1,0 +1,44 @@
+---
+apiVersion: sql.tanzu.vmware.com/v1
+kind: PostgresBackupLocation
+metadata:
+  name: backuplocation-sample
+spec:
+  retentionPolicy:
+    fullRetention:
+      type: count
+      number: 9999999
+    diffRetention:
+      number: 9999999
+  storage: #Either Azure or S3 storage can be configured
+    #azure:
+    #  container: "postgresql-backups"
+    #  repoPath: "/my-repo-path"
+    #  endpoint: "blob.core.windows.net"
+    #  keyType: "shared"
+    #  forcePathStyle: false
+    #  enableSSL: true
+    #  secret:
+    #    name: my-backuplocation-secret
+    s3:
+      bucket: "name-of-bucket"
+      bucketPath: "/my-bucket-path"
+      region: "us-east-1"
+      endpoint: "custom-endpoint"
+      forcePathStyle: false
+      enableSSL: true
+      secret:
+        name: backuplocation-creds-sample
+  additionalParameters: { }
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backuplocation-creds-sample
+type: generic
+stringData:
+  #  accountName: "azure-storage-account-name" #azure account name
+  #  accountKey: "azure-storage-key" #azure account key
+  accessKeyId: "my-access-key-id"
+  secretAccessKey: "my-secret-access-key"

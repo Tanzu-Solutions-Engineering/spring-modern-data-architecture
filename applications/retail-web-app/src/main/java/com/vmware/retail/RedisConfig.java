@@ -37,9 +37,6 @@ public class RedisConfig
     @Value("${retail.promotion.listener.pattern.topic}")
     private String patternTopic;
 
-    @Value("${spring.redis.url}")
-    private String redisUrl;
-
     @Bean
     ReactiveRedisTemplate<String, CustomerFavorites> reactiveRedisTemplate(LettuceConnectionFactory factory,
                                                                            RedisSerializer<Object> serializer) {

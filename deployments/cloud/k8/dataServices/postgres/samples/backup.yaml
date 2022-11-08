@@ -1,0 +1,9 @@
+---
+apiVersion: sql.tanzu.vmware.com/v1
+kind: PostgresBackup
+metadata:
+  name: backup-sample
+spec:
+  sourceInstance:
+    name: postgres-sample
+  type: full
