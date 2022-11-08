@@ -33,8 +33,6 @@ import java.util.function.Consumer;
 public class RedisConfig
 {
 
-    @Value("${spring.redis.url}")
-    private String redisUrl;
 
     @Bean
     public RedisSerializer redisSerializer()

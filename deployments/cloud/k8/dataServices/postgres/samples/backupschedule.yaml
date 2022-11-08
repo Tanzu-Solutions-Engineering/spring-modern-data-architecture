@@ -1,0 +1,12 @@
+---
+apiVersion: sql.tanzu.vmware.com/v1
+kind: PostgresBackupSchedule
+metadata:
+  name: backupschedule-sample
+spec:
+  backupTemplate:
+    spec:
+      sourceInstance:
+        name: postgres-sample
+      type: full
+  schedule: "0 0 * * *"

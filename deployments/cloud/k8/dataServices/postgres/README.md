@@ -9,7 +9,7 @@ kubectl get postgresversion
 Deploy
 
 ```shell
-k apply -f deployments/cloud/k8/dataServices/postgres/postgres-sample.yml
+k apply -f deployments/cloud/k8/dataServices/postgres/postgres.yml
 ```
 
 Access Database
