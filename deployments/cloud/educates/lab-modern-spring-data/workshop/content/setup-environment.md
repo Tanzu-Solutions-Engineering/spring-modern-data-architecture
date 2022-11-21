@@ -1,9 +1,69 @@
-Include in this page any steps which should be run by a user to check that the workshop environment is setup correctly. Exactly what you provide in this step will depend on whether the workshop is designed to be deployed in a specific way.
+# Step VMware Container Registry Credentials
 
-It is a good idea in this page to provide at least one sample command to run which is marked with the `execute` annotation so anyone doing the workshop understands they can click on marked commands to run them. For example:
 
-```execute
-date
+Replace CHANGEME with registered username/email at [network.tanzu.vmware.com](https://network.tanzu.vmware.com/)
+
+```copy
+export HARBOR_USER=CHANGEME
 ```
 
-Did you type the command in yourself? If you did, click on the command instead and you will find that it is executed for you. You can click on any command which has the <span class="fas fa-running"></span> icon shown to the right of it, and it will be copied to the interactive terminal and run. If you would rather make a copy of the command so you can paste it to another window, hold down the shift key when you click on the command.
+Replace CHANGEME with password of registered username/email at [network.tanzu.vmware.com](https://network.tanzu.vmware.com/)
+
+```copy
+export HARBOR_PASSWORD=CHANGEME
+```
+
+
+Create Secret in current namespace
+
+```execute
+kubectl create secret docker-registry image-pull-secret --docker-server=registry.tanzu.vmware.com --docker-username=$HARBOR_USER --docker-password=$HARBOR_PASSWORD
+```
+
+# Setup GemFire Operator
+
+```execute
+kubectl create namespace gemfire-system
+```
+
+Create pull secret in gemfire-system namespace
+
+```execute
+kubectl create secret docker-registry image-pull-secret --namespace=gemfire-system --docker-server=registry.tanzu.vmware.com --docker-username=$HARBOR_USER --docker-password=$HARBOR_PASSWORD
+```
+
+Install the GemFire Operator
+```execute
+# Setup GemFire Operator
+kubectl create namespace gemfire-system
+kubectl create rolebinding psp-gemfire --namespace=gemfire-system --clusterrole=psp:vmware-system-privileged --serviceaccount=gemfire-system:default
+
+
+# Install the GemFire Operator
+curl -o ./gemfire-crd-2.1.0.tgz https://spring-modern-data-architecture-files.s3.us-west-1.amazonaws.com/gemfire-crd-2.1.0.tgz
+curl -o ./gemfire-operator-2.1.0.tgz https://spring-modern-data-architecture-files.s3.us-west-1.amazonaws.com/gemfire-operator-2.1.0.tgz
+
+STATUS=1
+ATTEMPTS=0
+COMMAND="helm install gemfire-crd  ./gemfire-crd-2.1.0.tgz --set operatorReleaseName=gemfire-operator --namespace gemfire-system"
+
+until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
+    sleep 5
+    $COMMAND
+    STATUS=$?
+    ATTEMPTS=$((ATTEMPTS + 1))
+done
+
+
+STATUS=1
+ATTEMPTS=0
+COMMAND="helm install gemfire-operator  ./gemfire-operator-2.1.0.tgz --namespace gemfire-system"
+
+until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
+    sleep 5
+    $COMMAND
+    STATUS=$?
+    ATTEMPTS=$((ATTEMPTS + 1))
+done
+
+```
