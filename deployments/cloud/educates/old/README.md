@@ -6,7 +6,7 @@ Starter workshop for Educates
 # Setup
 
 
-Create
+Create 
 
 kubectl get trainingportals
 

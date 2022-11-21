@@ -1,0 +1,15 @@
+apiVersion: training.educates.dev/v1beta1
+kind: TrainingPortal
+metadata:
+  name: lab-modern-spring-data
+spec:
+  portal:
+    registration:
+      type: anonymous
+    updates:
+      workshop: true
+  workshops:
+  - name: lab-modern-spring-data
+    capacity: 1
+    expires: 60m
+    orphaned: 5m

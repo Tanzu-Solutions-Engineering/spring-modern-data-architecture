@@ -1,0 +1,17 @@
+name: Starter Workshop
+modules:
+  activate:
+  - workshop-overview
+  - setup-environment
+  - exercises/01-web-real-time-gemfire-redis
+  - workshop-summary
+spec:
+  session:
+    applications:
+      vcluster:
+        enabled: true
+        resources:
+          syncer:
+            memory: 768Mi
+          k3s:
+            memory: 1Gi
