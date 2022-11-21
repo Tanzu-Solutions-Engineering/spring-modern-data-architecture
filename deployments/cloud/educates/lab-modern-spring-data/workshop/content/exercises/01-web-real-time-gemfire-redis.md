@@ -4,6 +4,25 @@ In this example the pages which make up the core of the workshop content are pla
 
 Included below are some tests and examples of page formatting using Markdown.
 
+# Install GemFire
+
+
+```shell script
+curl -o ./gemfire-operator-2.1.0.tgz https://spring-modern-data-architecture-files.s3.us-west-1.amazonaws.com/gemfire-operator-2.1.0.tgz
+curl -o ./gemfire-crd-2.1.0.tgz https://spring-modern-data-architecture-files.s3.us-west-1.amazonaws.com/gemfire-crd-2.1.0.tgz
+
+```
+
+
+```shell
+helm install gemfire-crd  ./gemfire-crd-2.1.0.tgz --set operatorReleaseName=gemfire-operator --namespace gemfire-system 
+helm install gemfire-operator  ~/dataServices/gemfire/gemfire-operator-2.0.0.tgz --namespace gemfire-system
+
+sleep 5s
+kubectl wait pod -l=app.kubernetes.io/component=gemfire-controller-manager --for=condition=Ready --timeout=160s --namespace=gemfire-system
+
+```
+
 #### Standard code block
 
 ```
