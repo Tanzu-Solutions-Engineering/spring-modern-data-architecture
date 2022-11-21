@@ -30,5 +30,5 @@ imgpkg pull -i ghcr.io/vmware-tanzu-labs/educates-workshop-templates:latest -o e
 Limit to 25 characters (start with lab)
 
 ```shell
-educates-workshop-templates/create-workshop.sh lab-modern-spring-data --output .
+educates-workshop-templates/create-workshop.sh lab-modern-spring-data --output . --overlay virtual-cluster
 ```
