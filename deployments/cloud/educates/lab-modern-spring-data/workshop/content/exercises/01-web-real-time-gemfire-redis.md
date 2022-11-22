@@ -9,12 +9,16 @@ file: ~/data-services/gemfire-redis.yml
 Create GemFire for Redis Cluster
 
 ```execute
-k apply -f data-services/gemfire.ym
+k apply -f data-services/gemfire.yml
 ```
 
+Wait for 1 locator and 1 server to be created
+
+
+Create retail web application
 
 ```execute
-helm repo add jetstack https://charts.jetstack.io
+k apply -f apps/retail-web-app.yml
 ```
 
 ```execute
