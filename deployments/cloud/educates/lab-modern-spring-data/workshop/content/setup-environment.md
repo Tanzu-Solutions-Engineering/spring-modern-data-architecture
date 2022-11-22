@@ -35,7 +35,6 @@ kubectl create secret docker-registry image-pull-secret --namespace=gemfire-syst
 Install the GemFire Operator
 ```execute
 # Setup GemFire Operator
-kubectl create namespace gemfire-system
 kubectl create rolebinding psp-gemfire --namespace=gemfire-system --clusterrole=psp:vmware-system-privileged --serviceaccount=gemfire-system:default
 
 
@@ -66,4 +65,11 @@ until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
     ATTEMPTS=$((ATTEMPTS + 1))
 done
 
+```
+
+
+Check GemFire Operator running
+
+```execute
+k get pods -n gemfire-system
 ```

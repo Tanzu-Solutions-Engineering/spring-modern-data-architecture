@@ -13,6 +13,7 @@ spec:
       - /workshop/**
       - /exercises/**
       - /README.md
+      - /data-services/gemfire-redis.yml
     packages:
     - name: tce
       files:
