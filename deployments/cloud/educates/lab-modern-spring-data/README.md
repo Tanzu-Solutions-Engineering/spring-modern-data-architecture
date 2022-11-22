@@ -18,6 +18,15 @@ kubectl get trainingportals
 kubectl delete workshop,trainingportal lab-modern-spring-data
 
 ```
+
+
+Update image in kind
+
+
+```shell
+kind load docker-image localhost:5001/lab-modern-spring-data-image -n educates
+```
+
 ---------------------
 
 # Creating a Workshop

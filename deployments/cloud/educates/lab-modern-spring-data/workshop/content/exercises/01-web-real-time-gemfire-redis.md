@@ -1,16 +1,17 @@
-This is an example page for exercises to be done for the workshop. You would remove this page, replace it with your own and then adjust the `workshop.yaml` and `modules.yaml` file to list your pages instead.
+# Install GemFire for Redis Cluster
 
-In this example the pages which make up the core of the workshop content are placed in a sub directory. This is only done as a suggestion. You can place all pages at the same directory level if you wish.
+View GemFire for Redis Cluster Definition
+```editor:open-file
+file: ~/data-services/gemfire-redis.yml
+```
 
-Included below are some tests and examples of page formatting using Markdown.
 
-# Install GemFire
-
-
+Create GemFire for Redis Cluster
 
 ```execute
-kubectl create namespace cert-manager
+k apply -f data-services/gemfire.ym
 ```
+
 
 ```execute
 helm repo add jetstack https://charts.jetstack.io

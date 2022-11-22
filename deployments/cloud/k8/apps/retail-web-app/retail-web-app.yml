@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - env:
-            - name: spring.redis.url
-              value: redis://gf-redis-service:6379
+            - name: spring.redis.cluster.nodes
+              value: gf-redis-server:6379
           image: cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
           name: retail-web-app
           #          imagePullPolicy: Always
@@ -36,3 +36,4 @@ spec:
       port: 8080
       targetPort: 8080
   type: LoadBalancer
+#  type: LoadBalancer
