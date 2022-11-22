@@ -9,7 +9,7 @@ file: ~/data-services/gemfire-redis.yml
 Create GemFire for Redis Cluster
 
 ```execute
-k apply -f data-services/gemfire.yml
+k apply -f data-services/gemfire-redis.yml
 ```
 
 Wait for 1 locator and 1 server to be created
