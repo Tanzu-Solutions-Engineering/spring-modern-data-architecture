@@ -29,13 +29,6 @@ helm repo update
 helm repo update
 ```
 
-Download gemfire-crd
-
-Download gemfire-operator
-
-
-```
-
 
 ```shell
 
@@ -43,6 +36,8 @@ sleep 5s
 kubectl wait pod -l=app.kubernetes.io/component=gemfire-controller-manager --for=condition=Ready --timeout=160s --namespace=gemfire-system
 
 ```
+
+
 
 #### Standard code block
 
