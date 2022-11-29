@@ -11,6 +11,8 @@ spec:
         url: $(image_repository)/lab-modern-spring-data-files:latest
       includePaths:
       - /workshop/**
+      - /templates/**
+      - /apps/**
       - /exercises/**
       - /README.md
       - /data-services/gemfire-redis.yml

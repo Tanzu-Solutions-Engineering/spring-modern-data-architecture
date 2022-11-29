@@ -5,10 +5,10 @@ import com.vmware.retail.repository.PromotionRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("promotions")
-public record PromoteController(PromotionRepository repository,
-                                RedisTemplate<String,Promotion> redisTemplate)
+public record PromoteController(PromotionRepository repository, RedisTemplate<String,Promotion> redisTemplate)
 {
 
     @PostMapping("promotion")

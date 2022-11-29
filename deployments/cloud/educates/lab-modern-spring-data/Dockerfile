@@ -13,6 +13,6 @@ FROM ghcr.io/vmware-tanzu-labs/educates-base-environment:2.0
 # into the custom workshop base image, rather than workshop content files
 # being published using a separate OCI image artefact or other mechanism.
 
-COPY --chown=1001:0 ./workshop/data-services /home/eduk8s/data-services
+# COPY --chown=1001:0 ./workshop/data-services /home/eduk8s/data-services
 # RUN mv /home/eduk8s/workshop /opt/workshop
 # RUN fix-permissions /home/eduk8s

@@ -19,6 +19,8 @@ spring:
 #    client-name: ${spring.application.name}
 retail:
   favorites:
+    refresh:
+      rateSeconds: 5
     top:
       count: 3
   promotion:
