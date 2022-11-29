@@ -14,12 +14,30 @@ k apply -f data-services/gemfire-redis.yml
 
 Wait for 1 locator and 1 server to be created
 
+```execute
+kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Ready --timeout=260s
+```
 
 Create retail web application
 
 ```execute
 k apply -f apps/retail-web-app.yml
 ```
+
+Wait for application
+
+```execute
+kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=60s
+```
+
+Get Ingress
+
+```execute
+k get ingress
+```
+
+Open browser to address
+
 
 ```execute
 helm repo update

@@ -70,6 +70,7 @@ done
 
 Check GemFire Operator running
 
+
 ```execute
 k get pods -n gemfire-system
 ```

@@ -36,5 +36,5 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 
 
 # Template Updates
-
+mkdir -p apps
 envsubst < templates/apps/retail-web-app.yml.in > apps/retail-web-app.yml
