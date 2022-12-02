@@ -7,6 +7,8 @@ modules:
     exit_sign: Start Workshop
   exercises/01-web-real-time-gemfire-redis:
     name: Spring Web Caching
+  exercises/XX-rabbitmq-start:
+    name: RabbitMQ Startup
   workshop-summary:
     name: Workshop Summary
     exit_sign: Finish Workshop
