@@ -3,9 +3,11 @@
 RABBITMQ_SERVER_NAME=rabbitmq-cluster
 
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
-kubectl config set-context --current --namespace=rabbitmq-system
 
 # ############################################################################
+
+# kubectl config set-context --current --namespace=rabbitmq-system
+
 
 # echo "Waiting for pod creation to complete..."
 # kubectl apply -f ~/templates/rabbitmq/$RABBITMQ_SERVER_NAME.yaml

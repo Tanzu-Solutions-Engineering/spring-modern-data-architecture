@@ -4,7 +4,8 @@ modules:
   - workshop-overview
   - setup-environment
   - exercises/01-web-real-time-gemfire-redis
-  - exercises/XX-rabbitmq-start
+  - exercises/r00-rabbitmq-cluster
+  - exercises/r01-rabbitmq-management
   - workshop-summary
 spec:
   session:
