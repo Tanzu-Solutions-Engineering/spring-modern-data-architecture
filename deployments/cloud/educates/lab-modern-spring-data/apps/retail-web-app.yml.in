@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run:  retail-web-app
+    app.kubernetes.io/name: retail-web-app
+  name:  retail-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  retail-web-app
+  template:
+    metadata:
+      labels:
+        name:  retail-web-app
+    spec:
+      containers:
+        - env:
+            - name: spring.redis.cluster.nodes
+              value: gf-redis-server:6379
+            - name: retail.favorites.refresh.rateSeconds
+              value: "5"
+            - name: retail.customer.id
+              value: nyla
+          image: cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
+          name: retail-web-app
+          #          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-web-app-service
+spec:
+  selector:
+    name:  retail-web-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+#  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: retail-web-app
+  labels:
+    app.kubernetes.io/name: retail-web-app
+spec:
+  rules:
+    - host: retail-web-app-${SESSION_NAMESPACE}.${INGRESS_DOMAIN}
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: retail-web-app-service
+                port:
+                  number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "false"
+    kubernetes.io/ingress.class: contour
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    projectcontour.io/response-timeout: "infinity"
+    projectcontour.io/websocket-routes: /
+  name: retail-web-app
+  labels:
+    app.kubernetes.io/name: retail-web-app
+spec:
+  rules:
+    - host: retail-web-app-${SESSION_NAMESPACE}.${INGRESS_DOMAIN}
+      # Example:   - host: retail-web-app-lab-modern-spring-data-w01-s001.192.168.86.183.nip.io
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: retail-web-app-service
+                port:
+                  number: 8080
