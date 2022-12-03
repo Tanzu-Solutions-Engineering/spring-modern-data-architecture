@@ -24,7 +24,7 @@ spec:
           url: ghcr.io/vmware-tanzu-labs/educates-extension-packages/tce-0.12:sha-5f9081f
   session:
     namespaces:
-      budget: large
+      budget: xx-large
       limits:
         min:
           cpu: 5m
@@ -58,12 +58,8 @@ spec:
       url: terminal:gemfire
     - name: RabbitMQ Terminal
       url: terminal:rabbitmq
-    - name: Postgres
-      url: terminal:postgres
     - name: RabbitMQ
       url: http://rabbitmq-$(session_namespace).$(ingress_domain)
-    - name: Retail Web App
-      url: http://retail-web-app-$(session_namespace).$(ingress_domain)
     objects:
     - apiVersion: data.packaging.carvel.dev/v1alpha1
       kind: Package
