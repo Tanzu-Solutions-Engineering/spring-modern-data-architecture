@@ -24,7 +24,20 @@ spec:
           url: ghcr.io/vmware-tanzu-labs/educates-extension-packages/tce-0.12:sha-5f9081f
   session:
     namespaces:
-      budget: custom
+      budget: xx-large
+      limits:
+        min:
+          cpu: 5m
+          memory: 32Mi
+        max:
+          cpu: 8000m
+          memory: 16Gi
+        defaultRequest:
+          cpu: 50m
+          memory: 128Mi
+        default:
+          cpu: 500m
+          memory: 1Gi
     applications:
       terminal:
         enabled: true
@@ -35,6 +48,18 @@ spec:
         enabled: true
       vcluster:
         enabled: true
+    ingresses: 
+    - name: rabbitmq
+      port: 15672
+    - name: retail-web-app
+      port: 8080
+    dashboards: 
+    - name: Gemfire
+      url: terminal:gemfire
+    - name: RabbitMQ Terminal
+      url: terminal:rabbitmq
+    - name: RabbitMQ
+      url: http://rabbitmq-$(session_namespace).$(ingress_domain)
     objects:
     - apiVersion: data.packaging.carvel.dev/v1alpha1
       kind: Package
