@@ -16,3 +16,4 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 /deployments/cloud/secret/
 .sass-cache
+/deployments/cloud/educates/lab-modern-spring-data/workshop/profile.d/00-secret.sh

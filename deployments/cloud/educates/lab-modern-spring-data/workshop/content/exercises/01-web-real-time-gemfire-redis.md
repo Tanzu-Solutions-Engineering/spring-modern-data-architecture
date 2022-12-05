@@ -16,6 +16,7 @@ Wait for 1 locator and 1 server to be created
 
 ```execute
 kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Ready --timeout=260s
+kubectl wait pod -l=statefulset.kubernetes.io/pod-name=gf-redis-server-0  --for=condition=Ready --timeout=260s
 ```
 
 Create retail web application
@@ -38,6 +39,30 @@ k get ingress
 
 Open browser to address
 
+'http://retail-web-app-lab-modern-spring-data-w01-s001.192.168.86.183.nip.io/promotions/promotion/publish' \
+
+
+workshop_name: {{ workshop_name }}
+
+session_namespace: {{ session_namespace }}
+
+workshop_namespace: {{ workshop_namespace }}
+```shell
+curl -X 'POST' \
+  'http://retail-web-app-lab-modern-spring-data-w01-s001.192.168.86.183.nip.io/promotions/promotion/publish' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "nyla",
+  "marketingMessage": "string",
+  "products": [
+    {
+      "id": "1",
+      "name": "Peanut Butter"
+    }
+  ]
+}'
+```
 
 ```execute
 helm repo update
