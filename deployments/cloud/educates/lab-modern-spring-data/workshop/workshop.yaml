@@ -6,6 +6,7 @@ modules:
   - exercises/01-web-real-time-gemfire-redis
   - exercises/r00-rabbitmq-cluster
   - exercises/r01-rabbitmq-manage
+  - exercises/XX-glossary
   - workshop-summary
 spec:
   session:

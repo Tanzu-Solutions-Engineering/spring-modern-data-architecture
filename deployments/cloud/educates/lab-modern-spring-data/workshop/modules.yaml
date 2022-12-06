@@ -11,6 +11,8 @@ modules:
     name: RabbitMQ Cluster Operator
   exercises/r01-rabbitmq-manage:
     name: RabbitMQ Management UI
+  exercises/XX-glossary:
+    name: Glossary
   workshop-summary:
     name: Workshop Summary
     exit_sign: Finish Workshop
