@@ -51,9 +51,13 @@ spec:
     ingresses: 
     - name: rabbitmq
       port: 15672
-    - name: retail-web-app
+    - name: application
       port: 8080
-    dashboards: 
+    dashboards:
+    - name: application
+      url: "http://application-$(session_namespace).$(ingress_domain)"
+    - name: application Terminal
+      url: terminal:application
     - name: Gemfire
       url: terminal:gemfire
     - name: RabbitMQ Terminal

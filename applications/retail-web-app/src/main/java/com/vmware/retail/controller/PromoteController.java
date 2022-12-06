@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public record PromoteController(PromotionRepository repository, RedisTemplate<String,Promotion> redisTemplate)
 {
 
+    private static final String channel = "default";
+
     @PostMapping("promotion")
     public void savePromotion(@RequestBody Promotion promotion)
     {
@@ -20,7 +22,7 @@ public record PromoteController(PromotionRepository repository, RedisTemplate<St
     @PostMapping("promotion/publish")
     public void publishPromotion(@RequestBody Promotion promotion)
     {
-        redisTemplate.convertAndSend("hello",promotion);
+        redisTemplate.convertAndSend(channel,promotion);
     }
 
 
