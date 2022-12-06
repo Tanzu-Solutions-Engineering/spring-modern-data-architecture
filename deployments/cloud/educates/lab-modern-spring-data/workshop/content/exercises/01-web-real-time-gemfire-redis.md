@@ -1,4 +1,4 @@
-# GemFire for Redis Cluster
+## GemFire for Redis Cluster
 
 View GemFire for Redis Cluster Definition
 ```editor:open-file
@@ -16,12 +16,32 @@ Wait for 1 locator and 1 server to be created
 
 ```execute
 kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Ready --timeout=720s
-sleep 1s
+sleep 10s
 kubectl wait pod -l=statefulset.kubernetes.io/pod-name=gf-redis-server-0  --for=condition=Ready --timeout=720s
 ```
-# Deploying Spring Boot Web Application
+## Deploying Spring Boot Web Application
+
+
+The demo source code contains a [retail-web-app](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/tree/main/applications/retail-web-app)
+Spring Boot application. 
+
+The docker image of this application
+Was build using the following instructions.
+
+```shell
+mvn install
+cd applications/retail-web-app
+mvn spring-boot:build-image
+```
+
+The docker image has been published to Docker Hub.
 
 Create retail web application
+
+
+```editor:open-file
+file: ~/apps/retail-web-app.yml
+```
 
 ```execute
 k apply -f apps/retail-web-app.yml
@@ -39,12 +59,19 @@ Get Ingress
 k get ingress
 ```
 
+workshop_name: {{ workshop_name }}
+
+session_namespace: {{ session_namespace }}
+
+workshop_namespace: {{ workshop_namespace }}
+
 Open browser to address
-```dashboard:RetailApp
-url: http://retail-web-app-$(session_namespace).$(ingress_domain)
+```dashboard:open-dashboard
+name: application
+url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
 ```
 
-# Real-time data to Web with Redis Pub/Sub
+## Real-time data to Web with Redis Pub/Sub
 
 GemFire for Redis Apps can be used as a light-weight messaging engine to delivery 
 realtime low latency message using in-memory data processes.
@@ -67,7 +94,7 @@ Post a promotion directly to the web application.
 
 ```execute
 curl -X 'POST' \
-  'http://retail-web-app-$(session_namespace).$(ingress_domain)/promotions/promotion/publish' \
+  'http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}/promotions/promotion/publish' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -82,7 +109,7 @@ curl -X 'POST' \
 }'
 ```
 
-# Spring Data Redis Repository
+## Spring Data Redis Repository
 
 Spring Data  makes it very easy to perform Create, Read, Update and Delete (CRUD) operations,
 without having to know the low level details of the data solutions like Redis or GemFire for Redis
@@ -99,7 +126,7 @@ public interface CustomerFavoriteRepository extends KeyValueRepository<CustomerF
 {
 }
 ```
-# Web Reactive with Spring WebFlux
+## Web Reactive with Spring WebFlux
 
 JavaScript Server Side Events can be keep web browser content such as customer favorites
 updated using Spring Reactive Web Controllers.
@@ -123,7 +150,7 @@ public class ReadCustomerFavoritesController
     }
 ```
 
-# Low Latency Cache Update with Redis
+## Low Latency Cache Update with Redis
 
 Using a CQRS pattern, separate Reads from Write controllers.
 
@@ -146,16 +173,18 @@ Use the controller to save customer favorite data in Redis
 
 ```execute
 curl -X 'POST' \
-  'http://retail-web-app-$(session_namespace).$(ingress_domain)/promotions/promotion/publish' \
+  'http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}/customer/favorites/favorite' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
   "id": "nyla",
-  "marketingMessage": "string",
-  "products": [
+  "favorites": [
     {
-      "id": "1",
-      "name": "Peanut Butter"
+      "product": {
+        "id": "1",
+        "name": "Milk"
+      },
+      "quantity": 1
     }
   ]
 }'
@@ -166,8 +195,6 @@ workshop_name: {{ workshop_name }}
 session_namespace: {{ session_namespace }}
 
 workshop_namespace: {{ workshop_namespace }}
-
-
 
 
 #### Standard code block
