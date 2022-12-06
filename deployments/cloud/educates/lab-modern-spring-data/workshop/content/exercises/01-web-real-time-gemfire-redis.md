@@ -1,4 +1,4 @@
-# Install GemFire for Redis Cluster
+# GemFire for Redis Cluster
 
 View GemFire for Redis Cluster Definition
 ```editor:open-file
@@ -19,6 +19,7 @@ kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Read
 sleep 1s
 kubectl wait pod -l=statefulset.kubernetes.io/pod-name=gf-redis-server-0  --for=condition=Ready --timeout=720s
 ```
+# Deploying Spring Boot Web Application
 
 Create retail web application
 
@@ -43,7 +44,9 @@ Open browser to address
 url: http://retail-web-app-$(session_namespace).$(ingress_domain)
 ```
 
-GemFire for Redis Apps can be used as a light-weight message engine to delivery 
+# Real-time data to Web with Redis Pub/Sub
+
+GemFire for Redis Apps can be used as a light-weight messaging engine to delivery 
 realtime low latency message using in-memory data processes.
 
 See [PromoteController](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/retail-web-app/src/main/java/com/vmware/retail/controller/PromoteController.java)
@@ -60,7 +63,7 @@ public record PromoteController(PromotionRepository repository, RedisTemplate<St
     }
 ```
 
-Post Promotion example promotion
+Post a promotion directly to the web application.
 
 ```execute
 curl -X 'POST' \
@@ -79,12 +82,15 @@ curl -X 'POST' \
 }'
 ```
 
+# Spring Data Redis Repository
 
 Spring Data  makes it very easy to perform Create, Read, Update and Delete (CRUD) operations,
 without having to know the low level details of the data solutions like Redis or GemFire for Redis
 applications.
 
-All you need is a Repository interface is all you need.
+All you need is a Repository interface. Spring Data implements
+the low level data access details using the data solutions API(s).
+
 See [CustomerFavoriteRepository](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/components/retail-repositories-caching/src/main/java/com/vmware/retail/repository/CustomerFavoriteRepository.java)
 
 ```java
@@ -93,9 +99,10 @@ public interface CustomerFavoriteRepository extends KeyValueRepository<CustomerF
 {
 }
 ```
+# Web Reactive with Spring WebFlux
 
 JavaScript Server Side Events can be keep web browser content such as customer favorites
-using Spring Reactive Wen Controllers.
+updated using Spring Reactive Web Controllers.
 
 See [ReadCustomerFavoritesController](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/retail-web-app/src/main/java/com/vmware/retail/controller/ReadCustomerFavoritesController.java)
 
@@ -116,13 +123,12 @@ public class ReadCustomerFavoritesController
     }
 ```
 
+# Low Latency Cache Update with Redis
 
 Using a CQRS pattern, separate Reads from Write controllers.
 
 The [SaveCustomerFavoritesController](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/retail-web-app/src/main/java/com/vmware/retail/controller/SaveCustomerFavoritesController.java) provides write HTTP endpoint to save to the repository
 
-http://retail-web-app-lab-modern-spring-data-w01-s001.192.168.86.183.nip.io/promotions/promotion/publish
-http://retail-web-app-lab-modern-spring-data-w02-s003.192.168.86.183.nip.io/
 ```java
 @RestController
 @RequestMapping("customer/favorites")
@@ -136,7 +142,7 @@ public class SaveCustomerFavoritesController
     }
 ```
 
-Use the controller to save test data into the Redis
+Use the controller to save customer favorite data in Redis
 
 ```execute
 curl -X 'POST' \
