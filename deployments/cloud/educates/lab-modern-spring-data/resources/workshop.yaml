@@ -15,7 +15,7 @@ spec:
       - /apps/**
       - /exercises/**
       - /README.md
-      - /data-services/gemfire-redis.yml
+      - /data-services/**
       - /apps/**
     packages:
     - name: tce
