@@ -1,13 +1,5 @@
 #!/bin/bash
 
-kubectl create secret docker-registry image-pull-secret --docker-server=registry.tanzu.vmware.com --docker-username=$HARBOR_USER --docker-password=$HARBOR_PASSWORD
-
-kubectl create namespace gemfire-system
-
-kubectl create secret docker-registry image-pull-secret --namespace=gemfire-system --docker-server=registry.tanzu.vmware.com --docker-username=$HARBOR_USER --docker-password=$HARBOR_PASSWORD
-
-kubectl create rolebinding psp-gemfire --namespace=gemfire-system --clusterrole=psp:vmware-system-privileged --serviceaccount=gemfire-system:default
-
 
 # Install the GemFire Operator
 curl -o ./gemfire-crd-2.1.0.tgz https://spring-modern-data-architecture-files.s3.us-west-1.amazonaws.com/gemfire-crd-2.1.0.tgz
@@ -19,7 +11,20 @@ COMMAND="helm install gemfire-crd  ./gemfire-crd-2.1.0.tgz --set operatorRelease
 
 until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
     sleep 5
-    $COMMAND
+
+    echo "Exe: create namespace gemfire-system" >~/install.log
+    kubectl create namespace gemfire-system >>~/install.log 2>>install.log
+
+    echo "kubectl apply -f deployments/cloud/educates/lab-modern-spring-data/data-services/.secret">>~/install.log
+    kubectl apply -f ~/data-services/.secret  >>~/install.log 2>>install.log
+
+    echo "Exe: create rolebinding psp-gemfire --namespace=gemfire-system --clusterrole=psp:vmware-system-privileged --serviceaccount=gemfire-system:default ">>~/install.log
+    kubectl create rolebinding psp-gemfire --namespace=gemfire-system --clusterrole=psp:vmware-system-privileged --serviceaccount=gemfire-system:default  >>~/install.log 2>>install.log
+
+    helm uninstall gemfire-crd  --namespace gemfire-system  >>~/install.log 2>>install.log
+
+    echo $COMMAND >>~/install.log 2>>install.log
+    $COMMAND >>~/install.log 2>>install.log
     STATUS=$?
     ATTEMPTS=$((ATTEMPTS + 1))
 done
