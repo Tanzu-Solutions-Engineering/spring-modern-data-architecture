@@ -51,18 +51,20 @@ spec:
     ingresses: 
     - name: rabbitmq
       port: 15672
-    - name: application
+    - name: retail-web-app
       port: 8080
     dashboards:
-    - name: application
-      url: "http://application-$(session_namespace).$(ingress_domain)"
-    - name: application Terminal
-      url: terminal:application
+    - name: Retail Web App
+      url: "http://retail-web-app-$(session_namespace).$(ingress_domain)"
+    - name: Retail Web App Terminal
+      url: terminal:retailapp
     - name: Gemfire
       url: terminal:gemfire
     - name: RabbitMQ Terminal
       url: terminal:rabbitmq
-    - name: RabbitMQ
+    - name: Postgres Terminal
+      url: terminal:postgres
+    - name: RabbitMQ Management
       url: http://rabbitmq-$(session_namespace).$(ingress_domain)
     objects:
     - apiVersion: data.packaging.carvel.dev/v1alpha1

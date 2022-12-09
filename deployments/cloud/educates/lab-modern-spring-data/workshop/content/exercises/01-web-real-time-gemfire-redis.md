@@ -1,27 +1,39 @@
-## GemFire for Redis Cluster
+[ Description of Activity ]
 
-View GemFire for Redis Cluster Definition
-```editor:open-file
-file: ~/data-services/gemfire-redis.yml
-```
+# GemFire for Redis Cluster
+[ Description of Task ]
 
+1. View GemFire for Redis Cluster Definition
 
-Create GemFire for Redis Cluster
+    ```editor:open-file
+    file: ~/data-services/gemfire/gemfire-redis.yml
+    ```
+    
+2. Create GemFire for Redis Cluster
 
-```execute
-k apply -f data-services/gemfire-redis.yml
-```
+    ```terminal:execute
+    command: k apply -f data-services/gemfire/gemfire-redis.yml
+    session: gemfire
+    ```
 
-Wait for 1 locator and 1 server to be created
+# Wait for 1 locator and 1 server to be created
+[ Description of Task ]
 
-```execute
-kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Ready --timeout=720s
-sleep 10s
-kubectl wait pod -l=statefulset.kubernetes.io/pod-name=gf-redis-server-0  --for=condition=Ready --timeout=720s
-```
-## Deploying Spring Boot Web Application
+1. Create a Gefmire Redis Locator
 
+    ```terminal:execute
+    command: kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Ready --timeout=720s; sleep 10s;
+    session: gemfire
+    ```
 
+2. Create a Gemfire Redis Server
+
+    ```terminal:execute
+    command: kubectl wait pod -l=statefulset.kubernetes.io/pod-name=gf-redis-server-0  --for=condition=Ready --timeout=720s
+    session: gemfire
+    ```
+
+# Deploying Spring Boot Web Application
 The demo source code contains a [retail-web-app](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/tree/main/applications/retail-web-app)
 Spring Boot application. 
 
@@ -36,43 +48,54 @@ mvn spring-boot:build-image
 
 The docker image has been published to Docker Hub.
 
-Create retail web application
+1. View Retail Web App Defintion
 
+    ```editor:open-file
+    file: ~/apps/retail-web-app.yml
+    ```
 
-```editor:open-file
-file: ~/apps/retail-web-app.yml
-```
+2. Create retail web application
 
-```execute
-k apply -f apps/retail-web-app.yml
-```
+    ```terminal:execute
+    command: k apply -f apps/retail-web-app.yml
+    session: retailapp
+    ```
 
-Wait for application
+3. Wait for application
 
-```execute
-kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=60s
-```
+    ```terminal:execute
+    command: kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=60s
+    session: retailapp
+    ``` 
 
-Get Ingress
+4. Get Ingress
 
-```execute
-k get ingress
-```
+    ```terminal:execute
+    command: k get ingress
+    session: retailapp
+    ```
 
-workshop_name: {{ workshop_name }}
+  workshop_name: {{ workshop_name }}
 
-session_namespace: {{ session_namespace }}
+  session_namespace: {{ session_namespace }}
 
-workshop_namespace: {{ workshop_namespace }}
+  workshop_namespace: {{ workshop_namespace }}
 
-Open browser to address
-```dashboard:open-dashboard
-name: application
-url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
-```
+5. Make Ingress accessible on the web
+
+    ```terminal:execute
+    command: k port-forward pod/retail-web-app-68f94cddf-pfd2q 8080
+    session: retailapp
+    ```
+
+6. Open browser to address
+
+    ```dashboard:open-dashboard
+    name: Retail Web App
+    url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
+    ```
 
 ## Real-time data to Web with Redis Pub/Sub
-
 GemFire for Redis Apps can be used as a light-weight messaging engine to delivery 
 realtime low latency message using in-memory data processes.
 
@@ -109,8 +132,7 @@ curl -X 'POST' \
 }'
 ```
 
-## Spring Data Redis Repository
-
+# Spring Data Redis Repository
 Spring Data  makes it very easy to perform Create, Read, Update and Delete (CRUD) operations,
 without having to know the low level details of the data solutions like Redis or GemFire for Redis
 applications.
@@ -126,8 +148,7 @@ public interface CustomerFavoriteRepository extends KeyValueRepository<CustomerF
 {
 }
 ```
-## Web Reactive with Spring WebFlux
-
+# Web Reactive with Spring WebFlux
 JavaScript Server Side Events can be keep web browser content such as customer favorites
 updated using Spring Reactive Web Controllers.
 
@@ -150,8 +171,7 @@ public class ReadCustomerFavoritesController
     }
 ```
 
-## Low Latency Cache Update with Redis
-
+# Low Latency Cache Update with Redis
 Using a CQRS pattern, separate Reads from Write controllers.
 
 The [SaveCustomerFavoritesController](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/retail-web-app/src/main/java/com/vmware/retail/controller/SaveCustomerFavoritesController.java) provides write HTTP endpoint to save to the repository

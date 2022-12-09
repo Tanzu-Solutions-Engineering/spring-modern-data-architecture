@@ -1,40 +1,40 @@
-#!/bin/bash
+# #!/bin/bash
 
-# Wait for CRDs for kapp-controller to have been created.
+# # Wait for CRDs for kapp-controller to have been created.
 
-STATUS=1
-ATTEMPTS=0
-COMMAND="kubectl get crd/packagerepositories.packaging.carvel.dev"
+# STATUS=1
+# ATTEMPTS=0
+# COMMAND="kubectl get crd/packagerepositories.packaging.carvel.dev"
 
-until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
-    sleep 5
-    $COMMAND
-    STATUS=$?
-    ATTEMPTS=$((ATTEMPTS + 1))
-done
+# until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
+#     sleep 5
+#     $COMMAND
+#     STATUS=$?
+#     ATTEMPTS=$((ATTEMPTS + 1))
+# done
 
-# Now wait for deployment of kapp-controller.
+# # Now wait for deployment of kapp-controller.
 
-STATUS=1
-ATTEMPTS=0
-COMMAND="kubectl rollout status deployment/kapp-controller -n kapp-controller"
+# STATUS=1
+# ATTEMPTS=0
+# COMMAND="kubectl rollout status deployment/kapp-controller -n kapp-controller"
 
-until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
-    sleep 5
-    $COMMAND
-    STATUS=$?
-    ATTEMPTS=$((ATTEMPTS + 1))
-done
-
-
-# install CRD
-kubectl create namespace cert-manager
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.0/cert-manager.yaml
+# until [ $STATUS -eq 0 ] || $COMMAND || [ $ATTEMPTS -eq 12 ]; do
+#     sleep 5
+#     $COMMAND
+#     STATUS=$?
+#     ATTEMPTS=$((ATTEMPTS + 1))
+# done
 
 
+# # install CRD
+# kubectl create namespace cert-manager
+# helm repo add jetstack https://charts.jetstack.io
+# helm repo update
+# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.0/cert-manager.yaml
 
-# Template Updates
-mkdir -p apps
-envsubst < templates/apps/retail-web-app.yml.in > apps/retail-web-app.yml
+
+
+# # Template Updates
+# mkdir -p apps
+# envsubst < templates/apps/retail-web-app.yml.in > apps/retail-web-app.yml
