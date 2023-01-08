@@ -1,43 +1,60 @@
-apiVersion: gemfire.vmware.com/v1
-kind: GemFireCluster
+apiVersion: v1
+kind: Pod
 metadata:
-  name: gf-redis
+  name: spring-gf-redis-server
+  labels:
+    app.kubernetes.io/name: spring-gf-redis-server
 spec:
-  # Avoid using the "latest" tag in production as it is harder to track which
-  # version of the image is running and may cause members to upgrade
-  # unexpectedly.
-  image: registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:9.15.1
-  # Set antiAffinityPolicy to "Cluster" or "Full" in production to limit the
-  # chance of data loss.
-  antiAffinityPolicy: None
-  security:
-    tls: {}
-  metrics:
-    emission: Default
-  locators:
-    replicas: 1
-    resources:
-      requests:
-        memory: 1Gi
-#        cpu: 0.5
-#      limits:
-#        memory: 1Gi
-#        cpu: 0.5
-  servers:
-    replicas: 1
-    resources:
-      requests:
-        memory: 1Gi
-#        cpu: 1
-#      limits:
-#        memory: 1Gi
-#        cpu: 1
-    libraries:
-      - name: gemfire-for-redis-apps
-        container:
-          image: registry.tanzu.vmware.com/tanzu-gemfire-for-redis-apps/gemfire-for-redis-apps:1.0.1
-          path: "/gemfire-for-redis-apps/*"
-          imagePullSecretRef:
-            name: image-pull-secret
-    overrides:
-      jvmOptions: ["-Dgemfire-for-redis-enabled=true"]
+  containers:
+    - name: spring-gf-redis-server
+      image: cloudnativedata/spring-gf-redis-server:0.0.1-SNAPSHOT
+      resources:
+        requests:
+          memory: "2000Mi"
+        limits:
+          memory: "2000Mi"
+      env:
+        - name: "JVM_ARGS"
+          value: "-Xms1g -Xmx1g"
+        - name: server.port
+          value: "7080"
+      imagePullPolicy:  Always
+      #      imagePullPolicy:  IfNotPresent
+      ports:
+        - name: redis
+          containerPort: 6379
+        - name: actuator
+          containerPort: 7080
+      readinessProbe:
+        httpGet:
+          path: /actuator/health
+          port: 7080
+        initialDelaySeconds: 40
+        periodSeconds: 20
+        timeoutSeconds: 40
+        failureThreshold: 30
+      livenessProbe:
+        httpGet:
+          path: /actuator/health
+          port: 7080
+        initialDelaySeconds: 40
+        periodSeconds: 20
+        timeoutSeconds: 40
+        failureThreshold: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gf-redis-server
+spec:
+  selector:
+    app.kubernetes.io/name: spring-gf-redis-server
+  ports:
+    - name: "redis"
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
+    - name: "actuator"
+      protocol: TCP
+      port: 7080
+      targetPort: 7080
