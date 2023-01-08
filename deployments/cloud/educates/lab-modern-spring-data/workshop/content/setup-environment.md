@@ -34,41 +34,18 @@
 name: Editor
 ```
 
-### Web Apps:
-
-* Retail Web App
-
-    ```dashboard:open-dashboard
-    name: Retail Web App
-    ```
-
-* Retail Analytics App
-
-* RabbitMQ Management Portal
-
-    ```dashboard:open-dashboard
-    name: RabbitMQ Management 
-    ```
-
 
 ### Kubernetes Cluster Operators
 [VMware Data Solutions](https://tanzu.vmware.com/data-solutions) such as 
 [GemFire](https://tanzu.vmware.com/gemfire), [SQL (Postgres)](https://tanzu.vmware.com/sql) and [RabbitMQ](https://tanzu.vmware.com/rabbitmq) will be used for this workshops.
 
-Each of these data solutions have will be installed using the Kubernetes [Operator Pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/).
+The RabbitMQ and Postgres data solutions will be installed using the Kubernetes [Operator Pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/).
 
-Each Data Solution Operators manages the installation and health of the running data solutions.
+The Operators manage the installation and health of the running data solutions.
 The operator have embedded logic to manage the data solutions based on best practices.
 
 
 The following Operators are currently installed
-
-* [GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire-for-Kubernetes/2.0/tgf-k8s/GUID-install.html)
-
-    ```terminal:execute 
-    command: k get pods -n gemfire-system
-    session: gemfire
-    ```
 
 * [RabbitMQ Cluster Operator](https://www.rabbitmq.com/kubernetes/operator/operator-overview.html)
 
