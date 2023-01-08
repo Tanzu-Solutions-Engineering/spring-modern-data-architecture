@@ -15,6 +15,7 @@
         <module>applications/retail-web-app</module>
         <module>applications/retail-analytics-app</module>
         <module>applications/retail-source-app</module>
+        <module>applications/spring-gf-redis-server</module>
     </modules>
     <build>
         <pluginManagement>

@@ -17,6 +17,8 @@ spec:
     spec:
       containers:
         - env:
+            - name: retail.customer.id
+              value: "nyla"
             - name: spring.redis.cluster.nodes
               value: gf-redis-server:6379
           image: cloudnativedata/retail-web-app:0.0.1-SNAPSHOT

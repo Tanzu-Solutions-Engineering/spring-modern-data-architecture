@@ -23,6 +23,22 @@ spec:
               value: "5"
             - name: retail.customer.id
               value: nyla
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 20
+            timeoutSeconds: 40
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 20
+            timeoutSeconds: 40
+            failureThreshold: 30
           image: cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
           name: retail-web-app
           #          imagePullPolicy: Always

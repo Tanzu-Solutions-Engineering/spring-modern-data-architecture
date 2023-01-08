@@ -11,5 +11,5 @@ spec:
   workshops:
   - name: lab-modern-spring-data
     capacity: 1
-    expires: 60m
-    orphaned: 5m
+    expires: 120m
+    orphaned: 20m

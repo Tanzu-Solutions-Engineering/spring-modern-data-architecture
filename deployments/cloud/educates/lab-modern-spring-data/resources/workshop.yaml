@@ -27,17 +27,17 @@ spec:
       budget: xx-large
       limits:
         min:
-          cpu: 5m
+          cpu: 4000m
           memory: 32Mi
         max:
           cpu: 8000m
           memory: 16Gi
         defaultRequest:
-          cpu: 50m
+          cpu: 4000m
           memory: 128Mi
         default:
-          cpu: 500m
-          memory: 1Gi
+          cpu: 4000m
+          memory: 2Gi
     applications:
       terminal:
         enabled: true
