@@ -1,7 +1,42 @@
-[ Description of Activity ]
-
 # GemFire for Redis Cluster
-[ Description of Task ]
+
+[VMware GemFire](https://tanzu.vmware.com/content/blog/introducing-vmware-tanzu-gemfire-for-redis-apps) introduces compatibility between Redis applications and GemFire.
+
+
+[Spring Boot for VMware GemFire](https://tanzu.vmware.com/content/blog/introducing-vmware-tanzu-gemfire-for-redis-apps) allows Spring development to turn a Spring Boot application into GemFire with Redis  compatibility using the following.
+
+
+The **CacheServerApplication** annotation enable an embedded GemFire Server with the Application.
+
+```java
+@Configuration
+@CacheServerApplication
+public class GemFireConfig {
+}
+```
+
+In addition, the following addition system properties are needed.
+
+```
+--J=-Dgemfire-for-redis-port=6379  --J=-Dgemfire-for-redis-enabled=true
+```
+
+Or you set them in the Spring application main method
+
+```java
+ public static void main(String[] args) {
+
+        System.setProperty("gemfire-for-redis-port","6379");
+        System.setProperty("gemfire-for-redis-enabled","true");
+
+        SpringApplication.run(GfRedisServer.class);
+    }
+```
+
+
+
+
+
 
 1. View GemFire for Redis Cluster Definition
 
@@ -16,20 +51,14 @@
     session: gemfire
     ```
 
-# Wait for 1 locator and 1 server to be created
+# Wait for GemFire server to start
 [ Description of Task ]
 
-1. Create a Gefmire Redis Locator
+
+1. Create a Gemfire Redis Server
 
     ```terminal:execute
-    command: kubectl wait pod -l=gemfire.vmware.com/app=gf-redis-locator --for=condition=Ready --timeout=720s; sleep 10s;
-    session: gemfire
-    ```
-
-2. Create a Gemfire Redis Server
-
-    ```terminal:execute
-    command: kubectl wait pod -l=statefulset.kubernetes.io/pod-name=gf-redis-server-0  --for=condition=Ready --timeout=720s
+    command: kubectl wait pod -l=app.kubernetes.io/name=spring-gf-redis-server --for=condition=Ready --timeout=720s
     session: gemfire
     ```
 
@@ -48,7 +77,7 @@ mvn spring-boot:build-image
 
 The docker image has been published to Docker Hub.
 
-1. View Retail Web App Defintion
+1. View Retail Web App Definition
 
     ```editor:open-file
     file: ~/apps/retail-web-app.yml

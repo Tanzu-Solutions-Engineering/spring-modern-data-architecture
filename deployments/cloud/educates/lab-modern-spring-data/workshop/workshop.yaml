@@ -14,6 +14,6 @@ spec:
         enabled: true
         resources:
           syncer:
-            memory: 7Gi
+            memory: 9Gi
           k3s:
-            memory: 8Gi
+            memory: 10Gi
