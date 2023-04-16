@@ -1,9 +1,6 @@
 # Start RabbitMQ 
 
-[ Description of Activity ]
-
 ## RabbitMQ Cluster Operator
-[ Description of Item & Task ]
 
 ### Install the RabbitMQ Operator
 * Already Complete
@@ -22,7 +19,6 @@ session: rabbitmq
 ```
 
 ## RabbitMQ Cluster 
-[ Description of Item & Task ]
 
 ### Create a RabbitMQ Cluster
 
@@ -40,7 +36,7 @@ session: rabbitmq
     2. Create a cluster from the .yaml file
 
         ```terminal:execute 
-        command: kubectl ~/data-services/rabbitmq/rabbitmq-cluster.yaml  
+        command: k apply -f ~/data-services/rabbitmq/rabbitmq-cluster.yaml  
         session: rabbitmq 
         ```
 
@@ -54,14 +50,13 @@ session: rabbitmq
 3. Wait until pod is ready
 
     ```terminal:execute 
-    command: kubectl wait pods -n {{ ENV_RMQ_KUB_NAMESPACE }} {{ ENV_RABBITMQ_SERVER_NAME }}-server-0 --for condition=Ready --timeout=90s 
+    command: kubectl wait pod/rabbitmq-server-0 --for condition=Ready --timeout=90s 
     session: rabbitmq 
     ```
 
-4. View all resources created for cluster
+4. Start Database
 
-    ```terminal:execute 
-    command: kubectl get all -l app.kubernetes.io/name={{ ENV_RABBITMQ_SERVER_NAME }} 
-    session: rabbitmq 
-    ```
-
+```terminal:execute 
+command: k apply -f ~/data-services/postgres/postgres.yml
+session: postgres 
+```

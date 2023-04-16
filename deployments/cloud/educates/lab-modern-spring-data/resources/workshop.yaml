@@ -23,21 +23,21 @@ spec:
       - image:
           url: ghcr.io/vmware-tanzu-labs/educates-extension-packages/tce-0.12:sha-5f9081f
   session:
-    namespaces:
-      budget: xx-large
-      limits:
-        min:
-          cpu: 4000m
-          memory: 32Mi
-        max:
-          cpu: 8000m
-          memory: 16Gi
-        defaultRequest:
-          cpu: 4000m
-          memory: 128Mi
-        default:
-          cpu: 4000m
-          memory: 2Gi
+#    namespaces:
+#      budget: xx-large
+#      limits:
+#        min:
+#          cpu: 4000m
+#          memory: 32Mi
+#        max:
+#          cpu: 8000m
+#          memory: 16Gi
+#        defaultRequest:
+#          cpu: 4000m
+#          memory: 128Mi
+#        default:
+#          cpu: 4000m
+#          memory: 2Gi
     applications:
       terminal:
         enabled: true

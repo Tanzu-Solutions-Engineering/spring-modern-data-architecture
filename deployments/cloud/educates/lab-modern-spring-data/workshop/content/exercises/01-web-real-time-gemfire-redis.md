@@ -6,7 +6,8 @@
 [Spring Boot for VMware GemFire](https://tanzu.vmware.com/content/blog/introducing-vmware-tanzu-gemfire-for-redis-apps) allows Spring development to turn a Spring Boot application into GemFire with Redis  compatibility using the following.
 
 
-The **CacheServerApplication** annotation enable an embedded GemFire Server with the Application.
+In the [GemFireConfig](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/spring-gf-redis-server/src/main/java/com/vmware/gemfire/spring/redis/server/GemFireConfig.java) the **CacheServerApplication** 
+annotation enables an embedded GemFire Server with the Application.
 
 ```java
 @Configuration
@@ -21,7 +22,8 @@ In addition, the following addition system properties are needed.
 --J=-Dgemfire-for-redis-port=6379  --J=-Dgemfire-for-redis-enabled=true
 ```
 
-Or you set them in the Spring application main method
+Or you can see [GfRedisServer](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/spring-gf-redis-server/src/main/java/com/vmware/gemfire/spring/redis/server/GfRedisServer.java) 
+then in the Spring application main method
 
 ```java
  public static void main(String[] args) {
@@ -33,29 +35,32 @@ Or you set them in the Spring application main method
     }
 ```
 
+The spring-gf-redis-server container image was built using the following'
+
+```shell
+cd applications/spring-gf-redis-server
+mvn spring-boot:build-image
+```
+The docker image has been published to Docker Hub.
 
 
+# GemFire for Redis Server
 
+1. View GemFire fir Redis Kubernetes Definition
 
-
-1. View GemFire for Redis Cluster Definition
-
-    ```editor:open-file
-    file: ~/data-services/gemfire/gemfire-redis.yml
-    ```
+```editor:open-file
+file: ~/data-services/gemfire/gemfire-redis.yml
+```
     
-2. Create GemFire for Redis Cluster
+2. Create GemFire for Redis Server
 
     ```terminal:execute
     command: k apply -f data-services/gemfire/gemfire-redis.yml
     session: gemfire
     ```
 
-# Wait for GemFire server to start
-[ Description of Task ]
 
-
-1. Create a Gemfire Redis Server
+3. Create a Gemfire Redis Server
 
     ```terminal:execute
     command: kubectl wait pod -l=app.kubernetes.io/name=spring-gf-redis-server --for=condition=Ready --timeout=720s
@@ -63,25 +68,25 @@ Or you set them in the Spring application main method
     ```
 
 # Deploying Spring Boot Web Application
+
 The demo source code contains a [retail-web-app](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/tree/main/applications/retail-web-app)
 Spring Boot application. 
 
 The docker image of this application
-Was build using the following instructions.
+was built using the following instructions.
 
 ```shell
 mvn install
 cd applications/retail-web-app
 mvn spring-boot:build-image
 ```
-
 The docker image has been published to Docker Hub.
 
 1. View Retail Web App Definition
 
-    ```editor:open-file
-    file: ~/apps/retail-web-app.yml
-    ```
+```editor:open-file
+file: ~/apps/retail-web-app.yml
+```
 
 2. Create retail web application
 
@@ -90,14 +95,22 @@ The docker image has been published to Docker Hub.
     session: retailapp
     ```
 
-3. Wait for application
+3. List Pods for Application
+
+```terminal:execute
+command: kubectl get pods
+session: retailapp
+``` 
+
+
+4. Wait for application
 
     ```terminal:execute
-    command: kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=60s
+    command: kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=140s
     session: retailapp
     ``` 
 
-4. Get Ingress
+5. Get Ingress
 
     ```terminal:execute
     command: k get ingress
@@ -109,13 +122,6 @@ The docker image has been published to Docker Hub.
   session_namespace: {{ session_namespace }}
 
   workshop_namespace: {{ workshop_namespace }}
-
-5. Make Ingress accessible on the web
-
-    ```terminal:execute
-    command: k port-forward pod/retail-web-app-68f94cddf-pfd2q 8080
-    session: retailapp
-    ```
 
 6. Open browser to address
 
@@ -161,6 +167,14 @@ curl -X 'POST' \
 }'
 ```
 
+Open browser see to promotion
+
+```dashboard:open-dashboard
+name: Retail Web App
+url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
+```
+
+
 # Spring Data Redis Repository
 Spring Data  makes it very easy to perform Create, Read, Update and Delete (CRUD) operations,
 without having to know the low level details of the data solutions like Redis or GemFire for Redis
@@ -178,7 +192,7 @@ public interface CustomerFavoriteRepository extends KeyValueRepository<CustomerF
 }
 ```
 # Web Reactive with Spring WebFlux
-JavaScript Server Side Events can be keep web browser content such as customer favorites
+JavaScript Server Side Events can be keep on web browser content such as customer favorites
 updated using Spring Reactive Web Controllers.
 
 See [ReadCustomerFavoritesController](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/retail-web-app/src/main/java/com/vmware/retail/controller/ReadCustomerFavoritesController.java)
@@ -201,7 +215,7 @@ public class ReadCustomerFavoritesController
 ```
 
 # Low Latency Cache Update with Redis
-Using a CQRS pattern, separate Reads from Write controllers.
+Using a CQRS pattern, you can separate Reads from Write controllers.
 
 The [SaveCustomerFavoritesController](https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/blob/main/applications/retail-web-app/src/main/java/com/vmware/retail/controller/SaveCustomerFavoritesController.java) provides write HTTP endpoint to save to the repository
 
@@ -239,3 +253,9 @@ curl -X 'POST' \
 }'
 ```
 
+Open browser see to Favorites
+
+```dashboard:open-dashboard
+name: Retail Web App
+url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
+```
