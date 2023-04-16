@@ -1,0 +1,57 @@
+#@ load("@ytt:data", "data")
+
+#@ additional_config = "cluster_partition_handling = pause_minority\nvm_memory_high_watermark_paging_ratio={}\ndisk_free_limit.relative={}\ncollect_statistics_interval={}\n".format(data.values.rabbitmq.vm_memory_high_watermark_paging_ratio, data.values.rabbitmq.disk_free_limit.relative, data.values.rabbitmq.collect_statistics_interval)
+
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: tanzu-rabbitmq
+spec:
+  rabbitmq:
+    additionalConfig: #@ additional_config
+  #@ if data.values.rabbitmq.persistent == 1:
+  persistence:
+    storageClassName: #@ data.values.rabbitmq.storageclassname
+    storage: #@ data.values.rabbitmq.storage
+  #@ end
+  replicas: #@ data.values.rabbitmq.replicas
+  resources:
+    requests:
+      cpu: #@ data.values.rabbitmq.cpu
+      memory: #@ data.values.rabbitmq.memory
+    limits:
+      cpu: #@ data.values.rabbitmq.cpu
+      memory: #@ data.values.rabbitmq.memory
+  imagePullSecrets:
+  - name: tanzu-rabbitmq-registry-creds
+  #@ if data.values.rabbitmq.antiaffinity == 1:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - tanzu-rabbitmq
+        topologyKey: kubernetes.io/hostname
+  #@ end
+  override:
+    statefulSet:
+      spec:
+        template:
+          spec:
+            containers: []
+            #@ if data.values.openshift == 1:
+            securityContext: {}
+            #@ end
+            #@ if data.values.rabbitmq.antiaffinity == 1:
+            topologySpreadConstraints:
+            - maxSkew: #@ data.values.rabbitmq.maxskew
+              topologyKey: "topology.kubernetes.io/zone"
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: tanzu-rabbitmq
+            #@ end
+

@@ -1,0 +1,10 @@
+#@ load("@ytt:data", "data")
+
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: tanzu-rabbitmq-repo
+spec:
+  fetch:
+    imgpkgBundle:
+      image: #@ data.values.rabbitmq.image
