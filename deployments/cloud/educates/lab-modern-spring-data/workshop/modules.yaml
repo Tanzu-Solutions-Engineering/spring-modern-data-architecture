@@ -7,10 +7,8 @@ modules:
     exit_sign: Start Workshop
   exercises/01-web-real-time-gemfire-redis:
     name: Spring Web Caching
-  exercises/r00-rabbitmq-cluster:
-    name: RabbitMQ Cluster Operator
-  exercises/r01-rabbitmq-manage:
-    name: RabbitMQ Management UI
+  exercises/02-streaming-analytics-rabbit-postgres:
+    name: Spring Stream Analytics
   workshop-summary:
     name: Workshop Summary
     exit_sign: Finish Workshop
