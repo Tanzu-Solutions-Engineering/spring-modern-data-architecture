@@ -3,16 +3,16 @@
 set -eo pipefail
 
 # Parameters with default values (can override):
-tanzurmqversion=1.3.0
+tanzurmqversion=1.4.1
 serviceaccount=rabbitmq
 namespace="rabbitmq-system"
 replicas=3
 prometheusrepourl="https://github.com/rabbitmq/cluster-operator.git"
-prometheusoperatorversion=v1.14.0
+prometheusoperatorversion=v2.2.0
 requesttimeout=100s
 vmwareuser=$HARBOR_USER
 vmwarepassword=$HARBOR_PASSWORD
-certmanagervsersion=1.8.0
+certmanagervsersion=1.11.0
 kubectl=kubectl
 maxskew=1
 cluster_partition_handling=pause_minority
@@ -155,3 +155,4 @@ echo "INSTALLING CLUSTERS MONITOR..."
 $kubectl apply --filename https://raw.githubusercontent.com/rabbitmq/cluster-operator/main/observability/prometheus/monitors/rabbitmq-servicemonitor.yml
 echo "INSTALLING OPERATORS MONITOR..."
 $kubectl apply --filename https://raw.githubusercontent.com/rabbitmq/cluster-operator/main/observability/prometheus/monitors/rabbitmq-cluster-operator-podmonitor.yml
+$kubectl apply -f /Users/Projects/VMware/Tanzu/TanzuData/TanzuRabbitMQ/dev/tanzu-rabbitmq-event-streaming-showcase/deployment/cloud/k8/data-services/rabbitmq/secret/secrets.yml

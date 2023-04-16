@@ -1,4 +1,4 @@
-# This example is GKE specific, other Kubernetes deployments will have a different `storageClass` for SSD disks.
+# This example is GKE.md specific, other Kubernetes deployments will have a different `storageClass` for SSD disks.
 #
 # https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/ssd-pd
 # https://cloud.google.com/compute/docs/disks/performance#ssd_persistent_disk
