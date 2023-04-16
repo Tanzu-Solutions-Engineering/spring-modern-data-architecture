@@ -41,13 +41,16 @@ The spring-gf-redis-server container image was built using the following'
 cd applications/spring-gf-redis-server
 mvn spring-boot:build-image
 ```
+The docker image has been published to Docker Hub.
 
+
+# GemFire for Redis Server
 
 1. View GemFire fir Redis Kubernetes Definition
 
-    ```editor:open-file
-    file: ~/data-services/gemfire/gemfire-redis.yml
-    ```
+```editor:open-file
+file: ~/data-services/gemfire/gemfire-redis.yml
+```
     
 2. Create GemFire for Redis Server
 
@@ -56,10 +59,8 @@ mvn spring-boot:build-image
     session: gemfire
     ```
 
-# Wait for GemFire server to start
 
-
-1. Create a Gemfire Redis Server
+3. Create a Gemfire Redis Server
 
     ```terminal:execute
     command: kubectl wait pod -l=app.kubernetes.io/name=spring-gf-redis-server --for=condition=Ready --timeout=720s
@@ -72,21 +73,20 @@ The demo source code contains a [retail-web-app](https://github.com/Tanzu-Soluti
 Spring Boot application. 
 
 The docker image of this application
-Was build using the following instructions.
+was built using the following instructions.
 
 ```shell
 mvn install
 cd applications/retail-web-app
 mvn spring-boot:build-image
 ```
-
 The docker image has been published to Docker Hub.
 
 1. View Retail Web App Definition
 
-    ```editor:open-file
-    file: ~/apps/retail-web-app.yml
-    ```
+```editor:open-file
+file: ~/apps/retail-web-app.yml
+```
 
 2. Create retail web application
 
@@ -95,14 +95,22 @@ The docker image has been published to Docker Hub.
     session: retailapp
     ```
 
-3. Wait for application
+3. List Pods for Application
+
+```terminal:execute
+command: kubectl get pods
+session: retailapp
+``` 
+
+
+4. Wait for application
 
     ```terminal:execute
-    command: kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=60s
+    command: kubectl wait pod -l=name=retail-web-app --for=condition=Ready --timeout=140s
     session: retailapp
     ``` 
 
-4. Get Ingress
+5. Get Ingress
 
     ```terminal:execute
     command: k get ingress
@@ -115,7 +123,7 @@ The docker image has been published to Docker Hub.
 
   workshop_namespace: {{ workshop_namespace }}
 
-5. Open browser to address
+6. Open browser to address
 
     ```dashboard:open-dashboard
     name: Retail Web App
@@ -158,12 +166,13 @@ curl -X 'POST' \
   ]
 }'
 ```
+
 Open browser see to promotion
 
-    ```dashboard:open-dashboard
-    name: Retail Web App
-    url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
-    ```
+```dashboard:open-dashboard
+name: Retail Web App
+url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
+```
 
 
 # Spring Data Redis Repository
@@ -246,7 +255,7 @@ curl -X 'POST' \
 
 Open browser see to Favorites
 
-    ```dashboard:open-dashboard
-    name: Retail Web App
-    url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
-    ```
+```dashboard:open-dashboard
+name: Retail Web App
+url: http://retail-web-app-{{ session_namespace }}.{{ ingress_domain }}
+```
