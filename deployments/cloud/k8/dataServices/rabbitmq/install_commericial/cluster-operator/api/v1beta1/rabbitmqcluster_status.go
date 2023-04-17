@@ -1,3 +1,5 @@
+// Copyright 2019 VMware, Inc.
+// SPDX-License-Identifier: GPL-3.0
 package v1beta1
 
 import (
