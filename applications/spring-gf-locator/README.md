@@ -3,6 +3,7 @@
 
 ```shell
 java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --retail.customer.id=nyla  --server-port=0
+
 ```
 
 
