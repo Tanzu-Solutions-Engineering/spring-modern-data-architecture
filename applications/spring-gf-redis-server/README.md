@@ -1,8 +1,16 @@
 # Start App
 
 
+Start with Locator
+
 ```shell
-java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --retail.customer.id=nyla  --server-port=0
+java  --add-opens java.base/sun.nio.ch=ALL-UNNAMED -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.0.1-SNAPSHOT.jar --server.port=0 --spring.data.gemfire.cache.server.port=10001 --spring.data.gemfire.name=server1 --spring.data.gemfire.locators="localhost[10334]" --gemfire-for-redis-port=6379
+```
+
+Without locator
+
+```shell
+java  -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.0.1-SNAPSHOT.jar --server.port=0 --spring.data.gemfire.cache.server.port=10001 --spring.data.gemfire.name=server1 --gemfire-for-redis-port=6379
 ```
 
 
