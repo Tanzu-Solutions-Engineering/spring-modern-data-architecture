@@ -9,6 +9,7 @@ package com.vmware.retail.controller;
 
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.repository.CustomerFavoriteRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +31,7 @@ import java.util.concurrent.ThreadFactory;
  */
 @RestController
 @RequestMapping(value = "customer/favorites", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+@Tag(name = "manual", description = "the manual API")
 public class ReadCustomerFavoritesController
 {
 

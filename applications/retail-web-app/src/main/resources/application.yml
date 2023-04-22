@@ -1,10 +1,14 @@
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
 spring:
   config:
     import: "optional:configserver:"
   redis:
     cluster:
 #      Comma-delimited list of host:port pairs.
-      nodes: localhost:6379,localhost:6372
+#      nodes: localhost:6379,localhost:6372
+      nodes: localhost:6379
 #   Number of allowed cluster redirections.
       max-redirects: 1
 #  redis:
