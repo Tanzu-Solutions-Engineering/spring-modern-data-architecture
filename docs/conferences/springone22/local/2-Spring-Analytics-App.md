@@ -180,7 +180,7 @@ Verify Products in Postgres psql with retail login user
 
 ```shell
 docker run -it --rm \
-    bitnami/postgresql:15.2.0 psql -h 0.0.0.0 -U retail -d postgres
+    bitnami/postgresql:15.2.0 psql -h docker.internal.host -U postgres -d postgres
 ```
 
 ```sql
@@ -209,7 +209,7 @@ Kill analytics application
 Run application with replay flag
 
 ```shell
-java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --rabbitmq.streaming.replay=true --spring.profiles.active=local 
+java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local --spring.datasource.username=postgres  --spring.datasource.password=password123 --spring.rabbitmq.username=user --spring.rabbitmq.password=bitnami --spring.data.redis.cluster.nodes=0.0.0.0:6379 --rabbitmq.streaming.replay=true
 ```
 
 Verify producted reloaded from RabbitMQ
@@ -220,7 +220,10 @@ select * from products;
 
 
 --------------------
-- Buy Peanut Butter and Jelly
+### Buy Peanut Butter and Jelly
+
+- Goto Exchanges -> retail.customer.orders
+
 
 ```json
   {"id":1,"customerIdentifier":{"customerId":"nyla"},
@@ -230,17 +233,23 @@ select * from products;
   ]}
 ```
 
-- Buy Bread  
--
+- Click publish message
+
+### Buy Bread  
+
+- Goto Exchanges -> retail.customer.orders
+- 
 ```json
   {"id":2,"customerIdentifier":{"customerId":"nyla"},
   "productOrders":[
     {"productId":"sku3","quantity":1}
   ]}
 ```
+- Click publish message
 
+No recommendations
 
-- Buy Milk
+### Buy Milk
 
 ```json
   {"id":3,"customerIdentifier":{"customerId":"nyla"},
@@ -248,6 +257,9 @@ select * from products;
     {"productId":"sku4","quantity":1}
   ]}
 ```
+
+Recommendation should include Peanut butter/Jelly
+
 
 
 

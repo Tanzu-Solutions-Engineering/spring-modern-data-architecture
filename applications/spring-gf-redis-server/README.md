@@ -1,12 +1,6 @@
 # Start App
 
 
-Start with Locator
-
-```shell
-java  --add-opens java.base/sun.nio.ch=ALL-UNNAMED -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.0.3-SNAPSHOT.jar --server.port=0 --spring.data.gemfire.cache.server.port=10001 --spring.data.gemfire.name=server1 --spring.data.gemfire.locators="localhost[10334]" --gemfire-for-redis-port=6379
-```
-
 Without locator
 
 ```shell
