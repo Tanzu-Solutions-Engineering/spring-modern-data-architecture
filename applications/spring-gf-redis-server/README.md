@@ -46,5 +46,5 @@ docker push cloudnativedata/spring-gf-redis-server:0.0.3-SNAPSHOT
 
 
 ```shell
-docker  run -p 6379:6379 --name gf-redis -h host -e gemfire-for-redis-port=6379 cloudnativedata/spring-gf-redis-server:0.0.3-SNAPSHOT 
+docker  run -p 6379:6379 --name gf-redis -e gemfire-for-redis-port=6379 cloudnativedata/spring-gf-redis-server:0.0.3-SNAPSHOT 
 ```
