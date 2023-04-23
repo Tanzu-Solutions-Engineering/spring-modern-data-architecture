@@ -1,28 +1,3 @@
-# Start RabbitMQ
-
-
-Start RabbitMQ
-
-```shell
-brew services start rabbitmq
-```
-
-Verify RabbitMQ running
-
-
-```shell
- brew services list 
-```
-
-Example output
-
-```shell
-brew services list          
-Name     Status  User     File
-rabbitmq started gregoryg ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
-
-```
-
 
 # Start Postgres
 
@@ -96,6 +71,11 @@ postgres=> \l
 docker run --name rabbitmq --hostname localhost -it -p 5672:5672 -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-rabbitmq_stream advertised_host localhost -rabbitmq_stream advertised_port 5552 -rabbitmq_stream tcp_listeners [5552]" -e RABBITMQ_PLUGINS="rabbitmq_stream,rabbitmq_management"  -p 5552:5552 -p 15672:15672  -p  1884:1884 --rm bitnami/rabbitmq:3.11.13
 ```
 
+
+```shell
+docker run --name rabbitmq --hostname localhost -it -p 5672:5672 -e RABBITMQ_PLUGINS="rabbitmq_stream,rabbitmq_management"  -p 5552:5552 -p 15672:15672  -p  1884:1884 --rm bitnami/rabbitmq:3.11.13
+```
+
 RABBITMQ_USERNAME: user
 RABBITMQ_PASSWORD: bitnami
 
@@ -107,7 +87,7 @@ mvn -Dmaven.test.skip=true package
 
 
 ```shell
-java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local --spring.datasource.password=retail --spring.rabbitmq.username=user --spring.rabbitmq.password=bitnami 
+java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local --spring.datasource.username=postgres  --spring.datasource.password=password123 --spring.rabbitmq.username=user --spring.rabbitmq.password=bitnami --spring.data.redis.cluster.nodes=0.0.0.0:6379
 ```
 
 Expected Output
@@ -139,7 +119,7 @@ Steps
 
 - Login with default user/bitnami
 - Goto Exchanges -> retail.products
-- REQUIRED: Add properties
+- REQUIRED: Add header
   - contentType=application/json
 
 ```json
@@ -185,12 +165,22 @@ Replace $USERNAME at needed
     {"productId":"sku2","quantity":1}
   ]}
 ```
+Example
 
+```json
+  {"id":4,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1},
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku2","quantity":1}
+  ]}
+```
 
 Verify Products in Postgres psql with retail login user
 
 ```shell
-psql -d postgres -U retail 
+docker run -it --rm \
+    bitnami/postgresql:15.2.0 psql -h 0.0.0.0 -U retail -d postgres
 ```
 
 ```sql
