@@ -7,4 +7,5 @@ spring:
   redis:
     cluster:
       #      Comma-delimited list of host:port pairs.
-      nodes: localhost:6379,localhost:6372
+      #      ,localhost:6372
+      nodes: localhost:6379
