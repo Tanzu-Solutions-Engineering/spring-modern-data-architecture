@@ -27,19 +27,27 @@ rabbitmq started gregoryg ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
 # Start Postgres
 
 ```shell
-brew services start postgresql@14
+docker run -p 5432:5432 -d  --expose 5432 --name postgresql --rm -e POSTGRESQL_PASSWORD=password123  -h postgresql bitnami/postgresql:15.2.0
 ```
 
-Login
-```shell
-psql -d postgres -U postgres 
-```
 
 Create user
 
 ```shell
+docker run -it --rm \
+    --network host \
+    bitnami/postgresql:15.2.0 psql -h 0.0.0.0 -U postgres
+```
+
+```shell
+docker run -it --rm \
+    bitnami/postgresql:15.2.0 psql -h host.docker.internal -U postgres
+```
+
+
+```sql
 CREATE USER retail WITH PASSWORD 'retail';
-GRANT ALL PRIVILEGES ON SCHEMA public TO 'retail';
+GRANT ALL PRIVILEGES ON SCHEMA public TO retail;
 ```
 Quit psql
 
@@ -51,7 +59,8 @@ Quit psql
 Login as retail user
 
 ```shell
-psql -d postgres -U retail 
+docker run -it --rm \
+    bitnami/postgresql:15.2.0 psql -h host.docker.internal -d postgres -U retail 
 ```
 
 Verify database access in psql
@@ -65,32 +74,45 @@ Sample output
 
 ```shell
 postgres=> \l
-                             List of databases
-   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
------------+----------+----------+---------+-------+-----------------------
- postgres  | gregoryg | UTF8     | C       | C     | 
- template0 | gregoryg | UTF8     | C       | C     | =c/gregoryg          +
-           |          |          |         |       | gregoryg=CTc/gregoryg
- template1 | gregoryg | UTF8     | C       | C     | =c/gregoryg          +
-           |          |          |         |       | gregoryg=CTc/gregoryg
-
+                                                 List of databases
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    | ICU Locale | Locale Provider |   Access privileges   
+-----------+----------+----------+-------------+-------------+------------+-----------------+-----------------------
+ postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            | 
+ template0 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            | =c/postgres          +
+           |          |          |             |             |            |                 | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            | =c/postgres          +
+           |          |          |             |             |            |                 | postgres=CTc/postgres
+(3 rows)
 
 ```
+
+
+# RabbitMQ
+
+
+
+
+```shell
+docker run --name rabbitmq --hostname localhost -it -p 5672:5672 -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-rabbitmq_stream advertised_host localhost -rabbitmq_stream advertised_port 5552 -rabbitmq_stream tcp_listeners [5552]" -e RABBITMQ_PLUGINS="rabbitmq_stream,rabbitmq_management"  -p 5552:5552 -p 15672:15672  -p  1884:1884 --rm bitnami/rabbitmq:3.11.13
+```
+
+RABBITMQ_USERNAME: user
+RABBITMQ_PASSWORD: bitnami
 
 # Start Web Application
 
 Run application
 
+mvn -Dmaven.test.skip=true package
+
+
 ```shell
-java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
+java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local --spring.datasource.password=retail --spring.rabbitmq.username=user --spring.rabbitmq.password=bitnami 
 ```
 
 Expected Output
 
-```shell
-java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
-
-  .   ____          _            __ _ _
+```shell  .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
@@ -115,9 +137,9 @@ open http://localhost:15672
 
 Steps
 
-- Login with default guest/guest
+- Login with default user/bitnami
 - Goto Exchanges -> retail.products
-- REQUIRED: Add Header
+- REQUIRED: Add properties
   - contentType=application/json
 
 ```json

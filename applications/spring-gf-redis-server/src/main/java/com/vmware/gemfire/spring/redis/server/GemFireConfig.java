@@ -8,11 +8,17 @@
 package com.vmware.gemfire.spring.redis.server;
 
 
+import com.vmware.gemfire.redis.internal.data.RedisData;
+import com.vmware.gemfire.redis.internal.data.RedisKey;
+import com.vmware.gemfire.redis.internal.data.RedisString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
@@ -41,6 +47,11 @@ public class GemFireConfig {
     @Value("${gemfire.redis.region.type:PARTITION}")
     private String regionTypeName;
 
+    /**
+     *
+     * @param gemFireCache the GemFire cache
+     * @return the factory to create the Redis region
+     */
     @Bean
     PartitionedRegionFactoryBean<String,Object> region(GemFireCache gemFireCache)
     {
@@ -64,5 +75,25 @@ public class GemFireConfig {
         region.setRegionConfigurers(configurer);
 
         return region;
+    }
+
+    /**
+     * Working around for
+     * (error) MOVED 6918 192.168.1.76:6379
+     * @return
+     */
+    @Bean
+    ApplicationContextAware startupListener() {
+        return applicationContext -> {
+            byte[] bytes = {1};
+            var region = applicationContext.getBean(Region.class);
+
+            var key = new RedisKey(bytes);
+            var data = new RedisString(bytes);
+
+            log.info("Putting data in region {}", region);
+            region.put(key, data);
+
+        };
     }
 }
