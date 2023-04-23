@@ -17,7 +17,7 @@ with open('/Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-
 productId = 1
 # while productId < orderCnt:
 
-with open('scripts/generate_customer_orders/resources/output.txt', 'w') as f:
+with open('scripts/generate_customer_orders/resources/products.json', 'w') as f:
   f.write('[\n')
 
   for product in products:

@@ -127,7 +127,7 @@ Apricots
 Apricots, Japanese
 Arborio rice
 Arctic char
-Artichoke, Jerusalem
+Organic Artichoke
 Artichokes
 Arugula
 Asian greens
@@ -143,7 +143,7 @@ Barbecued meat
 Basil
 Bean curd
 Beef
-Beer
+Root Beer
 Beets
 Bell peppers
 Bitter almond oil
@@ -443,7 +443,7 @@ White vinegar
 Whole wheat bread
 Wild ginger
 Wild rice
-Wine
+Win Candy
 Winter squash
 Yams
 Yerba maté
@@ -485,7 +485,7 @@ Cookies
 Ice Cream
 Brownie Mix
 Cake Mix
-Jell-O
+Jello
 Instant Pudding
 Macaroni and Cheese
 Pot Pie
