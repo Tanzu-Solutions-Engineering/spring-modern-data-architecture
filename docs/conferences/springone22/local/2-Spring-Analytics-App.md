@@ -1,3 +1,9 @@
+# Start Redis
+
+
+```shell
+java  -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.0.3-SNAPSHOT.jar --server.port=0 --spring.data.gemfire.cache.server.port=10001 --spring.data.gemfire.name=server1 --gemfire-for-redis-port=6379
+```
 
 # Start Postgres
 
@@ -6,19 +12,14 @@ docker run -p 5432:5432 -d  --expose 5432 --name postgresql --rm -e POSTGRESQL_P
 ```
 
 
-Create user
-
-```shell
-docker run -it --rm \
-    --network host \
-    bitnami/postgresql:15.2.0 psql -h 0.0.0.0 -U postgres
-```
+Access pql password123
 
 ```shell
 docker run -it --rm \
     bitnami/postgresql:15.2.0 psql -h host.docker.internal -U postgres
 ```
 
+Optional
 
 ```sql
 CREATE USER retail WITH PASSWORD 'retail';
@@ -31,44 +32,10 @@ Quit psql
 ```
 
 
-Login as retail user
-
-```shell
-docker run -it --rm \
-    bitnami/postgresql:15.2.0 psql -h host.docker.internal -d postgres -U retail 
-```
-
-Verify database access in psql
-
-```shell
-\dt
-```
-
-
-Sample output
-
-```shell
-postgres=> \l
-                                                 List of databases
-   Name    |  Owner   | Encoding |   Collate   |    Ctype    | ICU Locale | Locale Provider |   Access privileges   
------------+----------+----------+-------------+-------------+------------+-----------------+-----------------------
- postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            | 
- template0 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            | =c/postgres          +
-           |          |          |             |             |            |                 | postgres=CTc/postgres
- template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            | =c/postgres          +
-           |          |          |             |             |            |                 | postgres=CTc/postgres
-(3 rows)
-
-```
-
-
 # RabbitMQ
 
-
-
-
 ```shell
-docker run --name rabbitmq --hostname localhost -it -p 5672:5672 -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-rabbitmq_stream advertised_host localhost -rabbitmq_stream advertised_port 5552 -rabbitmq_stream tcp_listeners [5552]" -e RABBITMQ_PLUGINS="rabbitmq_stream,rabbitmq_management"  -p 5552:5552 -p 15672:15672  -p  1884:1884 --rm bitnami/rabbitmq:3.11.13
+docker run --name rabbitmq --hostname localhost -it  -p 5672:5672 -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-rabbitmq_stream advertised_host localhost -rabbitmq_stream advertised_port 5552 -rabbitmq_stream tcp_listeners [5552]" -e RABBITMQ_PLUGINS="rabbitmq_stream,rabbitmq_management"  -p 5552:5552 -p 15672:15672  -p  1884:1884 --rm bitnami/rabbitmq:3.11.13
 ```
 
 
@@ -98,14 +65,7 @@ Expected Output
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v2.7.4)
-
-
-2022-11-03 14:49:14.847  INFO 88078 --- [           main] c.v.retail.analytics.RetailAnalyticsApp  : Starting RetailAnalyticsApp v0.0.1-SNAPSHOT using Java 17.0.4.1 on gregoryg-a02.vmware.com with PID 88078 (/Users/Projects/VMware/Tanzu/Tan/Users/Projects/VMware/Tanzu/Tn-data-architecture/applicationsanzuData/Spring/dev/spring-modern-data-architecture/applications/retail-analytics-app/target/retail-analytics-app-0.0.1u/TanzuData/Spring/dev/spring-modern-data-architecture)
-...
-tics-app'
-2022-11-03 14:49:42.464  INFO 88078 --- [           main] c.v.retail.analytics.RetailAnalyticsApp  : Started RetailAnalyticsApp in 29.406 seconds (JVM running for 31.094)
-
+ ...
 ```
 
 # Testing Load Products
@@ -122,7 +82,7 @@ Steps
 - REQUIRED: Add header
   - contentType=application/json
 
-Past Content from [Product.json](https://raw.githubusercontent.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/main/scripts/generate_customer_orders/resources/products.json?token=GHSAT0AAAAAACAFYLEKMWXTSXL4YF62KPFAZCFXNJA)
+Past Content from [Product.json](https://raw.githubusercontent.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/main/scripts/generate_customer_orders/resources/products.json)
 
 - Click Publish Message
 
