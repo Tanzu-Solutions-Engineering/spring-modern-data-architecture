@@ -19,6 +19,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import nyla.solutions.core.patterns.jdbc.Sql;
 import nyla.solutions.core.util.Organizer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -34,6 +35,7 @@ import static nyla.solutions.core.util.Organizer.toMap;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(name = "greenplum",havingValue = "false",matchIfMissing = true)
 public class ProductJdbcRepository implements ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -43,7 +45,6 @@ public class ProductJdbcRepository implements ProductRepository {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     private double confidence;
-
 
     @Override
     public CustomerFavorites findCustomerFavoritesByCustomerIdAndTopCount(String customerId, int topCount) {

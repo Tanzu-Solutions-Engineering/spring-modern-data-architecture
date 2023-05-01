@@ -54,7 +54,7 @@ mvn -Dmaven.test.skip=true package
 
 
 ```shell
-java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar --spring.profiles.active=local --spring.datasource.username=postgres  --spring.datasource.password=password123 --spring.rabbitmq.username=user --spring.rabbitmq.password=bitnami --spring.data.redis.cluster.nodes=0.0.0.0:6379
+java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --spring.data.redis.cluster.nodes=0.0.0.0:6379 --retail.customer.id=nyla
 ```
 
 Expected Output
