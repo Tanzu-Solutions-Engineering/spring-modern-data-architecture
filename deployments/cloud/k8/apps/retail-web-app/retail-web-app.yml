@@ -20,7 +20,7 @@ spec:
             - name: retail.customer.id
               value: "nyla"
             - name: spring.redis.cluster.nodes
-              value: gf-redis-server:6379
+              value: gf-redis-server-0:6379,gf-redis-server-1:6379
           image: cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
           name: retail-web-app
           #          imagePullPolicy: Always

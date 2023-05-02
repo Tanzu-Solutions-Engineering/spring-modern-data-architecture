@@ -17,6 +17,13 @@ import org.springframework.stereotype.Component;
 import java.io.StringReader;
 import java.util.function.Consumer;
 
+/**
+ *         var csv = """
+ *                 "3","c1","pa","5"
+ *                 "2","c2","pb","3"
+ *                 "3","c1","pc","3"
+ *                 """;
+ */
 @Component
 @Slf4j
 public class SplitCsvByCustomerOrder implements Consumer<String> {
@@ -29,11 +36,11 @@ public class SplitCsvByCustomerOrder implements Consumer<String> {
     private final RabbitTemplate rabbitTemplate;
 
     public SplitCsvByCustomerOrder(CsvToCustomerOrder csvToCustomerOrder,
-                                   @Value("${spring.cloud.stream.bindings.csvToCustomerOrder-out-0.destination}")
+                                   @Value("${spring.cloud.stream.bindings.csvToCustomerOrder-out-0.destination:retail.customer.orders}")
                                    String exchange,
-                                   @Value("${source.splitCsv.consumer.customerIdCol}")
+                                   @Value("${source.splitCsv.consumer.customerIdCol:1}")
                                    int customerIdCol,
-                                   @Value("${source.splitCsv.consumer.orderIdCol}")
+                                   @Value("${source.splitCsv.consumer.orderIdCol:0}")
                                    int orderIdCol, RabbitTemplate rabbitTemplate) {
         this.exchange = exchange;
         this.streamBridge = csvToCustomerOrder;

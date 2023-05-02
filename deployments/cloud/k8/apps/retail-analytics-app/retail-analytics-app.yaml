@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run:  retail-analytics-app
+    app.kubernetes.io/name: retail-analytics-app
+  name:  retail-analytics-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  retail-analytics-app
+  template:
+    metadata:
+      labels:
+        name:  retail-analytics-app
+    spec:
+      containers:
+        - env:
+            - name: spring.rabbitmq.host
+              value: rabbitmq
+            - name: spring.rabbitmq.username
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: username
+            - name: spring.rabbitmq.password
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: password
+            - name: spring.datasource.url
+              valueFrom:
+                secretKeyRef:
+                  name: spring.datasource
+                  key: url
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: spring.datasource
+                  key: username
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: spring.datasource
+                  key: password
+          image: cloudnativedata/retail-analytics-app:0.0.1-SNAPSHOT
+          name: retail-analytics-app
+          #          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-analytics-app-service
+spec:
+  selector:
+    name:  retail-analytics-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+#  type: LoadBalancer
