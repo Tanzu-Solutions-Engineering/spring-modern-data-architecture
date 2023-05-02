@@ -1,0 +1,25 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  image: registry.tanzu.vmware.com/rabbitmq/vmware-tanzu-rabbitmq:1.4.2
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "1Gi"
+    limits:
+      cpu: "0.5"
+      memory: "1Gi"
+  imagePullSecrets:
+    - name: tanzu-rabbitmq-registry-creds
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_stream_management
+      - rabbitmq_stream
+      - rabbitmq_shovel_management
+      - rabbitmq_federation_management
+      - rabbitmq_mqtt

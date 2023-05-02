@@ -1,0 +1,24 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq
+  namespace: default
+spec:
+  replicas: 1
+  image: rabbitmq:3.10.21-management
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_stream_management
+      - rabbitmq_stream
+      - rabbitmq_shovel_management
+      - rabbitmq_federation_management
+      - rabbitmq_mqtt

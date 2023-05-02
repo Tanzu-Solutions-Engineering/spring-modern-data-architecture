@@ -1,8 +1,0 @@
-apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqCluster
-metadata:
-  name: tls
-spec:
-  replicas: 1
-  tls:
-    secretName: tls-secret

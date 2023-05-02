@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: retail-source-app
+  config:
+    import: "optional:configserver:http://localhost:8888/"
+  cloud:
+    #    function.definition: csvToCustomerOrder;splitCsvByCustomerOrder
+    function:
+      definition: csvToCustomerOrder;splitCsvByCustomerOrder;saveProductConsumer
+    stream:
+      default:
+        contentType: "application/json"
+      bindings:
+        csvToCustomerOrder-in-0:
+          destination: retail.csvToCustomerOrder
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+        splitCsvByCustomerOrder-in-0:
+          destination: retail.customer.orders
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+        saveProductConsumer-in-0:
+          destination: retail.products
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+      rabbit:
+        default:
+          group: myQueue
+          requiredGroups: true
+          dlqQuorum:
+            enabled:  true
+          quorum:
+            enabled: true
+        bindings:
+          splitCsvByCustomerOrder-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
+          csvToCustomerOrder-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
+          csvToCustomerOrder-out-0:
+            destination: retail.customer.orders
+          saveProductConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: false
+              containerType: stream
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
+source:
+  splitCsv:
+    consumer:
+      customerIdCol: 1
+      orderIdCol: 0
+retail:
+  favorites:
+    top:
+      count: 3
