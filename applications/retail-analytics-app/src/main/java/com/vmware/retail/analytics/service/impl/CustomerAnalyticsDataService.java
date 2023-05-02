@@ -13,6 +13,7 @@ import com.vmware.retail.analytics.service.CustomerAnalyticService;
 import com.vmware.retail.domain.Promotion;
 import com.vmware.retail.domain.customer.CustomerIdentifier;
 import com.vmware.retail.domain.order.CustomerOrder;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -20,18 +21,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerAnalyticsDataService implements CustomerAnalyticService {
-    private final CustomerFavoriteRepository customerFavoriteRepository;
+    private final RabbitTemplate rabbitTemplate;
     private final ProductRepository productRepository;
     private final int topCount;
 
-    private final RedisTemplate<String,Promotion> redisTemplate;
+    private final String customerFavoritesExchange;
 
-    public CustomerAnalyticsDataService(CustomerFavoriteRepository customerFavoriteRepository, ProductRepository productRepository, RedisTemplate<String, Promotion> redisTemplate,
-                                        @Value("${retail.favorites.top.count}") int topCount) {
-        this.customerFavoriteRepository = customerFavoriteRepository;
+    public CustomerAnalyticsDataService(RabbitTemplate rabbitTemplate,
+                                        ProductRepository productRepository, RedisTemplate<String, Promotion> redisTemplate,
+                                        @Value("${retail.favorites.top.count}") int topCount,
+                                        @Value("${retail.customer.favorites.exchange:retail.customer.favorites}")
+                                        String customerFavoritesExchange) {
+        this.rabbitTemplate = rabbitTemplate;
         this.productRepository = productRepository;
         this.topCount = topCount;
-        this.redisTemplate = redisTemplate;
+        this.customerFavoritesExchange = customerFavoritesExchange;
     }
 
 
@@ -41,7 +45,7 @@ public class CustomerAnalyticsDataService implements CustomerAnalyticService {
         var customerId = customerIdentifier.customerId();
         var customerFavorites = productRepository.findCustomerFavoritesByCustomerIdAndTopCount(customerId, topCount);
 
-        this.customerFavoriteRepository.save(customerFavorites);
+        this.rabbitTemplate.convertAndSend(customerFavoritesExchange,customerIdentifier.customerId(),customerFavorites);
     }
 
     /**
@@ -57,7 +61,8 @@ public class CustomerAnalyticsDataService implements CustomerAnalyticService {
         var promotion = new Promotion(customerId,
                 null,recommendations);
 
-        this.redisTemplate.convertAndSend(customerId,promotion);
+        //this.redisTemplate.convertAndSend(customerId,promotion);
+        this.rabbitTemplate.convertAndSend(customerFavoritesExchange,customerIdentifier.customerId(),customerFavorites);
 
         return promotion;
 
