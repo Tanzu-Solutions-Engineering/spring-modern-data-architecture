@@ -44,6 +44,11 @@ public class CustomerAnalyticsDataService implements CustomerAnalyticService {
         this.customerFavoriteRepository.save(customerFavorites);
     }
 
+    /**
+     * Determine products frequently both together and send
+     * @param customerOrder
+     * @return
+     */
     @Async
     @Override
     public Promotion publishPromotion(CustomerOrder customerOrder) {
