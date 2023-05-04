@@ -17,9 +17,15 @@ Get current connection information
 ```
 
 
+```shell
+CREATE USER retail WITH PASSWORD 'retail';
+create schema retail;
+ALTER USER retail SET search_path TO retail;
+```
 
 ```shell
-GRANT ALL PRIVILEGES ON SCHEMA public TO 'retail';
+GRANT ALL PRIVILEGES ON SCHEMA public TO retail;
+GRANT ALL PRIVILEGES ON SCHEMA retail TO retail;
 ```
 
 ```shell
