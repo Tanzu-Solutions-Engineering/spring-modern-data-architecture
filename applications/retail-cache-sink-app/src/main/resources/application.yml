@@ -1,0 +1,45 @@
+server:
+  port: 0
+spring:
+  application:
+    name: retail-cache-sink-app
+  config:
+    import: "optional:configserver:http://localhost:8888/"
+  redis:
+    cluster:
+      #      Comma-delimited list of host:port pairs.
+      nodes: localhost:6379
+  cloud:
+#    function.definition: saveFavoritesConsumer;orderConsumer
+    function:
+      definition: saveFavoritesConsumer;savePromotionConsumer
+    stream:
+      default:
+        contentType: "application/json"
+      bindings:
+        saveFavoritesConsumer-in-0:
+          destination: retail.customer.favorites
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+        savePromotionConsumer-in-0:
+          destination: retail.customer.promotions
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+      rabbit:
+        default:
+          group: retail.customer
+          requiredGroups: true
+          dlqQuorum:
+            enabled:  true
+          quorum:
+            enabled: true
+        bindings:
+          saveFavoritesConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000

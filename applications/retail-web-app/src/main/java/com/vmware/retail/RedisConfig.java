@@ -9,8 +9,11 @@ package com.vmware.retail;
 
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.Promotion;
+import nyla.solutions.core.util.Text;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -27,6 +30,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.time.Duration;
+import java.util.Calendar;
 import java.util.function.Consumer;
 
 /**
@@ -38,6 +42,9 @@ import java.util.function.Consumer;
 @EnableRedisRepositories
 public class RedisConfig
 {
+    @Value("${spring.application.name}")
+    private String applicationName;
+
     @Value("${retail.promotion.listener.pattern.topic}")
     private String patternTopic;
 
@@ -66,6 +73,7 @@ public class RedisConfig
         template.setConnectionFactory(connectionFactory);
         return template;
     }
+
     @Bean
     public RedisMessageListenerContainer redisMessageListenerContainer(Consumer<Promotion> listener,
                                                                        RedisConnectionFactory connectionFactory,
@@ -81,4 +89,12 @@ public class RedisConfig
         return container;
     }
 
+    @Bean
+    ApplicationContextAware listener(RedisTemplate<String,String> redisTemplate)
+    {
+        return context -> {
+            redisTemplate.opsForValue().set(applicationName,
+                Text.formatDate(Calendar.getInstance().getTime()));
+        };
+    }
 }

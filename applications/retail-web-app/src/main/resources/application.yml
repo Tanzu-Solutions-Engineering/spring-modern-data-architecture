@@ -2,6 +2,8 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 spring:
+  application:
+    name: retail-web-app
   config:
     import: "optional:configserver:"
   redis:
