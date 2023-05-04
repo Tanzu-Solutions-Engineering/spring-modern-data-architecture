@@ -1,25 +1,28 @@
 package com.vmware.retail.analytics.service.impl;
 
-import com.vmware.retail.analytics.repository.CustomerFavoriteRepository;
 import com.vmware.retail.analytics.repository.ProductRepository;
+import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.Product;
+import com.vmware.retail.domain.ProductQuantity;
 import com.vmware.retail.domain.Promotion;
 import com.vmware.retail.domain.customer.CustomerIdentifier;
 import com.vmware.retail.domain.order.CustomerOrder;
 import com.vmware.retail.domain.order.ProductOrder;
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,32 +30,48 @@ import static org.mockito.Mockito.when;
 class CustomerAnalyticsDataServiceTest {
 
     @Mock
-    private CustomerFavoriteRepository customerFavoriteRepository;
+    private RabbitTemplate rabbitTemplate;
     @Mock
     private ProductRepository productRepository;
 
     @Mock
-    private RedisTemplate<String, Promotion> redisTemplate;
     private CustomerAnalyticsDataService subject;
 
+
+    private String promotionExchange = "promotions";
+    private String customerFavoritesExchange = "favorites";
     private final int top3 = 3;
+    private CustomerFavorites favorites;
+    private String id = "id";
+    private SortedSet<ProductQuantity> favoriteSet = new TreeSet<>();
+    private ProductQuantity productQuantity = JavaBeanGeneratorCreator
+                        .of(ProductQuantity.class).create();
 
     @BeforeEach
     void setUp() {
-        subject = new CustomerAnalyticsDataService(customerFavoriteRepository, productRepository, redisTemplate, top3);
+
+        favoriteSet.add(productQuantity);
+        favorites = new CustomerFavorites(id,favoriteSet);
+
+        subject = new CustomerAnalyticsDataService(
+                rabbitTemplate,
+                productRepository,
+                top3,
+                customerFavoritesExchange,
+                promotionExchange);
+
     }
 
     @Test
     void given_customer_when_accept_then_cacheFavorites() {
         var customerId = "u01";
 
-        var subject = new CustomerAnalyticsDataService(customerFavoriteRepository, productRepository, redisTemplate, top3);
+        when(productRepository.findCustomerFavoritesByCustomerIdAndTopCount(anyString(), anyInt())).thenReturn(favorites);
         var customIdentifier = new CustomerIdentifier(customerId);
 
         subject.constructFavorites(customIdentifier);
 
-        verify(customerFavoriteRepository).save(any());
-        verify(productRepository).findCustomerFavoritesByCustomerIdAndTopCount(customerId, top3);
+        verify(rabbitTemplate).convertAndSend(anyString(),anyString(),any(CustomerFavorites.class));
     }
 
     @Test
@@ -81,7 +100,7 @@ class CustomerAnalyticsDataServiceTest {
         assertEquals(expected, actual);
 
         verify(productRepository).findFrequentlyBoughtTogether(customerOrder.productOrders());
-        verify(redisTemplate).convertAndSend(anyString(),any(Promotion.class));
+        verify(rabbitTemplate).convertAndSend(anyString(),anyString(),any(Promotion.class));
 
     }
 }

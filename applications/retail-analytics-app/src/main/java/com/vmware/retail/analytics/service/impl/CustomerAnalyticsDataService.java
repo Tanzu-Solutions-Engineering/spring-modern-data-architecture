@@ -7,44 +7,51 @@
 
 package com.vmware.retail.analytics.service.impl;
 
-import com.vmware.retail.analytics.repository.CustomerFavoriteRepository;
 import com.vmware.retail.analytics.repository.ProductRepository;
 import com.vmware.retail.analytics.service.CustomerAnalyticService;
 import com.vmware.retail.domain.Promotion;
 import com.vmware.retail.domain.customer.CustomerIdentifier;
 import com.vmware.retail.domain.order.CustomerOrder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class CustomerAnalyticsDataService implements CustomerAnalyticService {
     private final RabbitTemplate rabbitTemplate;
     private final ProductRepository productRepository;
     private final int topCount;
 
     private final String customerFavoritesExchange;
+    private final String promotionExchange;
 
     public CustomerAnalyticsDataService(RabbitTemplate rabbitTemplate,
-                                        ProductRepository productRepository, RedisTemplate<String, Promotion> redisTemplate,
+                                        ProductRepository productRepository,
                                         @Value("${retail.favorites.top.count}") int topCount,
                                         @Value("${retail.customer.favorites.exchange:retail.customer.favorites}")
-                                        String customerFavoritesExchange) {
+                                        String customerFavoritesExchange,
+                                        @Value("${retail.customer.promotions.exchange:retail.customer.promotions}")
+                                        String promotionExchange) {
         this.rabbitTemplate = rabbitTemplate;
         this.productRepository = productRepository;
         this.topCount = topCount;
         this.customerFavoritesExchange = customerFavoritesExchange;
+        this.promotionExchange = promotionExchange;
     }
 
 
     @Async
     @Override
     public void constructFavorites(CustomerIdentifier customerIdentifier) {
+        log.info("Finding favorites for customer:{}",customerIdentifier);
+
         var customerId = customerIdentifier.customerId();
         var customerFavorites = productRepository.findCustomerFavoritesByCustomerIdAndTopCount(customerId, topCount);
 
+        log.info("Sending customerFavorites: {}",customerFavorites);
         this.rabbitTemplate.convertAndSend(customerFavoritesExchange,customerIdentifier.customerId(),customerFavorites);
     }
 
@@ -57,12 +64,13 @@ public class CustomerAnalyticsDataService implements CustomerAnalyticService {
     @Override
     public Promotion publishPromotion(CustomerOrder customerOrder) {
         var recommendations = this.productRepository.findFrequentlyBoughtTogether(customerOrder.productOrders());
+        log.info("recommendations: {} for customerOrder: {}",recommendations,customerOrder);
         var customerId = customerOrder.customerIdentifier().customerId();
         var promotion = new Promotion(customerId,
                 null,recommendations);
 
-        //this.redisTemplate.convertAndSend(customerId,promotion);
-        this.rabbitTemplate.convertAndSend(customerFavoritesExchange,customerIdentifier.customerId(),customerFavorites);
+        log.info("Publishing promotion : {}",promotion);
+        this.rabbitTemplate.convertAndSend(promotionExchange,customerId,promotion);
 
         return promotion;
 
