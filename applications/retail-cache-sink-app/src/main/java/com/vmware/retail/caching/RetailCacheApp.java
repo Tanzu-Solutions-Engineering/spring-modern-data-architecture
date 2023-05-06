@@ -5,7 +5,7 @@
  *
  */
 
-package com.vmware.retail.analytics;
+package com.vmware.retail.caching;
 
 import nyla.solutions.core.util.Config;
 import org.springframework.boot.SpringApplication;

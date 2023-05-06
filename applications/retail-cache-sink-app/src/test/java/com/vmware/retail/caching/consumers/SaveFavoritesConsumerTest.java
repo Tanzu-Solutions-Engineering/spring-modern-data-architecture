@@ -5,7 +5,7 @@
  *
  */
 
-package com.vmware.retail.analytics.consumers;
+package com.vmware.retail.caching.consumers;
 
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.ProductQuantity;

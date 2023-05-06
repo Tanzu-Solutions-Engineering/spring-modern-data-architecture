@@ -76,3 +76,12 @@ retail:
   favorites:
     top:
       count: 3
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health
+  wavefront:
+    application:
+      name: retail-analytics-app
+      service-name: retail-analytics-app
