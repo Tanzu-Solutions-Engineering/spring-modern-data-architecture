@@ -5,7 +5,7 @@
  *
  */
 
-package com.vmware.retail.analytics.consumers;
+package com.vmware.retail.caching.consumers;
 
 import com.vmware.retail.domain.Promotion;
 import com.vmware.retail.repository.PromotionRepository;

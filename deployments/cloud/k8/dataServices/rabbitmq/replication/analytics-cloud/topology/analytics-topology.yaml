@@ -1,0 +1,74 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: retail.customer.favorites-queue # name of this custom resource; does not have to the same as the actual queue name
+spec:
+  name: retail.customer.favorites.web # name of the queue
+  vhost: "/" # default to '/' if not provided
+  type: quorum # without providing a queue type, rabbitmq creates a classic queue
+  autoDelete: false
+  durable: true
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Exchange
+metadata:
+  name:  retail.customer.favorites-exchange
+spec:
+  name: retail.customer.favorites # name of the exchange
+  type: topic # default to 'direct' if not provided; can be set to 'direct', 'fanout', 'headers', and 'topic'
+  autoDelete: false
+  durable: true
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name:  retail.customer.favorites-binding
+spec:
+  source: retail.customer.favorites # an existing exchange
+  destination: retail.customer.favorites.web # an existing queue
+  destinationType: queue # can be 'queue' or 'exchange'
+  routingKey: "#"
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: retail.customer.promotions-queue # name of this custom resource; does not have to the same as the actual queue name
+spec:
+  name: retail.customer.promotions.web # name of the queue
+  vhost: "/" # default to '/' if not provided
+  type: quorum # without providing a queue type, rabbitmq creates a classic queue
+  autoDelete: false
+  durable: true
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Exchange
+metadata:
+  name:  retail.customer.promotions-exchange
+spec:
+  name: retail.customer.promotions # name of the exchange
+  type: topic # default to 'direct' if not provided; can be set to 'direct', 'fanout', 'headers', and 'topic'
+  autoDelete: false
+  durable: true
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name:  retail.customer.promotions-binding
+spec:
+  source: retail.customer.promotions # an existing exchange
+  destination: retail.customer.promotions.web # an existing queue
+  destinationType: queue # can be 'queue' or 'exchange'
+  routingKey: "#"
+  rabbitmqClusterReference:
+    name: rabbitmq
+---

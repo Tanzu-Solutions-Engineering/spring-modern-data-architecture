@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run:  retail-cache-sink-app
+    app.kubernetes.io/name: retail-cache-sink-app
+  name:  retail-cache-sink-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  retail-cache-sink-app
+  template:
+    metadata:
+      labels:
+        name:  retail-cache-sink-app
+    spec:
+      containers:
+        - env:
+            - name: spring.rabbitmq.host
+              value: rabbitmq
+            - name: spring.rabbitmq.username
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: username
+            - name: spring.rabbitmq.password
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: password
+            - name: spring.redis.cluster.nodes
+              value: gf-redis-server-0:6379,gf-redis-server-1:6379
+#          readinessProbe:
+#            httpGet:
+#              path: /actuator/health
+#              port: 8080
+#            initialDelaySeconds: 30 #wait seconds before performing the first probe
+#            periodSeconds: 5 #pecifies that the kubelet should perform a liveness probe every X seconds
+#            timeoutSeconds: 10 # Number of seconds after which the probe times out.
+#            failureThreshold: 15
+#          livenessProbe:
+#            httpGet:
+#              path: /actuator/health
+#              port: 8080
+#            initialDelaySeconds: 20 #wait seconds before performing the first probe
+#            periodSeconds: 5 #pecifies that the kubelet should perform a liveness probe every X seconds
+#            timeoutSeconds: 10 # Number of seconds after which the probe times out.
+#            failureThreshold: 15
+          image: cloudnativedata/retail-cache-sink-app:0.0.1-SNAPSHOT
+          name: retail-cache-sink-app
+          imagePullPolicy: Always
+#          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-cache-sink-app-service
+spec:
+  selector:
+    name:  retail-cache-sink-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+#  type: LoadBalancer

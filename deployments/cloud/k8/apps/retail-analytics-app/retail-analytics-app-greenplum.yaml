@@ -19,6 +19,8 @@ spec:
         - env:
             - name: spring.rabbitmq.host
               value: rabbitmq
+            - name: greenplum
+              value: "true"
             - name: management.endpoints.web.exposure.include
               value: "info, health"
             - name: server.port

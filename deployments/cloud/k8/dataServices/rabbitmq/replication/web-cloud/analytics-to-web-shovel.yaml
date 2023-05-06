@@ -1,0 +1,41 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Shovel
+metadata:
+  name: retail.customer.promotions-to-web
+spec:
+  name: "retail.customer.promotions-to-web"
+  uriSecret:
+    # secret must be created in the same namespace as this Shovel object; in this case 'rabbitmq-system'
+    name: analytics-to-web-secret
+  srcQueue: "retail.customer.favorites.web"
+  destExchange: "retail.customer.favorites"
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Shovel
+metadata:
+  name: retail.customer.promotions-to-web
+spec:
+  name: "retail.customer.promotions-to-web"
+  uriSecret:
+    # secret must be created in the same namespace as this Shovel object; in this case 'rabbitmq-system'
+    name: analytics-to-web-secret
+  srcQueue: "retail.customer.promotions.web"
+  destExchange: "retail.customer.promotions"
+  rabbitmqClusterReference:
+    name: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Shovel
+metadata:
+  name: retail.customer.favorites-to-web
+spec:
+  name: "retail.customer.favorites-to-web"
+  uriSecret:
+    # secret must be created in the same namespace as this Shovel object; in this case 'rabbitmq-system'
+    name: analytics-to-web-secret
+  srcQueue: "retail.customer.favorites.web"
+  destExchange: "retail.customer.favorites"
+  rabbitmqClusterReference:
+    name: rabbitmq

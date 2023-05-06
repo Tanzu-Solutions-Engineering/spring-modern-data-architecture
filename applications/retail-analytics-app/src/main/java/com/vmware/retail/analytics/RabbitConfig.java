@@ -10,6 +10,8 @@ package com.vmware.retail.analytics;
 import com.rabbitmq.stream.Environment;
 import com.rabbitmq.stream.OffsetSpecification;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionNameStrategy;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -40,6 +42,25 @@ public class RabbitConfig {
 
     @Value("${spring.cloud.stream.bindings.saveProductConsumer-in-0.destination}.${spring.cloud.stream.bindings.saveProductConsumer-in-0.group}")
     private String streamName;
+
+
+    @Value("${retail.customer.favorites.exchange:retail.customer.favorites}")
+    private String customerFavoritesExchangeName;
+
+    @Value("${retail.customer.promotions.exchange:retail.customer.promotions}")
+    private String promotionExchangeName;
+
+    @Bean
+    public Exchange customerFavoritesExchange()
+    {
+        return new TopicExchange(customerFavoritesExchangeName);
+    }
+
+    @Bean
+    public Exchange promotionExchange()
+    {
+        return new TopicExchange(promotionExchangeName);
+    }
 
     @Bean
     ConnectionNameStrategy connectionNameStrategy(){
