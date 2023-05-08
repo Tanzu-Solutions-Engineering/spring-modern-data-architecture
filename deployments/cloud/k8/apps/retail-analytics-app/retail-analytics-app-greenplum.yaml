@@ -23,6 +23,8 @@ spec:
               value: "true"
             - name: management.endpoints.web.exposure.include
               value: "info, health"
+            - name: rabbitmq.streaming.replay
+              value: "true"
             - name: server.port
               value: "8080"
             - name: spring.rabbitmq.username
