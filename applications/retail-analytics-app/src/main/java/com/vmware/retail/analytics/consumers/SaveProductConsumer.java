@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Component
-public record SaveProductConsumer(ProductRepository repository) implements Consumer<List<Product>> {
-
+public record SaveProductConsumer(ProductRepository repository)
+        implements Consumer<List<Product>> {
     @Override
     public void accept(List<Product> products) {
         repository.saveProducts(products);
