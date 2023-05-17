@@ -97,7 +97,7 @@ public class RabbitConfig {
             if(!(cont instanceof  StreamListenerContainer))
                 return;
 
-            final StreamListenerContainer container = StreamListenerContainer.class.cast(cont);
+            final var container = StreamListenerContainer.class.cast(cont);
 
             log.info("Replaying, setting offset to first the record for streams");
             container.setConsumerCustomizer( (name, builder) -> {

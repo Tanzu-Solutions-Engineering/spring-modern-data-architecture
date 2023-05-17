@@ -631,6 +631,21 @@ curl -X 'POST' \
 
 --------------------
 
+Clean
+
+```shell
+curl -X 'POST' \
+  'http://172.16.100.83:8080/customer/favorites/favorite' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "nyla",
+  "favorites": [
+  ]
+}'
+```
+
+dpeanut, jelly milk
 
 ```shell
   curl -X 'POST' \
@@ -669,26 +684,9 @@ No recommendations
 
 Recommendation should be Milk
 
-### Buy Bread
 
-- Goto Exchanges -> retail.customer.orders
--
-```shell
-  curl -X 'POST' \
-  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.customer.orders&routingKey=nyla' \
-  -H 'accept: */*' \
-  -H 'rabbitContentType: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{"id":2,"customerIdentifier":{"customerId":"nyla"},
-  "productOrders":[
-    {"productId":"sku3","quantity":1}
-  ]}'
-```
-- Click publish message
 
-No recommendations
-
-### Buy Milk
+### Buy Peant
 
 
 
@@ -700,10 +698,10 @@ No recommendations
   -H 'Content-Type: application/json' \
   -d '{"id":3,"customerIdentifier":{"customerId":"nyla"},
   "productOrders":[
+    {"productId":"sku2","quantity":1},
     {"productId":"sku4","quantity":1}
   ]}'
 ```
-
 
 Recommendation should include Peanut butter/Jelly
 
@@ -724,4 +722,30 @@ curl -X 'POST' \
   "favorites": [
   ]
 }'
+```
+
+
+
+
+
+
+
+
+---------------
+
+
+### Buy Milk
+
+
+
+```shell
+  curl -X 'POST' \
+  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.customer.orders&routingKey=nyla' \
+  -H 'accept: */*' \
+  -H 'rabbitContentType: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"id":3,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1}
+  ]}'
 ```
