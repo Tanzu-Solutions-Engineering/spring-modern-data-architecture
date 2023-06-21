@@ -7,14 +7,12 @@
 
 package com.vmware.retail.analytics.entity;
 
-import com.vmware.retail.domain.ProductQuantity;
-import com.vmware.retail.domain.order.ProductOrder;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 
 @Entity
 @Table(name = "customer_orders")
