@@ -1,0 +1,8 @@
+applications:
+  - name: retail-cache-sink-app
+    memory: 1G
+    services:
+      - retail-rabbitmq
+      - retail-gf-redis
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'

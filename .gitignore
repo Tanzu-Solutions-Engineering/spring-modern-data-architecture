@@ -1,4 +1,7 @@
 .idea/
+ConfigDiskDir_SpringBasedLocatorApplication
+*.pid
+*.dat
 .jekyll-cache/
 .DS_Store
 _site/
