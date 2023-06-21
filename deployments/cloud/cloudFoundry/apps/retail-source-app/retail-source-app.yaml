@@ -1,0 +1,7 @@
+applications:
+  - name: retail-source-app
+    memory: 1G
+    services:
+      - retail-rabbitmq
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'
