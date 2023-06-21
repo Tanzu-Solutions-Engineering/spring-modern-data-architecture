@@ -7,8 +7,6 @@ spring:
     cluster:
       #      Comma-delimited list of host:port pairs.
       nodes: localhost:6379,localhost:6372
-  datasource:
-    url: "jdbc:postgresql://localhost:5432/postgres"
     username : retail
   jpa:
     generate-ddl: true

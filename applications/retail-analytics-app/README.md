@@ -49,3 +49,17 @@ mvn spring-boot:build-image
 docker tag retail-analytics-app:0.0.1-SNAPSHOT cloudnativedata/retail-analytics-app:0.0.1-SNAPSHOT
 docker push cloudnativedata/retail-analytics-app:0.0.1-SNAPSHOT
 ```
+
+
+--------------
+
+Testing
+
+
+```json
+{
+  "customerId" : "nyla"
+  
+}
+
+```
