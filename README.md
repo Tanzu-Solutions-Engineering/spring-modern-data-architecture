@@ -25,7 +25,7 @@ Outcomes
 
 -	Spring Boot Web App real-time access from GemFire
 -	Spring Boot App producer of real-time data to RabbitMQ
--	Spring App for data analytics using Postgres and RabbitMQ to pushes data to GemFire
+-	Spring App for data analytics using (Postgres, MySQL or Greenplum) and RabbitMQ to pushes data to GemFire
 -	Integrate Monitoring analytics with Spring Boot applications (optional)
 
 

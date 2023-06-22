@@ -9,13 +9,12 @@ spring:
       nodes: localhost:6379,localhost:6372
     username : retail
   jpa:
-    generate-ddl: true
+#    generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+#      ddl-auto: update
 #      ddl-auto: create
-  liquibase:
-    change-log: "classpath:db/changelog/changelog-v1.sql"
   cloud:
 #    function.definition: calculateFavoritesConsumer;orderConsumer
     function:
