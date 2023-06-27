@@ -43,9 +43,6 @@ public class RabbitConfig {
     @Value("${spring.cloud.stream.bindings.saveProductConsumer-in-0.destination}.${spring.cloud.stream.bindings.saveProductConsumer-in-0.group}")
     private String productStreamName;
 
-    @Value("${spring.cloud.stream.bindings.saveProductConsumerJsonAdapter-in-0.destination}.${spring.cloud.stream.bindings.saveProductConsumerJsonAdapter-in-0.group}")
-    private String productStreamJsonName;
-
 
     @Value("${retail.customer.favorites.exchange:retail.customer.favorites}")
     private String customerFavoritesExchangeName;
@@ -89,7 +86,6 @@ public class RabbitConfig {
         var streamCreator = env.streamCreator();
 
         streamCreator.stream(productStreamName).create();
-        streamCreator.stream(productStreamJsonName).create();
 
         return env;
 

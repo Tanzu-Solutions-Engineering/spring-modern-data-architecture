@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GfRedisServer {
 
     private static final String REDIS_PORT_PROP = "gemfire-for-redis-port";
+    private static final String DEFAULT_REDIS_PORT = "6379";
 
     /**
      * --J=-Dgemfire-for-redis-port=6379  --J=-Dgemfire-for-redis-enabled=true
@@ -23,7 +24,7 @@ public class GfRedisServer {
 
         Config.loadArgs(args);
 
-        System.setProperty(REDIS_PORT_PROP,Config.getProperty(REDIS_PORT_PROP));
+        System.setProperty(REDIS_PORT_PROP,Config.getProperty(REDIS_PORT_PROP,DEFAULT_REDIS_PORT));
         System.setProperty("gemfire-for-redis-enabled","true");
         System.setProperty("gemfire-for-redis-use-default-region-config","false");
         System.setProperty("gemfire-for-redis-use-default-region-config","false");
