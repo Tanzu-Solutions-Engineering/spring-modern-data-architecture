@@ -41,7 +41,10 @@ public class RabbitConfig {
     private String hostname = "localhost";
 
     @Value("${spring.cloud.stream.bindings.saveProductConsumer-in-0.destination}.${spring.cloud.stream.bindings.saveProductConsumer-in-0.group}")
-    private String streamName;
+    private String productStreamName;
+
+    @Value("${spring.cloud.stream.bindings.saveProductConsumerJsonAdapter-in-0.destination}.${spring.cloud.stream.bindings.saveProductConsumerJsonAdapter-in-0.group}")
+    private String productStreamJsonName;
 
 
     @Value("${retail.customer.favorites.exchange:retail.customer.favorites}")
@@ -83,7 +86,10 @@ public class RabbitConfig {
                 .clientProperty("id",applicationName)
                 .build();
 
-        env.streamCreator().stream(streamName).create();
+        var streamCreator = env.streamCreator();
+
+        streamCreator.stream(productStreamName).create();
+        streamCreator.stream(productStreamJsonName).create();
 
         return env;
 

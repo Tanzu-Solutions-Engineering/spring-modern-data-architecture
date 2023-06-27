@@ -51,6 +51,9 @@ public class ProductJdbcRepository implements ProductRepository {
     @Value("${retail.frequent.bought.sql}")
     private String frequentBoughtSql;
 
+    @Value("${retail.product.save.sql}")
+    private String insertSql;
+
     @Override
     public CustomerFavorites findCustomerFavoritesByCustomerIdAndTopCount(String customerId, int topCount) {
 
@@ -136,13 +139,13 @@ public class ProductJdbcRepository implements ProductRepository {
     @Override
     public void saveProducts(List<Product> products) {
 
-        final var insertSql = """
-                INSERT INTO products(id, data) 
-                VALUES (:id,to_json(:data::json))
-                ON CONFLICT (id)
-                DO
-                   UPDATE SET data = to_json(:data::json);
-                """;
+//        final var insertSql = """
+//                INSERT INTO products(id, data)
+//                VALUES (:id,to_json(:data::json))
+//                ON CONFLICT (id)
+//                DO
+//                   UPDATE SET data = to_json(:data::json);
+//                """;
 
         log.info("sql {} inputs: {}",insertSql,products);
 

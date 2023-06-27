@@ -11,6 +11,7 @@ retail:
         DESC
         FETCH FIRST ? rows only) top_orders
         WHERE p.id = top_orders.product_id;"
+
       frequent: "select distinct p.data
             --,top_associations.original_SKU,top_associations.bought_with,top_associations.times_bought_together, count_by_product.product_cnt, cast(top_associations.times_bought_together as double precision)/cast(count_by_product.product_cnt as  double precision) as probability
                 from (
@@ -32,3 +33,10 @@ retail:
                 and cast(top_associations.times_bought_together as double precision)/
                 cast(count_by_product.product_cnt as  double precision) > :confidence
                 and  p.id = top_associations.bought_with"
+  product:
+    save:
+      sql: "INSERT INTO products(id, data) 
+                VALUES (:id,to_json(:data::json))
+                ON CONFLICT (id)
+                DO
+                   UPDATE SET data = to_json(:data::json)"

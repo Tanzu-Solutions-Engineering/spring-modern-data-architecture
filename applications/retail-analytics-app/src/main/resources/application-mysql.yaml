@@ -33,3 +33,9 @@ retail:
                 and cast(top_associations.times_bought_together as double precision)/
                 cast(count_by_product.product_cnt as  double precision) > :confidence
                 and  p.id = top_associations.bought_with"
+  product:
+    save:
+      sql: "INSERT INTO products(id, data) 
+                VALUES (:id,:data)
+                ON DUPLICATE KEY 
+                UPDATE data = :data"
