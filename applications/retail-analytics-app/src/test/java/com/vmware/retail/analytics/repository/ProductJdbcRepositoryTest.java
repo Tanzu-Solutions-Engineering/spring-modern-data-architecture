@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
@@ -41,10 +42,19 @@ class ProductJdbcRepositoryTest {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private ProductJdbcRepository subject;
+    private double confidence = 0.1;
+    private String frequentBoughtSql = "select * from table";
+    private String findCustomerFavoritesByCustomerIdAndTopCountSql = "select * from table";
+    private String insertSql = "insert into table";
 
     @BeforeEach
     void setUp() {
-        subject = new ProductJdbcRepository(jdbcTemplate,namedParameterJdbcTemplate);
+        subject = new ProductJdbcRepository(jdbcTemplate,
+                namedParameterJdbcTemplate,
+                confidence,
+                frequentBoughtSql,
+                findCustomerFavoritesByCustomerIdAndTopCountSql,
+                insertSql);
     }
 
     @Test

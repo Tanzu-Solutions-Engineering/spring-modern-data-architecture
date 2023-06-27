@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vmware.retail.domain.Product;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -34,8 +35,21 @@ public class ProductGreenplumRepository extends ProductJdbcRepository {
     private double confidence;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public ProductGreenplumRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        super(jdbcTemplate, namedParameterJdbcTemplate);
+    public ProductGreenplumRepository(JdbcTemplate jdbcTemplate,
+                                      NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                                      @Value("${retail.frequent.bought.confidence:0}")
+                                      double confidence,
+                                      @Value("${retail.frequent.bought.sql}")
+                                      String frequentBoughtSql,
+                                      @Value("${retail.favorites.top.sql}")
+                                      String findCustomerFavoritesByCustomerIdAndTopCountSql,
+                                      @Value("${retail.product.save.sql}")
+                                      String insertSql) {
+        super(jdbcTemplate, namedParameterJdbcTemplate,
+        confidence,
+        frequentBoughtSql,
+        findCustomerFavoritesByCustomerIdAndTopCountSql,
+        insertSql);
 
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
