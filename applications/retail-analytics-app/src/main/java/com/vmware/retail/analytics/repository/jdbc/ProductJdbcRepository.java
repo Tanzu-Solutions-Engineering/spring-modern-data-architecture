@@ -14,7 +14,6 @@ import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.Product;
 import com.vmware.retail.domain.ProductQuantity;
 import com.vmware.retail.domain.order.ProductOrder;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +31,6 @@ import java.util.TreeSet;
 import static nyla.solutions.core.util.Organizer.toMap;
 
 @Repository
-@RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "greenplum",havingValue = "false",matchIfMissing = true)
 public class ProductJdbcRepository implements ProductRepository {
@@ -45,30 +43,35 @@ public class ProductJdbcRepository implements ProductRepository {
 
     private double confidence;
 
-    @Value("${retail.favorites.top.sql}")
-    private String findCustomerFavoritesByCustomerIdAndTopCountSql;
 
-    @Value("${retail.frequent.bought.sql}")
-    private String frequentBoughtSql;
+    private final String findCustomerFavoritesByCustomerIdAndTopCountSql;
 
-    @Value("${retail.product.save.sql}")
+
+    private final String frequentBoughtSql;
+
+
     private String insertSql;
+
+    public ProductJdbcRepository(JdbcTemplate jdbcTemplate,
+                                 NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                                 @Value("${retail.frequent.bought.confidence:0}")
+                                 double confidence,
+                                 @Value("${retail.frequent.bought.sql}")
+                                 String frequentBoughtSql,
+                                 @Value("${retail.favorites.top.sql}")
+                                 String findCustomerFavoritesByCustomerIdAndTopCountSql,
+                                 @Value("${retail.product.save.sql}")
+                                 String insertSql) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.confidence = confidence;
+        this.frequentBoughtSql = frequentBoughtSql;
+        this.findCustomerFavoritesByCustomerIdAndTopCountSql = findCustomerFavoritesByCustomerIdAndTopCountSql;
+        this.insertSql = insertSql;
+    }
 
     @Override
     public CustomerFavorites findCustomerFavoritesByCustomerIdAndTopCount(String customerId, int topCount) {
-
-//        final String sql = """
-//            SELECT data, total_quantity
-//            from products p,
-//               (SELECT sum(quantity) total_quantity,
-//                    product_id
-//            FROM customer_orders
-//            WHERE customer_id = ?
-//            GROUP BY product_id order by total_quantity
-//            DESC
-//            FETCH FIRST ? rows only) top_orders
-//            WHERE p.id = top_orders.product_id;
-//            """;
 
         final SortedSet<ProductQuantity> productQuantities = new TreeSet<>();
 
@@ -90,34 +93,6 @@ public class ProductJdbcRepository implements ProductRepository {
     @Override
     public List<Product> findFrequentlyBoughtTogether(List<ProductOrder> productOrders) {
 
-        //Notes In causes have limits depending on database
-        // Postgres does set an exact count limit
-
-//        frequentBoughtSql = """
-//            select distinct p.data
-//            --,top_associations.original_SKU,top_associations.bought_with,top_associations.times_bought_together, count_by_product.product_cnt, cast(top_associations.times_bought_together as double precision)/cast(count_by_product.product_cnt as  double precision) as probability
-//                from (
-//                SELECT c.original_SKU as original_SKU, c.bought_with as bought_with, count(*) as times_bought_together
-//                FROM (
-//                  SELECT a.product_id as original_SKU, b.product_id as bought_with
-//                  FROM customer_orders a
-//                  INNER join customer_orders b
-//                  ON a.order_id = b.order_id AND a.product_id != b.product_id ) c
-//                GROUP BY c.original_SKU, c.bought_with
-//                having original_SKU in (:productIds)  and bought_with not in (:productIds)
-//                ORDER BY times_bought_together desc
-//                FETCH FIRST 10 rows only) top_associations,
-//                (select product_id, sum(quantity) as product_cnt
-//                      from customer_orders
-//                      group by product_id) count_by_product,
-//                products p
-//                where count_by_product.product_id = top_associations.original_SKU
-//                and cast(top_associations.times_bought_together as double precision)/
-//                cast(count_by_product.product_cnt as  double precision) > :confidence
-//                and  p.id = top_associations.bought_with
-//                """;
-
-
         Map<String, ?> map = toMap("productIds", productOrders.stream().map( po -> po.productId()).toList(),
                 "confidence",confidence);
 
@@ -138,14 +113,6 @@ public class ProductJdbcRepository implements ProductRepository {
     @SneakyThrows
     @Override
     public void saveProducts(List<Product> products) {
-
-//        final var insertSql = """
-//                INSERT INTO products(id, data)
-//                VALUES (:id,to_json(:data::json))
-//                ON CONFLICT (id)
-//                DO
-//                   UPDATE SET data = to_json(:data::json);
-//                """;
 
         log.info("sql {} inputs: {}",insertSql,products);
 

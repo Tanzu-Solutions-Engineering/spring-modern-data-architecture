@@ -38,12 +38,6 @@ spring:
           group: ${spring.application.name}
           consumer:
             concurrency: 1
-        saveProductConsumerJsonAdapter-in-0:
-          destination: retail.products.json
-          group: ${spring.application.name}
-          consumer:
-            concurrency: 1
-
       rabbit:
         default:
           group: myQueue
@@ -75,18 +69,13 @@ spring:
               dlqQuorum:
                 enabled: true
               prefetch: 10000
-          saveProductConsumerJsonAdapter-in-0:
-            consumer:
-              autoBindDlq: true
-              quorum.enabled: false
-              containerType: stream
-              dlqQuorum:
-                enabled: true
-              prefetch: 10000
 retail:
   favorites:
     top:
       count: 3
+  frequent:
+    bought:
+      confidence: 0.0000001
 management:
   endpoints:
     web:

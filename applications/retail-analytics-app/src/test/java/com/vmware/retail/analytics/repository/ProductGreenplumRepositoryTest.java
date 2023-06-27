@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
@@ -43,10 +44,19 @@ class ProductGreenplumRepositoryTest {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private ProductGreenplumRepository subject;
+    private double confidence = 0;
+    private String frequentBoughtSql = "";
+    private String findCustomerFavoritesByCustomerIdAndTopCountSql = "";
+    private String insertSql ="";
 
     @BeforeEach
     void setUp() {
-        subject = new ProductGreenplumRepository(jdbcTemplate,namedParameterJdbcTemplate);
+        subject = new ProductGreenplumRepository(jdbcTemplate,
+                namedParameterJdbcTemplate,
+                confidence,
+                frequentBoughtSql,
+                findCustomerFavoritesByCustomerIdAndTopCountSql,
+                insertSql);
     }
 
     @Test
