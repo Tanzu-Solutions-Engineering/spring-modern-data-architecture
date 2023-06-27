@@ -1,5 +1,5 @@
+server:
+  port: 0
 spring:
   application:
     name: "spring-gf-redis-server"
-server:
-  port: 7081

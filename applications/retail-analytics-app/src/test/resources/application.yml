@@ -1,3 +1,5 @@
+server:
+  port: 0
 spring:
   application:
     name: retail-analytics-app
