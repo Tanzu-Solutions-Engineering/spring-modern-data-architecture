@@ -18,7 +18,7 @@ spring:
   cloud:
 #    function.definition: calculateFavoritesConsumer;orderConsumer
     function:
-      definition: calculateFavoritesConsumer;orderConsumer;saveProductConsumer
+      definition: calculateFavoritesConsumer;orderConsumer;saveProductConsumer;saveProductConsumerJsonAdapter
     stream:
       default:
         contentType: "application/json"
@@ -38,6 +38,12 @@ spring:
           group: ${spring.application.name}
           consumer:
             concurrency: 1
+        saveProductConsumerJsonAdapter-in-0:
+          destination: retail.products.json
+          group: ${spring.application.name}
+          consumer:
+            concurrency: 1
+
       rabbit:
         default:
           group: myQueue
@@ -62,6 +68,14 @@ spring:
                 enabled: true
               prefetch: 10000
           saveProductConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: false
+              containerType: stream
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000
+          saveProductConsumerJsonAdapter-in-0:
             consumer:
               autoBindDlq: true
               quorum.enabled: false

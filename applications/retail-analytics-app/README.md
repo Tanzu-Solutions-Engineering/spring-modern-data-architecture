@@ -75,13 +75,23 @@ routing_key: nyla
 ```
 ## Customer Favorites
 
-
-
 ```json
 {
   "customerId" : "nyla"
   
 }
+```
+
+
+# Save Product Consumer
+
+Exchange: retail.products
+HEADER: contentType=application/json
+
+```json
+[{"id":  "sku1", "name" : "Peanut butter"}]
+```
+
 
 ```
 
