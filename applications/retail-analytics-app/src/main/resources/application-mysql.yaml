@@ -30,8 +30,8 @@ retail:
                       group by product_id) count_by_product,
                 products p
                 where count_by_product.product_id = top_associations.original_SKU
-                and cast(top_associations.times_bought_together as double precision)/
-                cast(count_by_product.product_cnt as  double precision) > :confidence
+                and cast(top_associations.times_bought_together as decimal(20,20))/
+                cast(count_by_product.product_cnt as decimal(20,20)) > :confidence
                 and  p.id = top_associations.bought_with"
   product:
     save:
