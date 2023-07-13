@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
-@Component
-public record OrderConsumer(CustomerOrderService customerOrderDataService) implements Consumer<CustomerOrder> {
+    @Component
+    public record OrderConsumer
+            (CustomerOrderService customerOrderDataService)
+            implements Consumer<CustomerOrder> {
+        @Override
+        public void accept(CustomerOrder customerOrder) {
+            customerOrderDataService.saveOrder(customerOrder);
 
-    @Override
-    public void accept(CustomerOrder customerOrder) {
-        customerOrderDataService.saveOrder(customerOrder);
-
+        }
     }
-}

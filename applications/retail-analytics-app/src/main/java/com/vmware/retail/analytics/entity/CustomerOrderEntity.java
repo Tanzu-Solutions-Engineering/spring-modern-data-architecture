@@ -14,22 +14,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Entity
-@Table(name = "customer_orders")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class CustomerOrderEntity
-{
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long id;
+        @Entity
+        @Table(name = "customer_orders")
+        @Data
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @Builder
+        public class CustomerOrderEntity
+        {
+                @Id
+                @GeneratedValue(strategy = GenerationType.IDENTITY)
+                private long id;
 
-        private Long orderId;
+                private Long orderId;
 
-        private String customerId;
+                private String customerId;
 
-        @Embedded
-        private ProductOrderEntity productOrder;
-}
+                @Embedded
+                private ProductOrderEntity productOrder;
+        }

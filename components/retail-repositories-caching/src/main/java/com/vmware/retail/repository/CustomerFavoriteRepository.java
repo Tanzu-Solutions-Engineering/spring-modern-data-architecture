@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Gregory Green
  */
-@Repository
-public interface CustomerFavoriteRepository extends KeyValueRepository<CustomerFavorites,String>
-{
-}
+    @Repository
+    public interface CustomerFavoriteRepository
+            extends KeyValueRepository<CustomerFavorites,String>
+    {
+    }
