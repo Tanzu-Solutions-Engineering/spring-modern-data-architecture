@@ -21,6 +21,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.stream.config.ListenerContainerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.rabbit.stream.listener.StreamListenerContainer;
 
 @Configuration
@@ -37,7 +38,7 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.password:guest}")
     private String password   = "guest";
 
-    @Value("${spring.rabbitmq.host:127.0.01}")
+    @Value("${spring.rabbitmq.host:127.0.0.1}")
     private String hostname = "localhost";
 
     @Value("${spring.cloud.stream.bindings.saveProductConsumer-in-0.destination}.${spring.cloud.stream.bindings.saveProductConsumer-in-0.group}")
@@ -73,8 +74,13 @@ public class RabbitConfig {
         return new Jackson2JsonMessageConverter();
     }
 
+    @Profile("!rabbit-product-quorum")
     @Bean
-    Environment rabbitStreamEnvironment() {
+    Environment rabbitStreamEnvironment(org.springframework.core.env.Environment springEnv) {
+
+
+        log.info("******* ENV: {}",System.getenv());
+        log.info("******** PROPERTIES: {}",System.getProperties());
 
         var env = Environment.builder()
                 .host(hostname)

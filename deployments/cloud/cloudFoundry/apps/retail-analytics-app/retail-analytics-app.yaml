@@ -1,0 +1,16 @@
+applications:
+  - name: retail-analytics-app
+    memory: 1G
+    services:
+      - retail-rabbitmq
+      - retail-mysql
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'
+      spring.profiles.active: 'mysql,rabbit-product-quorum'
+
+      spring.datasource.url: ${vcap.services.mysql.credentials.jdbcUrl}
+      spring.datasource.username: ${vcap.services.mysql.credentials.username}
+      spring.datasource.password: ${vcap.services.mysql.credentials.password}
+#      spring.rabbitmq.host: ${vcap.services.rabbitmq.credentials.hostname}
+#      spring.rabbitmq.password: ${vcap.services.rabbitmq.credentials.password}
+#      spring.rabbitmq.virtual-host: ${vcap.services.rabbitmq.credentials.vhost}

@@ -22,9 +22,9 @@ cf create-service p.mysql db-small retail-mysql
 
 ## RabbitMQ
 
-cf create-service p.rabbitmq single-node retail-rabbitmq
+cf create-service p.rabbitmq single-node retail-rabbitmq  -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
 
-
+# cf update-service retail-rabbitmq -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
 
 --------------------------------
 
@@ -40,8 +40,21 @@ cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-a
 cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml -p applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar
 
 
-# Create a service key by
+# retail-analytics-app
+cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar
+
+
+-------------------
+# Create a service key GemFire
 cf create-service-key retail-gf-redis retail-gf-redis-key
 
 # Inspect the service key:
 cf service-key retail-gf-redis retail-gf-redis-key
+
+
+-------------------
+# Create a service key RabbitMS
+cf create-service-key retail-rabbitmq retail-rabbitmq-key
+
+# Inspect the service key:
+cf service-key retail-rabbitmq retail-rabbitmq-key
