@@ -39,3 +39,6 @@ retail:
                 VALUES (:id,:data)
                 ON DUPLICATE KEY 
                 UPDATE data = :data"
+spring:
+  liquibase:
+    change-log: "classpath:db/changelog/mysql/changelog-v1.sql"

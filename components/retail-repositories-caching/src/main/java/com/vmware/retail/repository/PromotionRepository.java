@@ -15,6 +15,9 @@ import org.springframework.data.keyvalue.repository.KeyValueRepository;
  *
  * @author Gregory Green
  */
-public interface PromotionRepository extends KeyValueRepository<Promotion,String>
-{
-}
+
+    public interface PromotionRepository
+        extends KeyValueRepository<Promotion,String>
+    {
+    }
+

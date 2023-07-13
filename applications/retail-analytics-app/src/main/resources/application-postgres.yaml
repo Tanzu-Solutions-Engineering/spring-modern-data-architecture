@@ -40,3 +40,6 @@ retail:
                 ON CONFLICT (id)
                 DO
                    UPDATE SET data = to_json(:data::json)"
+spring:
+  liquibase:
+    change-log: "classpath:db/changelog/postgres/changelog-v1.sql"

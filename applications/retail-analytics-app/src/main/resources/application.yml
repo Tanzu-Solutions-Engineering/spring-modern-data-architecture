@@ -63,14 +63,6 @@ spring:
               dlqQuorum:
                 enabled: true
               prefetch: 10000
-          saveProductConsumer-in-0:
-            consumer:
-              autoBindDlq: true
-              quorum.enabled: false
-              containerType: stream
-              dlqQuorum:
-                enabled: true
-              prefetch: 10000
 retail:
   favorites:
     top:

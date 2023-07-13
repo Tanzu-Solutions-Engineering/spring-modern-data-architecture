@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+      rabbit:
+        bindings:
+          saveProductConsumer-in-0:
+            consumer:
+              autoBindDlq: true
+              quorum.enabled: true
+              containerType: simple
+              dlqQuorum:
+                enabled: true
+              prefetch: 10000

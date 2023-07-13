@@ -16,7 +16,9 @@ import org.springframework.stereotype.Repository;
  *
  * @author Gregory Green
  */
-@Repository
-public interface ProductRepository extends KeyValueRepository<Product,String>
-{
-}
+    @Repository
+    public interface ProductRepository
+            extends KeyValueRepository<Product,String>
+    {
+    }
+
