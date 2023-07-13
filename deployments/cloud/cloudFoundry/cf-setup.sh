@@ -53,8 +53,19 @@ cf service-key retail-gf-redis retail-gf-redis-key
 
 
 -------------------
-# Create a service key RabbitMS
+# Create a service key RabbitMQ
 cf create-service-key retail-rabbitmq retail-rabbitmq-key
 
 # Inspect the service key:
 cf service-key retail-rabbitmq retail-rabbitmq-key
+
+
+-------------------
+# Create a service key MySQL
+cf create-service-key retail-mysql retail-mysql-key
+
+# Inspect the service key:
+cf service-key retail-mysql retail-mysql-key
+
+
+cf install-plugin -r "CF-Community" mysql-plugin

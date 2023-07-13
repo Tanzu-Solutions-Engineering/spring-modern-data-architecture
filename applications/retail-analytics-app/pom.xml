@@ -11,8 +11,8 @@
 	<groupId>com.vmware</groupId>
 	<artifactId>retail-analytics-app </artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>retail-analytics-app </name>
-	<description>retail-analytics-app </description>
+	<name>retail-analytics-app</name>
+	<description>retail-analytics-app</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
@@ -80,10 +80,7 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream</artifactId>
-<!--			<classifier>test-binder</classifier>-->
-<!--			<type>test-jar</type>-->
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-test-binder</artifactId>
@@ -94,10 +91,6 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>com.vmware</groupId>
 			<artifactId>retail-domain</artifactId>
