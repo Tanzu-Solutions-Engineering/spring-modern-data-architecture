@@ -17,7 +17,7 @@ Pre-requisites
 - Latest version of Chrome
 - OS/LINUX command line
 - Basic database and messaging system knowledge
-- Java development experience
+- Java 17 or higher and Java development experience
 - Container/Kubernetes skills
 
 
