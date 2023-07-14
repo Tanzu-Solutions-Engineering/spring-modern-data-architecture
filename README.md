@@ -30,8 +30,7 @@ dependencies in the [GemFire maven repository](https://docs.vmware.com/en/VMware
 
 
 
-
-Outcomes
+# Spring Modern Data Architecture Project - Outcomes
 
 -	Spring Boot Web App real-time access from GemFire
 -	Spring Boot App producer of real-time data to RabbitMQ
