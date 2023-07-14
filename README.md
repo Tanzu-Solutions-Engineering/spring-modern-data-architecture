@@ -25,7 +25,7 @@ Pre-requisites
 Note: This repository uses GemFire for Redis.
 GemFire for Redis is free to use for local development.
 
-In order to build Please following the instruction here to setup your credentials in your .m2/settings.xml file to access the 
+In order to build Please following the instruction [here]((https://docs.vmware.com/en/VMware-GemFire/10.0/gf/getting_started-installation-obtain_gemfire_maven.html)) to setup your credentials in your .m2/settings.xml file to access the 
 dependencies in the [GemFire maven repository](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/getting_started-installation-obtain_gemfire_maven.html).
 
 
