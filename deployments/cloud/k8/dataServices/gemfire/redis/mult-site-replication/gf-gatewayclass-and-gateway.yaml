@@ -1,0 +1,20 @@
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: GatewayClass
+metadata:
+  name: my-contour-gateway-class
+spec:
+  controllerName: projectcontour.io/gateway-controller
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: my-gateway
+spec:
+  gatewayClassName: my-contour-gateway-class
+  listeners:
+    - name: my-gateway-listener
+      protocol: TLS
+      port: 9000
+      tls:
+        mode: Passthrough

@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>com.vmware.gemfire</groupId>
 			<artifactId>spring-boot-2.7-gemfire-9.15</artifactId>
-			<version>1.0.0</version>
+			<version>1.0	.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jgroups</groupId>
