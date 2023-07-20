@@ -16,8 +16,8 @@
         <module>applications/retail-analytics-app</module>
         <module>applications/retail-source-app</module>
         <module>applications/retail-cache-sink-app</module>
-        <module>applications/spring-gf-redis-server</module>
-        <module>applications/spring-gf-locator</module>
+<!--        <module>applications/spring-gf-redis-server</module>-->
+<!--        <module>applications/spring-gf-locator</module>-->
     </modules>
     <build>
         <pluginManagement>
