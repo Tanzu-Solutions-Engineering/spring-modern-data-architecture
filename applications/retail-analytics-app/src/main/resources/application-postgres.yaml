@@ -12,8 +12,9 @@ retail:
         FETCH FIRST ? rows only) top_orders
         WHERE p.id = top_orders.product_id;"
 
-      frequent: "select distinct p.data
-            --,top_associations.original_SKU,top_associations.bought_with,top_associations.times_bought_together, count_by_product.product_cnt, cast(top_associations.times_bought_together as double precision)/cast(count_by_product.product_cnt as  double precision) as probability
+  frequent:
+    bought:
+      sql: "select distinct p.data
                 from (
                 SELECT c.original_SKU as original_SKU, c.bought_with as bought_with, count(*) as times_bought_together
                 FROM (
@@ -41,5 +42,12 @@ retail:
                 DO
                    UPDATE SET data = to_json(:data::json)"
 spring:
+  sql:
+      init:
+        platform: postgres
+  datasource:
+      platform: postgres
   liquibase:
+    # Required running: CREATE SCHEMA IF NOT EXISTS retail;
+    defaultSchema: "retail"
     change-log: "classpath:db/changelog/postgres/changelog-v1.sql"

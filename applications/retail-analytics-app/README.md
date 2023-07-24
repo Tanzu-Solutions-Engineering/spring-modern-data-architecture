@@ -46,8 +46,8 @@ mvn spring-boot:build-image
 ```
 
 ```shell
-docker tag retail-analytics-app:0.0.1-SNAPSHOT cloudnativedata/retail-analytics-app:0.0.1-SNAPSHOT
-docker push cloudnativedata/retail-analytics-app:0.0.1-SNAPSHOT
+docker tag retail-analytics-app:0.0.3-SNAPSHOT cloudnativedata/retail-analytics-app:0.0.3-SNAPSHOT
+docker push cloudnativedata/retail-analytics-app:0.0.3-SNAPSHOT
 ```
 
 
