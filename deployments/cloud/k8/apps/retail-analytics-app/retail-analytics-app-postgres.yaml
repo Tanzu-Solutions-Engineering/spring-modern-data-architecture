@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run:  retail-analytics-app
+    app.kubernetes.io/name: retail-analytics-app
+  name:  retail-analytics-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  retail-analytics-app
+  template:
+    metadata:
+      labels:
+        name:  retail-analytics-app
+    spec:
+      containers:
+        - env:
+            - name: spring.rabbitmq.host
+              value: rabbitmq
+            - name: management.endpoints.web.exposure.include
+              value: "info, health"
+            - name: server.port
+              value: "8080"
+            - name: spring.rabbitmq.username
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: username
+            - name: spring.rabbitmq.password
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: password
+            - name: spring.profiles.active
+              value: "postgres"
+            - name: spring.datasource.url
+              value: jdbc:postgresql://postgres-db:5432/postgres-db
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-db-app-user-db-secret
+                  key: username
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-db-app-user-db-secret
+                  key: password
+#          readinessProbe:
+#            httpGet:
+#              path: /actuator/health
+#              port: 8080
+#            initialDelaySeconds: 40 #wait seconds before performing the first probe
+#            periodSeconds: 10 #pecifies that the kubelet should perform a liveness probe every X seconds
+#            timeoutSeconds: 15 # Number of seconds after which the probe times out.
+#            failureThreshold: 20
+#          livenessProbe:
+#            httpGet:
+#              path: /actuator/health
+#              port: 8080
+#            initialDelaySeconds: 40 #wait seconds before performing the first probe
+#            periodSeconds: 10 #pecifies that the kubelet should perform a liveness probe every X seconds
+#            timeoutSeconds: 15 # Number of seconds after which the probe times out.
+#            failureThreshold: 20
+          image: cloudnativedata/retail-analytics-app:0.0.3-SNAPSHOT
+          name: retail-analytics-app
+#          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-analytics-app-service
+spec:
+  selector:
+    name:  retail-analytics-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+#  type: LoadBalancer
