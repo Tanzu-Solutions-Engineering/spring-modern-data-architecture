@@ -10,6 +10,12 @@ spring:
       #      Comma-delimited list of host:port pairs.
       nodes: localhost:6379,localhost:6372
     username : retail
+  sql:
+    init:
+      mode: always
+  datasource:
+    initialization-mode: always
+    #
   jpa:
 #    generate-ddl: true
     show-sql: true
