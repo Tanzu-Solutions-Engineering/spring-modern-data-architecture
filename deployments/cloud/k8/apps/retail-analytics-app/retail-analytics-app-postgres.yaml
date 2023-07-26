@@ -36,7 +36,7 @@ spec:
             - name: spring.profiles.active
               value: "postgres"
             - name: spring.datasource.url
-              value: jdbc:postgresql://postgres-db:5432/postgres-db
+              value: jdbc:postgresql://postgres-db:5432/postgres-db?currentSchema=retail
             - name: spring.datasource.username
               valueFrom:
                 secretKeyRef:
