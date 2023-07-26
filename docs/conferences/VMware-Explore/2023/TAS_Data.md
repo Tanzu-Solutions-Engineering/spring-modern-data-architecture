@@ -84,6 +84,7 @@ No recommendations
 
 ### Buy Milk
 
+- Goto Exchanges -> retail.customer.orders
 - REQUIRED: Add header
   - contentType=application/json
   - 
@@ -95,3 +96,4 @@ No recommendations
 ```
 
 
+- Click publish message
