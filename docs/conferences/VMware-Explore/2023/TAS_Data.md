@@ -1,4 +1,13 @@
-# Testing Load Products
+# Conference Play Book
+
+
+Run 
+
+```shell
+./deployments/cloud/cloudFoundry/scripts/cf-setup.sh
+```
+
+
 
 Open Retail Web 
 
