@@ -93,6 +93,10 @@ k apply -f deployments/cloud/k8/dataServices/rabbitmq/replication/web-cloud/anal
 ----------------
 
 
+Open 
+
+
+
 - Login with default user/bitnami
 - Goto Exchanges -> retail.products
 - REQUIRED: Add header
@@ -737,7 +741,8 @@ Recommendation should be Peanut butter
   -H 'Content-Type: application/json' \
   -d '{"id":3,"customerIdentifier":{"customerId":"nyla"},
   "productOrders":[
-    {"productId":"sku2","quantity":1},
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku3","quantity":1},
     {"productId":"sku4","quantity":1}
   ]}'
 ```
