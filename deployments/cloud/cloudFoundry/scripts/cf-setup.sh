@@ -26,8 +26,6 @@ cf create-service p.rabbitmq single-node retail-rabbitmq  -c '{ "plugins": { "ra
 
 # cf update-service retail-rabbitmq -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
 
---------------------------------
-
 # retail-cache-sink-app
 
 cf push retail-cache-sink-app -f deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml -p applications/retail-cache-sink-app/target/retail-cache-sink-app-0.0.1-SNAPSHOT.jar
