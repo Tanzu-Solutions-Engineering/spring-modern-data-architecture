@@ -8,58 +8,50 @@
 
 
 
-## GemFire for Redis
-
-cf create-service p-cloudcache dev-plan  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
-
-## My SQL
-
-cf create-service p.mysql db-small retail-mysql
-
-
-## RabbitMQ
-
-cf create-service p.rabbitmq single-node retail-rabbitmq  -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
-
 # cf update-service retail-rabbitmq -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
 
-# retail-cache-sink-app
-
-cf push retail-cache-sink-app -f deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml -p applications/retail-cache-sink-app/target/retail-cache-sink-app-0.0.1-SNAPSHOT.jar
-
-# retail-source-app
-cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml -p applications/retail-source-app/target/retail-source-app-0.0.1-SNAPSHOT.jar
 
 
-# retail-web-app
-cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml -p applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar
+
+-------------------
+
+# Create a service key MySQL
+cf delete-service-key retail-mysql retail-mysql-key
+
+
+# Create a service key RabbitMQ
+cf delete-service-key retail-rabbitmq retail-rabbitmq-key
+
+# Inspect the service key:
+cf delete-service-key retail-gf-redis retail-gf-redis-key
+
+# retail-analytics-app
+cf delete retail-analytics-app
+
+cf delete pivotal-mysqlweb
 
 
 # retail-analytics-app
-cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.1-SNAPSHOT.jar
+cf delete retail-analytics-app
+
+# retail-web-app
+cf delete retail-web-app
+
+# retail-source-app
+cf delete retail-source-app
 
 
--------------------
-# Create a service key GemFire
-cf create-service-key retail-gf-redis retail-gf-redis-key
+# retail-cache-sink-app
+cf delete retail-cache-sink-app
 
-# Inspect the service key:
-cf service-key retail-gf-redis retail-gf-redis-key
+cf delete hello-demo
 
-
--------------------
-# Create a service key RabbitMQ
-cf create-service-key retail-rabbitmq retail-rabbitmq-key
-
-# Inspect the service key:
-cf service-key retail-rabbitmq retail-rabbitmq-key
+## RabbitMQ
+cf delete-service retail-rabbitmq
 
 
--------------------
-# Create a service key MySQL
-cf create-service-key retail-mysql retail-mysql-key
+## My SQL
+cf delete-service retail-mysql
 
-# Inspect the service key:
-cf delete-key retail-mysql retail-mysql-key
-
-
+## GemFire for Redis
+cf delete-service retail-gf-redis
