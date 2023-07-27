@@ -1,7 +1,7 @@
 # Conference Play Book
 
 
-Run 
+Run the following to setup environment
 
 ```shell
 ./deployments/cloud/cloudFoundry/scripts/cf-setup.sh
@@ -97,3 +97,12 @@ No recommendations
 
 
 - Click publish message
+
+
+--------------
+
+# Destore Environment
+
+```shell
+./deployments/cloud/cloudFoundry/scripts/cf-destroy.sh
+```
