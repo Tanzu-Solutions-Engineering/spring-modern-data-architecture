@@ -5,16 +5,6 @@
 #  */
 #
 
-
-
-
-# cf update-service retail-rabbitmq -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
-
-
-
-
--------------------
-
 # Create a service key MySQL
 cf delete-service-key retail-mysql retail-mysql-key
 
