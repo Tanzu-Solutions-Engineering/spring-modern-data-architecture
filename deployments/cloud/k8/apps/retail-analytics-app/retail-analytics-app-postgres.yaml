@@ -42,6 +42,8 @@ spec:
                 secretKeyRef:
                   name: postgres-db-app-user-db-secret
                   key: username
+            - name: rabbitmq.streaming.replay
+              value: "true"
             - name: spring.datasource.password
               valueFrom:
                 secretKeyRef:

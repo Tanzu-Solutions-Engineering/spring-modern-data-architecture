@@ -26,7 +26,7 @@ spring:
   cloud:
 #    function.definition: calculateFavoritesConsumer;orderConsumer
     function:
-      definition: calculateFavoritesConsumer;orderConsumer;saveProductConsumer;saveProductConsumerJsonAdapter
+      definition: calculateFavoritesConsumer;orderConsumer;saveProductConsumer
     stream:
       default:
         contentType: "application/json"

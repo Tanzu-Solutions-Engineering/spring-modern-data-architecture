@@ -11,17 +11,30 @@ kubectl config set-context --current --namespace=retail-explore-demo
 ```
 
 Login Into Database
+
 ```shell
-k exec postgres-db-0 -it psql postgres-db pgappuser  -n retail-explore-demo
+k exec postgres-db-0 -it -- psql postgres-db pgappuser  -n retail-explore-demo
 ```
 
 
-Delete Records
+Review Records
 
-```shell
-truncate retail.products;
+```roomsql
+select count(*) from retail.products;
 ```
 
+```roomsql
+select * from retail.products;
+```
+
+
+
+```roomsql
+select * from retail.customer_orders;
+```
+```roomsql
+select count(*) from retail.customer_orders;
+```
 
 ```shell
   curl -X 'POST' \
@@ -35,4 +48,13 @@ truncate retail.products;
     {"productId":"sku3","quantity":1},
     {"productId":"sku4","quantity":1}
   ]}'
+```
+
+```shell
+rabbitmq-streams add_replica   retail.products.retail-analytics-app "rabbit@rabbitmq-server-1.rabbitmq-nodes.retail-explore-demo"
+rabbitmq-streams add_replica   retail.products.retail-analytics-app "rabbit@rabbitmq-server-2.rabbitmq-nodes.retail-explore-demo"
+```
+
+```roomsql
+select count(*) from retail.customer_orders;
 ```
