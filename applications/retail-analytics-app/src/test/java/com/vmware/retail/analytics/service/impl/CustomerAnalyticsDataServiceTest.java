@@ -10,6 +10,7 @@ import com.vmware.retail.domain.order.CustomerOrder;
 import com.vmware.retail.domain.order.ProductOrder;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,9 +23,9 @@ import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerAnalyticsDataServiceTest {
@@ -46,6 +47,20 @@ class CustomerAnalyticsDataServiceTest {
     private SortedSet<ProductQuantity> favoriteSet = new TreeSet<>();
     private ProductQuantity productQuantity = JavaBeanGeneratorCreator
                         .of(ProductQuantity.class).create();
+
+    private Product expectedProduct = new Product("id","name");
+    private List<Product> expectedProducts = asList(expectedProduct);
+    private String expectedId = "customerId";
+    private Promotion expected = new Promotion(expectedId,null,expectedProducts);
+
+    private Long orderId = 3L;
+    private String productId = "pId";
+    private int quantity = 3;
+    private String customerId = "customerId";
+    private ProductOrder productOrder = new ProductOrder(productId,quantity);
+    private CustomerIdentifier customerIdentifier = new CustomerIdentifier(customerId);
+    private List<ProductOrder> productOrders = asList(productOrder);
+    private CustomerOrder customerOrder = new CustomerOrder(orderId,customerIdentifier,productOrders);
 
     @BeforeEach
     void setUp() {
@@ -77,22 +92,6 @@ class CustomerAnalyticsDataServiceTest {
     @Test
     void given_customerOrder_getRecommendations_based_onOrders_thenPublish_Recommendations() {
 
-        Product expectedProduct = new Product("id","name");
-        List<Product> expectedProducts = asList(expectedProduct);
-        String expectedId = "customerId";
-
-        Promotion expected = new Promotion(expectedId,null,expectedProducts);
-
-        Long orderId = 3L;
-        String productId = "pId";
-        int quantity = 3;
-        String customerId = "customerId";
-        ProductOrder productOrder = new ProductOrder(productId,quantity);
-        CustomerIdentifier customerIdentifier = new CustomerIdentifier(customerId);
-        List<ProductOrder> productOrders = asList(productOrder);
-        var customerOrder = new CustomerOrder(orderId,customerIdentifier,productOrders);
-
-
         when(productRepository.findFrequentlyBoughtTogether(any())).thenReturn(expectedProducts);
 
         var actual = subject.publishPromotion(customerOrder);
@@ -101,6 +100,18 @@ class CustomerAnalyticsDataServiceTest {
 
         verify(productRepository).findFrequentlyBoughtTogether(customerOrder.productOrders());
         verify(rabbitTemplate).convertAndSend(anyString(),anyString(),any(Promotion.class));
+
+    }
+
+    @DisplayName("GIVEN No products find sold together WHEN publishPromotion THEN verify no data sent")
+    @Test
+    void doNotPublishWhenNoRecommendations() {
+        var actual = subject.publishPromotion(customerOrder);
+
+        assertNull(actual);
+
+        verify(productRepository).findFrequentlyBoughtTogether(customerOrder.productOrders());
+        verify(rabbitTemplate,never()).convertAndSend(anyString(),anyString(),any(Promotion.class));
 
     }
 }
