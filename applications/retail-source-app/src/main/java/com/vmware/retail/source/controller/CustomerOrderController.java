@@ -7,8 +7,10 @@
 
 package com.vmware.retail.source.controller;
 
+import com.vmware.retail.source.controller.exceptions.InvalidOrderCsvException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,20 @@ import java.util.function.Consumer;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("retail")
+@Slf4j
 public class CustomerOrderController {
 
     private final Consumer<String> splitCsvByCustomerOrder;
 
     @PostMapping("orders")
     public void processCsvOrders(@RequestBody String csvOrders) {
-        splitCsvByCustomerOrder.accept(csvOrders);
+        try {
+            splitCsvByCustomerOrder.accept(csvOrders);
+        }
+        catch(NumberFormatException e)
+        {
+            log.error("{}",e);
+            throw new InvalidOrderCsvException(e);
+        }
     }
 }
