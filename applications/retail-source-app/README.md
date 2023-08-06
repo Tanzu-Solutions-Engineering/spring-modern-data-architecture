@@ -29,5 +29,5 @@ orderId, customer,productId,quantity
 ```csv
 "5","nyla","sku4","1"
 "5","nyla","sku1","1"
-"6","nyla","sku2","1"
+"5","nyla","sku2","1"
 ```

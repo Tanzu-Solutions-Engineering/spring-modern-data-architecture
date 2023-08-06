@@ -65,6 +65,11 @@ public class CustomerAnalyticsDataService implements CustomerAnalyticService {
     public Promotion publishPromotion(CustomerOrder customerOrder) {
         var recommendations = this.productRepository.findFrequentlyBoughtTogether(customerOrder.productOrders());
         log.info("recommendations: {} for customerOrder: {}",recommendations,customerOrder);
+
+        if(recommendations == null || recommendations.isEmpty()) {
+            log.info("No recommendations found");
+            return null;
+        }
         var customerId = customerOrder.customerIdentifier().customerId();
         var promotion = new Promotion(customerId,
                 null,recommendations);
