@@ -36,7 +36,7 @@ public class SplitCsvByCustomerOrder implements Consumer<String> {
     private final RabbitTemplate rabbitTemplate;
 
     public SplitCsvByCustomerOrder(CsvToCustomerOrder csvToCustomerOrder,
-                                   @Value("${spring.cloud.stream.bindings.csvToCustomerOrder-out-0.destination:retail.customer.orders}")
+                                   @Value("${source.splitCsv.customer.orders.exchange:retail.customer.orders}")
                                    String exchange,
                                    @Value("${source.splitCsv.consumer.customerIdCol:1}")
                                    int customerIdCol,
@@ -73,9 +73,6 @@ public class SplitCsvByCustomerOrder implements Consumer<String> {
             rabbitTemplate.convertAndSend(exchange, customerId, this.streamBridge.apply(outCsv));
         });
 
-        //        csvList.forEach(outCsv -> this.streamBridge.send(exchange,customerId, MessageBuilder
-        //                .withBody(outCsv.getBytes(StandardCharsets.UTF_8))
-        //                .setContentType(MediaType.TEXT_PLAIN_VALUE).build()));
     }
 }
 

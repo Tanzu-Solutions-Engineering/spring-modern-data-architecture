@@ -4,6 +4,11 @@
 psql -d postgres -U retail
 ```
 
+
+```shell
+--spring.profiles.active=postgres,local-postgres,product-quorum
+```
+
 # Useful SQL
 
 List connections
