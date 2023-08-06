@@ -58,3 +58,4 @@ rabbitmq-streams add_replica   retail.products.retail-analytics-app "rabbit@rabb
 ```roomsql
 select count(*) from retail.customer_orders;
 ```
+

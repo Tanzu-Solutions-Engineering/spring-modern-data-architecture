@@ -17,3 +17,17 @@ mvn spring-boot:build-image
 docker tag retail-source-app:0.0.1-SNAPSHOT cloudnativedata/retail-source-app:0.0.1-SNAPSHOT
 docker push cloudnativedata/retail-source-app:0.0.1-SNAPSHOT
 ```
+
+
+# Testing
+
+Headers
+
+orderId, customer,productId,quantity
+
+
+```csv
+"5","nyla","sku4","1"
+"5","nyla","sku1","1"
+"6","nyla","sku2","1"
+```

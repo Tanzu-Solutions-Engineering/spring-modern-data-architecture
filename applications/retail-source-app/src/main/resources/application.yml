@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8190
 spring:
   application:
     name: retail-source-app
@@ -8,23 +8,18 @@ spring:
   cloud:
     #    function.definition: csvToCustomerOrder;splitCsvByCustomerOrder
     function:
-      definition: csvToCustomerOrder;splitCsvByCustomerOrder;saveProductConsumer
+      definition: csvToCustomerOrder;splitCsvByCustomerOrder
     stream:
       default:
         contentType: "application/json"
       bindings:
         csvToCustomerOrder-in-0:
-          destination: retail.csvToCustomerOrder
+          destination: retail.csv.customer.order
           group: ${spring.application.name}
           consumer:
             concurrency: 1
         splitCsvByCustomerOrder-in-0:
-          destination: retail.customer.orders
-          group: ${spring.application.name}
-          consumer:
-            concurrency: 1
-        saveProductConsumer-in-0:
-          destination: retail.products
+          destination: retail.csv.customer.orders
           group: ${spring.application.name}
           consumer:
             concurrency: 1
@@ -53,14 +48,6 @@ spring:
               prefetch: 10000
           csvToCustomerOrder-out-0:
             destination: retail.customer.orders
-          saveProductConsumer-in-0:
-            consumer:
-              autoBindDlq: true
-              quorum.enabled: false
-              containerType: stream
-              dlqQuorum:
-                enabled: true
-              prefetch: 10000
 source:
   splitCsv:
     consumer:
