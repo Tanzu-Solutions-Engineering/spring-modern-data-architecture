@@ -12,7 +12,9 @@ Run the following to setup environment
 Open Retail Web 
 
 ```shell
-open https://retail-web-app.apps.int.tas-labs.com
+export WEB_APP_HOST=`cf apps | grep retail-web-app  | awk  '{print $5}'`
+echo $WEB_APP_HOST
+open https://$WEB_APP_HOST
 ```
 
 Tail retail-analytics-app logs
@@ -36,8 +38,20 @@ Step
 - REQUIRED: Add header
     - contentType=application/json
 
-Past Content from [Product.json](https://raw.githubusercontent.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/main/scripts/generate_customer_orders/resources/products.json)
 
+Load Products
+
+```shell
+export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
+echo $SOURCE_APP_HOST
+```
+
+```shell
+curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  --data "@./scripts/generate_customer_orders/resources/products.json" 
+```
 - Click Publish Message
 
 This will load products into MySQL
@@ -99,9 +113,19 @@ No recommendations
 - Click publish message
 
 
+```shell
+curl -X 'POST' \
+  https://$SOURCE_APP_HOST/retail/orders -k \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '"7","nyla","sku4","1"
+"7","nyla","sku1","1"'
+```
+
+
 --------------
 
-# Destore Environment
+# Destroy Environment
 
 ```shell
 ./deployments/cloud/cloudFoundry/scripts/cf-destroy.sh
