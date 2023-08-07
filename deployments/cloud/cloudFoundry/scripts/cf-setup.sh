@@ -79,7 +79,7 @@ cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/ret
 cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.3-SNAPSHOT.jar
 
 
--------------------
+#-------------------
 # Create a service key GemFire
 cf create-service-key retail-gf-redis retail-gf-redis-key
 
@@ -87,7 +87,7 @@ cf create-service-key retail-gf-redis retail-gf-redis-key
 cf service-key retail-gf-redis retail-gf-redis-key
 
 
--------------------
+#-------------------
 # Create a service key RabbitMQ
 cf create-service-key retail-rabbitmq retail-rabbitmq-key
 
@@ -95,7 +95,7 @@ cf create-service-key retail-rabbitmq retail-rabbitmq-key
 cf service-key retail-rabbitmq retail-rabbitmq-key
 
 
--------------------
+#-------------------
 # Create a service key MySQL
 cf create-service-key retail-mysql retail-mysql-key
 
