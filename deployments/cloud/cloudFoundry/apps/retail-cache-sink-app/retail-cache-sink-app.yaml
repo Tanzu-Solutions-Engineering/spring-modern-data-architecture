@@ -1,6 +1,7 @@
 applications:
   - name: retail-cache-sink-app
     memory: 1G
+    log-rate-limit-per-second: -1
     services:
       - retail-rabbitmq
       - retail-gf-redis
