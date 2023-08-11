@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: jdbc-sql-rest-app
+server:
+  port: 7280

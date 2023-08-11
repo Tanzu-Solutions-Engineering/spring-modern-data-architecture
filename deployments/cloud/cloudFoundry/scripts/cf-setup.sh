@@ -28,8 +28,6 @@ cf create-service p.rabbitmq single-node retail-rabbitmq
 
 #cf update-service retail-rabbitmq -c '{ "plugins": { "rabbitmq_stream": true, "rabbitmq_stream_management": true } }'
 
-# retail-cache-sink-app
-
 # -----------------------------
 # WAIT FOR SERVICE to be available
 
@@ -92,7 +90,7 @@ cf service-key retail-gf-redis retail-gf-redis-key
 
 #-------------------
 # Create a service key RabbitMQ
-cf create-service-key retail-rabbitmq retail-rabbitmq-key
+cf create-service-key retail-rabbitmq retail-rabbitmq-key -c '{"tags":"administrator"}'
 
 # Inspect the service key:
 cf service-key retail-rabbitmq retail-rabbitmq-key
