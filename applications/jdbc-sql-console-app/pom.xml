@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vmware</groupId>
-	<artifactId>jdbc-sql-rest-app</artifactId>
+	<artifactId>jdbc-sql-console-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jdbc-sql-rest-app</name>
-	<description>jdbc-sql-rest-app</description>
+	<name>jdbc-sql-console-app</name>
+	<description>jdbc-sql-console-app</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

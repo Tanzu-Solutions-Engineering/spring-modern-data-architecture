@@ -16,7 +16,7 @@
         <module>applications/retail-analytics-app</module>
         <module>applications/retail-source-app</module>
         <module>applications/retail-cache-sink-app</module>
-        <module>applications/jdbc-sql-rest-app</module>
+        <module>applications/jdbc-sql-console-app</module>
     </modules>
     <build>
         <pluginManagement>

@@ -1,0 +1,11 @@
+applications:
+  - name: jdbc-sql-console-app
+    memory: 1G
+    log-rate-limit-per-second: -1
+    services:
+      - retail-mysql
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'
+      spring.datasource.url: ${vcap.services.mysql.credentials.jdbcUrl}
+      spring.datasource.username: ${vcap.services.mysql.credentials.username}
+      spring.datasource.password: ${vcap.services.mysql.credentials.password}
