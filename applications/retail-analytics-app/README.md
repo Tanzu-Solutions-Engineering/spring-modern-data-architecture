@@ -1,15 +1,37 @@
-# Postgres
+# retail-analytics-app
 
+Performance and database analytics.
+This application uses an event driven design based on messages consumed in RabbitMQ.
+
+
+Verified databases
+
+- [VMware Postgres](https://docs.vmware.com/en/VMware-Postgres/index.html)
+- [VMware MYSQL](https://docs.vmware.com/en/VMware-SQL-with-MySQL-for-Tanzu-Application-Service/3.0/mysql-for-tas/index.html)
+- [VMware Greenplum](https://www.vmware.com/products/greenplum.html)
+
+
+# Configuration
+
+Set active Profile 
+
+
+| profile        | Notes                                                                                   |
+|----------------|-----------------------------------------------------------------------------------------|
+ | postgres       | Used Postgres                                                                           |
+ | mysql          | Used MySQL                                                                              | 
+ | product-quorum | Used RabbitMQ [Quorum Queues](https://www.rabbitmq.com/quorum-queues.html) for Products |
+ | product-stream | Used RabbitMQ [Streams](https://www.rabbitmq.com/streams.html for Products              |
+
+
+Example 
 ```shell
-psql -d postgres -U retail
+java -jar applications/retail-analytics-app/target/retail-analytics-app-0.0.3-SNAPSHOT.jar --spring.profiles.active=postgres,local-postgres,product-quorum
 ```
 
+# Misc.
 
-```shell
---spring.profiles.active=postgres,local-postgres,product-quorum
-```
-
-# Useful SQL
+## Useful Postgres SQL
 
 List connections
 ```
@@ -42,6 +64,8 @@ GRANT ALL PRIVILEGES ON TABLE products TO gregoryg;
 select * from pg_tables where tablename = 'products';
 ```
 
+# Docker 
+
 ## Docker building image
 
 ```shell
@@ -54,8 +78,6 @@ mvn spring-boot:build-image
 docker tag retail-analytics-app:0.0.3-SNAPSHOT cloudnativedata/retail-analytics-app:0.0.3-SNAPSHOT
 docker push cloudnativedata/retail-analytics-app:0.0.3-SNAPSHOT
 ```
-
-
 --------------
 
 # Testing
@@ -98,11 +120,9 @@ HEADER: contentType=application/json
 ```
 
 
-```
-
-
 # MYSQL 
 
+Example SQL 
 
 ```roomsql
 SELECT data, total_quantity
