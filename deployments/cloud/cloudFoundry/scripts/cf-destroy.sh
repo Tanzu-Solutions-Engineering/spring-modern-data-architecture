@@ -18,9 +18,6 @@ cf delete-service-key retail-gf-redis retail-gf-redis-key
 # retail-analytics-app
 cf delete retail-analytics-app
 
-cf delete pivotal-mysqlweb
-
-
 # retail-analytics-app
 cf delete retail-analytics-app
 
@@ -34,7 +31,8 @@ cf delete retail-source-app
 # retail-cache-sink-app
 cf delete retail-cache-sink-app
 
-cf delete hello-demo
+# jdbc-sql-console-app
+cf delete jdbc-sql-console-app
 
 ## RabbitMQ
 cf delete-service retail-rabbitmq

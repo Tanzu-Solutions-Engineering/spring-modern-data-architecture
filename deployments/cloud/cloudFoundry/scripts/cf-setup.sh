@@ -79,6 +79,9 @@ cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/ret
 cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.3-SNAPSHOT.jar
 
 
+# jdbc-sql-console-app
+cf push jdbc-sql-console-app -f deployments/cloud/cloudFoundry/apps/jdbc-sql-console-app/jdbc-sql-console-app.yaml -p applications/jdbc-sql-console-app/target/jdbc-sql-console-app-0.0.1-SNAPSHOT.jar
+
 #-------------------
 # Create a service key GemFire
 cf create-service-key retail-gf-redis retail-gf-redis-key
