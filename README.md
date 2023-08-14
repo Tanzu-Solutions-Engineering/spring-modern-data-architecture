@@ -31,6 +31,8 @@ dependencies in the [GemFire maven repository](https://docs.vmware.com/en/VMware
 
 # Spring Modern Data Architecture Project - Outcomes
 
+![web-app-img.png](docs/diagrams/web-app-img.png)
+
 - Spring Boot Web App real-time access from GemFire
 - Spring Boot App sink application to populate data from RabbitMQ
 - Spring App for data analytics using (Postgres, MySQL or Greenplum) and RabbitMQ to pushes data to GemFire
