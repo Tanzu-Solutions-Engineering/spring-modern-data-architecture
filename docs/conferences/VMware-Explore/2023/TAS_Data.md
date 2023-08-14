@@ -56,6 +56,32 @@ curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
 
 This will load products into MySQL
 
+
+Verify loaded data
+
+```shell
+export JDBC_CONSOLE_HOST=`cf apps | grep jdbc-sql-console-app  | awk  '{print $5}'`
+echo $JDBC_CONSOLE_HOST
+```
+
+```shell
+curl -X 'POST' -k \
+  https://$JDBC_CONSOLE_HOST/query \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d 'select * from products limit 1'
+```
+
+Select count
+```shell
+curl -X 'POST' -k \
+  https://$JDBC_CONSOLE_HOST/query \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d 'select count(*) from products'
+```
+
+
 # Customer Orders
 
 In RabbitMQ Dashboard
@@ -119,9 +145,18 @@ curl -X 'POST' \
   https://$SOURCE_APP_HOST/retail/orders -k \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
-  -d '"7","nyla","sku4","1"
-"7","nyla","sku1","1"'
+  -d '"7","nyla","sku4","1"'
 ```
+
+```shell
+curl -X 'POST' \
+  https://$SOURCE_APP_HOST/retail/orders -k \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '"7","nyla","sku4","1"
+"7","nyla","sku22","1"'
+```
+
 
 
 --------------
