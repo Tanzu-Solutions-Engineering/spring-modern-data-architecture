@@ -18,9 +18,6 @@ cd ~/workspace/spring-modern-data-architecture/
 ./deployments/cloud/cloudFoundry/apps/jdbc-sql-console-app/cf-push.sh
 ```
 
-Load Products
-
-
 Get rabbit Dashboard, username/password
 
 ```shell
@@ -38,10 +35,12 @@ The first app we are going to push is the retail source app.
 ```shell
 cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml -p applications/retail-source-app/target/retail-source-app-0.0.1-SNAPSHOT.jar
 ```
+
 ```shell
 cat ./deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml
 ```
 
+Load Products
 
 ```shell
 export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
