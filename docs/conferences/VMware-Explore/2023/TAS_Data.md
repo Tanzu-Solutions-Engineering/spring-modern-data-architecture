@@ -98,42 +98,16 @@ cf logs retail-analytics-app
 ```
 
 
+Load products via the source app.
 
-Step
-
-- Login with user/password
-- Goto Exchanges -> retail.products
-- REQUIRED: Add header
-    - contentType=application/json
-
-
-- Click Publish Message
-
-This will load products into MySQL
-
-
-Verify loaded data
-
-```shell
-export JDBC_CONSOLE_HOST=`cf apps | grep jdbc-sql-console-app  | awk  '{print $5}'`
-echo $JDBC_CONSOLE_HOST
-```
-
-```shell
-curl -X 'POST' -k \
-  https://$JDBC_CONSOLE_HOST/query \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d 'select * from products limit 1'
-```
-
-Select count
-```shell
-curl -X 'POST' -k \
-  https://$JDBC_CONSOLE_HOST/query \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d 'select count(*) from products'
+- [product json](https://raw.githubusercontent.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/main/scripts/generate_customer_orders/resources/products_full.json)
+- Load Products using swagger UI source app
+  ```roomsql
+  select count(*) from products
+  ```
+  
+```roomsql
+select * from products where id in ('sku1','sku2','sku3','sku4')
 ```
 
 
@@ -154,64 +128,34 @@ Publish the following JSON an order
 ```json
   {"id":4,"customerIdentifier":{"customerId":"nyla"},
   "productOrders":[
-    {"productId":"sku4","quantity":1},
-    {"productId":"sku1","quantity":1},
-    {"productId":"sku2","quantity":1}
+    {"productId":"sku1","quantity":4},
+    {"productId":"sku2","quantity":4}
   ]}
 ```
 
 
 ### Buy Bread
 
-- Goto Exchanges -> retail.customer.orders
-- REQUIRED: Add header
-  - contentType=application/json
-- 
-```json
-  {"id":2,"customerIdentifier":{"customerId":"nyla"},
-  "productOrders":[
-    {"productId":"sku3","quantity":1}
-  ]}
+
+Bread, Peanut and Jelly
+
+```csv
+"7","nyla","sku3","1"
+"7","nyla","sku1","1"
+"7","nyla","sku2","1"
 ```
+
 - Click publish message
 
 No recommendations
 
-### Buy Milk
+### Buy Peanut Butter and Bread
 
-- Goto Exchanges -> retail.customer.orders
-- REQUIRED: Add header
-  - contentType=application/json
-  - 
-```json
-  {"id":3,"customerIdentifier":{"customerId":"nyla"},
-  "productOrders":[
-    {"productId":"sku4","quantity":1}
-  ]}
+```csv
+"8","nyla","sku1","1"
+"8","nyla","sku3","1"
+"8","nyla","sku4","1"
 ```
-
-
-- Click publish message
-
-### Orders using Source API with CSVs
-
-```shell
-curl -X 'POST' \
-  https://$SOURCE_APP_HOST/retail/orders -k \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '"7","nyla","sku4","1"'
-```
-
-```shell
-curl -X 'POST' \
-  https://$SOURCE_APP_HOST/retail/orders -k \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '"7","nyla","sku4","1"
-"7","nyla","sku22","1"'
-```
-
 
 
 --------------
