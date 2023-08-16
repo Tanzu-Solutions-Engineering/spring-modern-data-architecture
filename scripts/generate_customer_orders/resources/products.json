@@ -1,4 +1,5 @@
-[
+	{"id" : "sku186", "name" : "Chilli peppers"},
+	[
 	{"id" : "sku1", "name" : "Peanut butter"},
 	{"id" : "sku2", "name" : "Jelly"},
 	{"id" : "sku3", "name" : "Bread"},
@@ -184,7 +185,6 @@
 	{"id" : "sku183", "name" : "Cherries"},
 	{"id" : "sku184", "name" : "Chicken"},
 	{"id" : "sku185", "name" : "Chickpeas"},
-	{"id" : "sku186", "name" : "Chilli peppers"},
 	{"id" : "sku187", "name" : "Chives"},
 	{"id" : "sku188", "name" : "Chocolate"},
 	{"id" : "sku189", "name" : "Cilantro"},

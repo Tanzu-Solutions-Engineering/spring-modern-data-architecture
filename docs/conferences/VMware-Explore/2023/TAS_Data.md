@@ -1,15 +1,19 @@
 # Conference Play Book
 
 
+## Setup 
+
 Run the following to setup environment
 
 ```shell
 ./deployments/cloud/cloudFoundry/scripts/cf-setup.sh
 ```
 
-
+## Instructions
 
 Open Retail Web 
+
+
 
 ```shell
 export WEB_APP_HOST=`cf apps | grep retail-web-app  | awk  '{print $5}'`
