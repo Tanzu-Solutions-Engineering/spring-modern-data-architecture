@@ -20,17 +20,6 @@ cd ~/workspace/spring-modern-data-architecture/
 
 Load Products
 
-```shell
-export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
-echo $SOURCE_APP_HOST
-```
-
-```shell
-curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  --data "@./scripts/generate_customer_orders/resources/products.json" 
-```
 
 Get rabbit Dashboard, username/password
 
@@ -51,6 +40,19 @@ cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-a
 ```
 ```shell
 cat ./deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml
+```
+
+
+```shell
+export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
+echo $SOURCE_APP_HOST
+```
+
+```shell
+curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  --data "@./scripts/generate_customer_orders/resources/products.json" 
 ```
 
 ## retail-analytics-app
