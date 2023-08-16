@@ -129,6 +129,14 @@ select * from products where id in ('sku1','sku2','sku3','sku4')
 
 # Customer Orders
 
+
+
+Open Web Application
+
+- cf apps
+
+
+
 In RabbitMQ Dashboard
 
 Steps
@@ -165,7 +173,7 @@ Bread, Peanut and Jelly
 
 No recommendations
 
-### Buy Peanut Butter and Bread
+### WHY NO Jelly (recommendation)
 
 ```csv
 "8","nyla","sku1","1"
