@@ -18,6 +18,20 @@ cd ~/workspace/spring-modern-data-architecture/
 ./deployments/cloud/cloudFoundry/apps/jdbc-sql-console-app/cf-push.sh
 ```
 
+Load Products
+
+```shell
+export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
+echo $SOURCE_APP_HOST
+```
+
+```shell
+curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  --data "@./scripts/generate_customer_orders/resources/products.json" 
+```
+
 Get rabbit Dashboard, username/password
 
 ```shell
@@ -93,19 +107,6 @@ Step
     - contentType=application/json
 
 
-Load Products
-
-```shell
-export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
-echo $SOURCE_APP_HOST
-```
-
-```shell
-curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  --data "@./scripts/generate_customer_orders/resources/products.json" 
-```
 - Click Publish Message
 
 This will load products into MySQL
