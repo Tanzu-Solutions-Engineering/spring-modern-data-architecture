@@ -5,6 +5,7 @@ ConfigDiskDir_SpringBasedLocatorApplication
 *.dat
 .jekyll-cache/
 .DS_Store
+.m2/
 _site/
 Gemfile.lock
 target/
