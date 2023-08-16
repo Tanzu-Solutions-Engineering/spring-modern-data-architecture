@@ -40,7 +40,55 @@ cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-a
 cat ./deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml
 ```
 
-Load Products
+## retail-analytics-app
+
+push the retail analytics app
+
+```shell
+cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.3-SNAPSHOT.jar
+```
+
+
+
+## retail-cache-sink-app
+
+app going to pull messages off the recommendations queue and store them appropriately in gemfire
+
+```shell
+cf push retail-cache-sink-app -f deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml -p applications/retail-cache-sink-app/target/retail-cache-sink-app-0.0.1-SNAPSHOT.jar
+```
+
+
+
+## retail-web-app
+
+frontend that will display recommendation information
+
+```shell
+cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml -p applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar
+```
+
+## Review Manifest
+
+open up that retail-analytics-app manifest
+```shell
+cat deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml
+```
+
+open up retail-cache-sink-app
+
+```shell
+cat deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml
+```
+retail-web-app
+
+```shell
+cat deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml 
+```
+--------------------------------
+# Look at MySQL
+
+Seed Products
 
 ```shell
 export SOURCE_APP_HOST=`cf apps | grep retail-source-app  | awk  '{print $5}'`
@@ -54,50 +102,17 @@ curl -X 'POST' https://$SOURCE_APP_HOST/products -k \
   --data "@./scripts/generate_customer_orders/resources/products.json" 
 ```
 
-## retail-analytics-app
+Open JDBC console in SWAGGER
 
-push the retail analytics app
-
-```shell
-cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.3-SNAPSHOT.jar
+```roomsql
+select * from products where id in ('sku1','sku2','sku3','sku4')
 ```
-
-open up that app manifest 
-```shell
-cat deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app.yaml
-```
-
-
-## retail-cache-sink-app
-
-app going to pull messages off the recommendations queue and store them appropriately in gemfire
-
-```shell
-cf push retail-cache-sink-app -f deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml -p applications/retail-cache-sink-app/target/retail-cache-sink-app-0.0.1-SNAPSHOT.jar
-```
-
-```shell
-cat deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml
-```
-
-
-## retail-web-app
-
-frontend that will display recommendation information
-
-```shell
-cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml -p applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar
-```
-
-----------------------------------
-# Demo Use Case
 
 Tail retail-analytics-app logs
 
 ```shell
 cf logs retail-analytics-app
 ```
-
 
 Load products via the source app.
 
