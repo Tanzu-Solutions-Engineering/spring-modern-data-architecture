@@ -1,6 +1,10 @@
 # Conference Play Book
 
 
+```json
+{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}
+```
+
 ## Pre-setup 
 
 Cleanup everything and start from scratch
@@ -36,9 +40,6 @@ The first app we are going to push is the retail source app.
 cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml -p applications/retail-source-app/target/retail-source-app-0.0.1-SNAPSHOT.jar
 ```
 
-```shell
-cat ./deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml
-```
 
 ## retail-analytics-app
 
@@ -85,6 +86,7 @@ retail-web-app
 ```shell
 cat deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml 
 ```
+
 --------------------------------
 # Look at MySQL
 
