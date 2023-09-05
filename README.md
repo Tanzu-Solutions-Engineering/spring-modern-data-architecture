@@ -27,7 +27,11 @@ GemFire for Redis is free to use for local development.
 In order to build Please following the instruction [here]((https://docs.vmware.com/en/VMware-GemFire/10.0/gf/getting_started-installation-obtain_gemfire_maven.html)) to setup your credentials in your .m2/settings.xml file to access the 
 dependencies in the [GemFire maven repository](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/getting_started-installation-obtain_gemfire_maven.html).
 
+Demo/Records/Webinars
 
+- [Retail supply chain volatility and improve resiliency through data visibility, intelligence and automation](https://www.brighttalk.com/webcast/14883/571251?utm_source=brighttalk-portal&utm_medium=web&utm_campaign=all-brighttalk&utm_content=recorded)
+- [Multi-Cloud Native Data with Spring and VMware Data Solutions](https://www.vmware.com/explore/video-library/video-landing.html?sessionid=1679079685784001CLge&videoId=6335593213112) (VMware Explore)
+- [Tanzu Application Service and VMware Data Solutions](https://www.vmware.com/explore/video-library/video-landing.html?sessionid=1683899525801001iaCG&videoId=6335272435112)  (VMware Explore)
 
 # Spring Modern Data Architecture Project - Outcomes
 
@@ -36,7 +40,7 @@ dependencies in the [GemFire maven repository](https://docs.vmware.com/en/VMware
 - Spring Boot Web App real-time access from GemFire
 - Spring Boot App sink application to populate data from RabbitMQ
 - Spring App for data analytics using (Postgres, MySQL or Greenplum) and RabbitMQ to pushes data to GemFire
-- - Spring Boot App source to provide API integration interfaces to send to RabbitMQ
+Spring Boot App source to provide API integration interfaces to send to RabbitMQ
 
 
 
