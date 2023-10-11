@@ -2,12 +2,16 @@
 
 
 ```shell
-java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --retail.customer.id=nyla  --server-port=0
-
+export JAVA_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-exports  java.management/com.sun.jmx.remote.security=ALL-UNNAMED --add-exports  java.base/sun.nio.ch=ALL-UNNAMED"
 ```
 
 
-Register 
+```shell
+java -jar applications/spring-gf-locator/target/spring-gf-locator-0.0.1-SNAPSHOT.jar
+```
+
+
+Register MVn packages
 
 ```shell
 mvn install:install-file \

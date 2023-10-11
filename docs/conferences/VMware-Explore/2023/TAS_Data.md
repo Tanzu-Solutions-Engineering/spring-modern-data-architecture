@@ -162,6 +162,8 @@ Publish the following JSON an order
 
 ### Buy Bread
 
+On the source endpoint (app: retail-source-app)
+
 
 Bread, Peanut and Jelly
 

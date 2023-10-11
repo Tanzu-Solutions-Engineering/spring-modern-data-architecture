@@ -18,9 +18,6 @@ cf delete-service-key retail-gf-redis retail-gf-redis-key
 # retail-analytics-app
 cf delete retail-analytics-app
 
-# retail-analytics-app
-cf delete retail-analytics-app
-
 # retail-web-app
 cf delete retail-web-app
 

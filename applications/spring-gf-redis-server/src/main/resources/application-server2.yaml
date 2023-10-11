@@ -1,0 +1,11 @@
+spring:
+  data:
+    gemfire:
+      locators: localhost[10334]
+      cache:
+        name: server2
+        server:
+         port: 10334
+gemfire:
+  gemfire-for-redis-port: 6279
+#  remote-distributed-system-id: 1

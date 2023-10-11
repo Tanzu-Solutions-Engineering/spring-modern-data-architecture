@@ -1,5 +1,6 @@
 .idea/
 ConfigDiskDir_SpringBasedLocatorApplication
+ConfigDiskDir_locator1
 *.pid
 .DS_Store
 *.dat

@@ -11,7 +11,7 @@
 
 ## GemFire for Redis
 
-cf create-service p-cloudcache dev-plan  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
+cf create-service p-cloudcache dev-plan-small  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
 
 ## My SQL
 

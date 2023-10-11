@@ -11,10 +11,12 @@ https://network.tanzu.vmware.com/products/tanzu-gemfire-for-redis-apps/
 # Start App
 
 
-Without locator
+```shell
+export JAVA_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-exports  java.management/com.sun.jmx.remote.security=ALL-UNNAMED --add-exports  java.base/sun.nio.ch=ALL-UNNAMED"
+```
 
 ```shell
-java  -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.0.3-SNAPSHOT.jar --server.port=0 --spring.data.gemfire.cache.server.port=10001 --spring.data.gemfire.name=server1 --gemfire-for-redis-port=6379
+java  -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.1.0-SNAPSHOT.jar
 ```
 
 
