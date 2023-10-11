@@ -24,7 +24,7 @@ public class GemFireConfig {
     @Value("${spring.data.gemfire.locator.name}")
     private String locatorName;
 
-    @Value("${spring.data.gemfire.locator.port}")
+    @Value("${spring.data.gemfire.locator.port:10334}")
     private int port;
 
     @Value("${gemfire.remote-locators:}")
