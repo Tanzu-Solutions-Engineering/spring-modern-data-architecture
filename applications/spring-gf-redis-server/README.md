@@ -10,13 +10,25 @@ https://network.tanzu.vmware.com/products/tanzu-gemfire-for-redis-apps/
 
 # Start App
 
-
+Server 1
 ```shell
-export JAVA_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-exports  java.management/com.sun.jmx.remote.security=ALL-UNNAMED --add-exports  java.base/sun.nio.ch=ALL-UNNAMED"
+mkdir -p  runtime/server1
+cd runtime/server1
+java --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-exports  java.management/com.sun.jmx.remote.security=ALL-UNNAMED --add-exports  java.base/sun.nio.ch=ALL-UNNAMED -jar /Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture/applications/spring-gf-redis-server/target/spring-gf-redis-server-0.1.0-SNAPSHOT.jar --spring.config.location=file:/Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture/applications/spring-gf-redis-server/src/main/resources/application.yml
 ```
 
+Server 2
 ```shell
-java  -jar applications/spring-gf-redis-server/target/spring-gf-redis-server-0.1.0-SNAPSHOT.jar
+mkdir -p  runtime/server2
+cd runtime/server2
+java --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-exports  java.management/com.sun.jmx.remote.security=ALL-UNNAMED --add-exports  java.base/sun.nio.ch=ALL-UNNAMED -jar /Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture/applications/spring-gf-redis-server/target/spring-gf-redis-server-0.1.0-SNAPSHOT.jar --spring.profiles.active=server2 --spring.config.location=file:/Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture/applications/spring-gf-redis-server/src/main/resources/application-server2.yaml --gemfire.gemfire-for-redis-port=63792
+```
+
+Server 3
+```shell
+mkdir -p  runtime/server3
+cd runtime/server3
+java --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-exports  java.management/com.sun.jmx.remote.security=ALL-UNNAMED --add-exports  java.base/sun.nio.ch=ALL-UNNAMED -jar /Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture/applications/spring-gf-redis-server/target/spring-gf-redis-server-0.1.0-SNAPSHOT.jar --spring.profiles.active=server3 --spring.config.location=file:/Users/Projects/VMware/Tanzu/TanzuData/Spring/dev/spring-modern-data-architecture/applications/spring-gf-redis-server/src/main/resources/application-server3.yaml --server-port=0 --gemfire.gemfire-for-redis-port=63793
 ```
 
 

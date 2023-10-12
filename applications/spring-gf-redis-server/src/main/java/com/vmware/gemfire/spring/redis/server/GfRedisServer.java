@@ -24,7 +24,7 @@ public class GfRedisServer {
 
         Config.loadArgs(args);
 
-        System.setProperty(REDIS_PORT_PROP,Config.getProperty(REDIS_PORT_PROP,DEFAULT_REDIS_PORT));
+        System.setProperty(REDIS_PORT_PROP,Config.getProperty("gemfire.gemfire-for-redis-port",DEFAULT_REDIS_PORT));
         System.setProperty("gemfire-for-redis-enabled","true");
         System.setProperty("gemfire-for-redis-use-default-region-config","false");
         System.setProperty("gemfire-for-redis-use-default-region-config","false");

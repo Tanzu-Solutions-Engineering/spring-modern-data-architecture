@@ -5,7 +5,7 @@ spring:
       cache:
         name: server2
         server:
-         port: 10334
+         port: 10112
 gemfire:
   gemfire-for-redis-port: 6279
 #  remote-distributed-system-id: 1

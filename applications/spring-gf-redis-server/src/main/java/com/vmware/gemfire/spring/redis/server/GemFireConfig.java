@@ -8,7 +8,6 @@
 package com.vmware.gemfire.spring.redis.server;
 
 
-import com.vmware.gemfire.redis.internal.data.RedisData;
 import com.vmware.gemfire.redis.internal.data.RedisKey;
 import com.vmware.gemfire.redis.internal.data.RedisString;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +45,9 @@ public class GemFireConfig {
     @Value("${gemfire.redis.region.type:PARTITION}")
     private String regionTypeName;
 
+    @Value("${gemfire.gemfire-for-redis-port:6379}")
+    private String redisPort;
+
     /**
      *
      * @param gemFireCache the GemFire cache
@@ -75,6 +76,28 @@ public class GemFireConfig {
         region.setRegionConfigurers(configurer);
 
         return region;
+    }
+
+    @Bean
+    RegionConfigurer regionConfigurer() {
+
+        return new RegionConfigurer() {
+
+            @Override
+            public void configure(String beanName, PeerRegionFactoryBean<?, ?> regionBean) {
+
+
+                System.setProperty("gemfire-for-redis-port", redisPort);
+                System.setProperty("gemfire-for-redis-enabled","true");
+                System.setProperty("gemfire-for-redis-use-default-region-config","false");
+                System.setProperty("gemfire-for-redis-use-default-region-config","false");
+                System.setProperty("gemfire-for-redis-region-name",GemFireConfig.REGION_NAME);
+
+//                if (REGION_NAME.equals(beanName)) {
+//                    regionBean.setGatewaySenders(asArray(gatewaySender));
+//                }
+            }
+        };
     }
 
     /**

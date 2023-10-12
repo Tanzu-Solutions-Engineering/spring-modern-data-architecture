@@ -14,7 +14,7 @@ cf marketplace
 ## GemFire for Redis
 
 #small
-cf create-service p-cloudcache dev-plan-small  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
+cf create-service p-cloudcache small  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
 
 ## My SQL
 
@@ -87,7 +87,6 @@ cf create-service-key retail-gf-redis retail-gf-redis-key
 
 # Inspect the service key:
 cf service-key retail-gf-redis retail-gf-redis-key
-
 
 #-------------------
 # Create a service key RabbitMQ

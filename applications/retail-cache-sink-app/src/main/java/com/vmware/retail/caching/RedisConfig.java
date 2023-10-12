@@ -8,6 +8,7 @@
 package com.vmware.retail.caching;
 
 import com.vmware.retail.repository.CustomerFavoriteRepository;
+import lombok.extern.slf4j.Slf4j;
 import nyla.solutions.core.util.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -24,6 +26,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * RedisConfig
@@ -32,10 +35,14 @@ import java.util.Calendar;
  */
 @Configuration
 @EnableRedisRepositories(basePackageClasses = CustomerFavoriteRepository.class)
+@Slf4j
 public class RedisConfig
 {
     @Value("${spring.application.name}")
     private String applicationName;
+
+    @Value("${spring.data.redis.cluster.nodes:}")
+    private List<String> nodes;
 
     @Bean
     public RedisSerializer redisSerializer()
@@ -43,14 +50,10 @@ public class RedisConfig
         return new GenericJackson2JsonRedisSerializer();
     }
 
-    /**
-     * Type safe representation of application.properties
-     */
-
-    public @Bean RedisConnectionFactory connectionFactory(RedisClusterConfigurationProperties clusterProperties) {
-
-        return new LettuceConnectionFactory(
-                new RedisClusterConfiguration(clusterProperties.getNodes()));
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        RedisClusterConfiguration config = new RedisClusterConfiguration(nodes);
+        return new JedisConnectionFactory(config);
     }
 
     @Bean

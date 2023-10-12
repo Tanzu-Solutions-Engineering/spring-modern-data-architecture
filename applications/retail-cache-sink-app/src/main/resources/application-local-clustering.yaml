@@ -1,0 +1,5 @@
+spring:
+  data:
+    redis:
+      cluster:
+        nodes: localhost:6383,localhost:6379,localhost:6380

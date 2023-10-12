@@ -6,13 +6,17 @@ spring:
     name: retail-web-app
   config:
     import: "optional:configserver:"
-  redis:
+#  redis:
     cluster:
 #      Comma-delimited list of host:port pairs.
 #      nodes: localhost:6379,localhost:6372
-      nodes: localhost:6379
+      nodes: localhost:6380,localhost:6383,localhost:6379
 #   Number of allowed cluster redirections.
       max-redirects: 1
+  data:
+    redis:
+      cluster:
+        nodes: localhost:6379
 #  redis:
 #    redis-sentinel://[password@]host[:port][,host2[:port2]][/databaseNumber]#sentinelMasterId for using Redis Sentinel
 #    url: redis-sentinel://localhost:6379

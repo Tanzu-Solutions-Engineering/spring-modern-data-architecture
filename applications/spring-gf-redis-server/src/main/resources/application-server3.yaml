@@ -1,3 +1,5 @@
+server:
+  port: 0
 spring:
   data:
     gemfire:
@@ -5,7 +7,7 @@ spring:
       cache:
         name: server3
         server:
-          port: 10334
+          port: 10133
 gemfire:
-  gemfire-for-redis-port: 6379
+  gemfire-for-redis-port: 63793
 #  remote-distributed-system-id: 1

@@ -7,6 +7,6 @@ spring:
       cache:
         name: server1
         server:
-          port: 10334
+          port: 10111
   application:
     name: "spring-gf-redis-server"

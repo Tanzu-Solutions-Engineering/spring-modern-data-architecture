@@ -8,7 +8,12 @@ spring:
   redis:
     cluster:
       #      Comma-delimited list of host:port pairs.
-      nodes: localhost:6379
+      nodes:
+  data:
+    redis:
+      cluster:
+        nodes: localhost:6379
+      client-type: jedis
   cloud:
 #    function.definition: saveFavoritesConsumer;orderConsumer
     function:
