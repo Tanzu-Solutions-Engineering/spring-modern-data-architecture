@@ -56,3 +56,11 @@ Spring Boot App source to provide API integration interfaces to send to RabbitMQ
 | [spring-gf-locator](applications/spring-gf-locator)           | Spring Boot with [Embedded GemFire locator](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/configuring-running-running_the_locator.html)                                                               |
  | [spring-gf-redis-server](applications/spring-gf-redis-server) | Spring Boot Redis Server with [Embedded GemFire cache server](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/configuring-running-running_the_cacheserver.html)                                         |
 
+# Building Applications
+
+Note this projects required Java version 17.
+Set the JAVA_HOME prior to building the application.
+
+Building the application
+
+
