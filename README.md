@@ -58,9 +58,12 @@ Spring Boot App source to provide API integration interfaces to send to RabbitMQ
 
 # Building Applications
 
-Note this projects required Java version 17.
-Set the JAVA_HOME prior to building the application.
+Note this projects requires Java version 17.
+Set the JAVA_HOME environment prior to building the application.
 
 Building the application
+```shell
+./mvnw package
+```
 
 
