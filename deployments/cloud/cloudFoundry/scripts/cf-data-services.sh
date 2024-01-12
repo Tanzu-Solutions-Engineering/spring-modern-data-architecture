@@ -11,11 +11,12 @@
 
 ## GemFire for Redis
 
-cf create-service p-cloudcache dev-plan-small  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
+cf create-service p-cloudcache extra-small  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":1,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
 
-## My SQL
+## SQL
 
-cf create-service p.mysql db-small retail-mysql
+#cf create-service p.mysql free retail-sql
+cf create-service postgres   on-demand-postgres-small retail-sql
 
 
 ## RabbitMQ
@@ -37,13 +38,13 @@ do
 done
 
 
-mysql_status=`cf service retail-mysql | grep status:`
+mysql_status=`cf service retail-sql | grep status:`
 echo "Waiting for mysql, current status:" $mysql_status
 while [[ "$mysql_status" != *"create succeeded"* ]]
 do
   echo "Waiting for mysql, current status:" $mysql_status
   sleep 1
-  mysql_status=`cf service retail-mysql | grep status:`
+  mysql_status=`cf service retail-sql | grep status:`
 done
 
 
@@ -73,7 +74,7 @@ cf service-key retail-rabbitmq retail-rabbitmq-key
 
 #-------------------
 # Create a service key MySQL
-cf create-service-key retail-mysql retail-mysql-key
+cf create-service-key retail-sql retail-sql-key
 
 # Inspect the service key:
-cf service-key retail-mysql retail-mysql-key
+cf service-key retail-sql retail-sql-key

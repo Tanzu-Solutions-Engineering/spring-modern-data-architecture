@@ -47,11 +47,11 @@ public class RedisConfig
      * Type safe representation of application.properties
      */
 
-    public @Bean RedisConnectionFactory connectionFactory(RedisClusterConfigurationProperties clusterProperties) {
-
-        return new LettuceConnectionFactory(
-                new RedisClusterConfiguration(clusterProperties.getNodes()));
-    }
+//    public @Bean RedisConnectionFactory connectionFactory(RedisClusterConfigurationProperties clusterProperties) {
+//
+//        return new LettuceConnectionFactory(
+//                new RedisClusterConfiguration(clusterProperties.getNodes()));
+//    }
 
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory, RedisSerializer redisSerializer)

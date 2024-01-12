@@ -18,7 +18,7 @@ cf create-service p-cloudcache dev-plan-small  retail-gf-redis -c '{"gemfire_for
 
 ## My SQL
 
-cf create-service p.mysql db-small retail-mysql
+cf create-service p.mysql db-small retail-sql
 
 
 ## RabbitMQ
@@ -42,13 +42,13 @@ do
 done
 
 
-mysql_status=`cf service retail-mysql | grep status:`
+mysql_status=`cf service retail-sql | grep status:`
 echo "Waiting for mysql, current status:" $mysql_status
 while [[ "$mysql_status" != *"create succeeded"* ]]
 do
   echo "Waiting for mysql, current status:" $mysql_status
   sleep 1
-  mysql_status=`cf service retail-mysql | grep status:`
+  mysql_status=`cf service retail-sql | grep status:`
 done
 
 
@@ -99,7 +99,7 @@ cf service-key retail-rabbitmq retail-rabbitmq-key
 
 #-------------------
 # Create a service key MySQL
-cf create-service-key retail-mysql retail-mysql-key
+cf create-service-key retail-sql retail-sql-key
 
 # Inspect the service key:
-cf service-key retail-mysql retail-mysql-key
+cf service-key retail-sql retail-sql-key

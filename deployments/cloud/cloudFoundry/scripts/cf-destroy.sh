@@ -6,7 +6,7 @@
 #
 
 # Create a service key MySQL
-cf delete-service-key retail-mysql retail-mysql-key
+cf delete-service-key retail-sql retail-sql-key
 
 
 # Create a service key RabbitMQ
@@ -36,7 +36,7 @@ cf delete-service retail-rabbitmq
 
 
 ## My SQL
-cf delete-service retail-mysql
+cf delete-service retail-sql
 
 ## GemFire for Redis
 cf delete-service retail-gf-redis

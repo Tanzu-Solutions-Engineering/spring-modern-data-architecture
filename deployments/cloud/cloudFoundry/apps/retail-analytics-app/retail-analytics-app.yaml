@@ -1,10 +1,10 @@
 applications:
   - name: retail-analytics-app
-    memory: 1G
+    memory: 700M
     log-rate-limit-per-second: -1
     services:
       - retail-rabbitmq
-      - retail-mysql
+      - retail-sql
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'
       spring.profiles.active: 'mysql,rabbit-product-quorum'
