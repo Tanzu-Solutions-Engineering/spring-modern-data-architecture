@@ -2,6 +2,8 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: retail-web-app
   config:

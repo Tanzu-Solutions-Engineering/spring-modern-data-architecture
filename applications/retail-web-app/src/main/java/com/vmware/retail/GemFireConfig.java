@@ -10,6 +10,7 @@ package com.vmware.retail;
 import com.vmware.retail.domain.CustomerFavorites;
 import com.vmware.retail.domain.Product;
 import com.vmware.retail.domain.Promotion;
+import com.vmware.retail.events.CacheListerConsumerBridge;
 import com.vmware.retail.repository.gemfire.CustomerFavoriteGemFireRepository;
 import com.vmware.retail.repository.gemfire.ProductGemFireRepository;
 import com.vmware.retail.repository.gemfire.PromotionGemFireRepository;
@@ -24,6 +25,8 @@ import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.Interest;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
+
+import java.util.function.Consumer;
 
 
 @Profile("gemfire")
@@ -57,8 +60,8 @@ public class GemFireConfig {
     }
 
     @Bean
-    CacheListener<String, Promotion> listener(){
-
+    CacheListener<String, Promotion> listener(Consumer<Promotion> promotionConsumer){
+        return new CacheListerConsumerBridge(promotionConsumer);
     }
 
     @Bean("Promotion")

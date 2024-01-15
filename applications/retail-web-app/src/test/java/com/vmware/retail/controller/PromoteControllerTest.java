@@ -10,12 +10,10 @@ package com.vmware.retail.controller;
 import com.vmware.retail.domain.Product;
 import com.vmware.retail.domain.Promotion;
 import com.vmware.retail.repository.PromotionRepository;
-import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Optional;
 
@@ -30,8 +28,6 @@ class PromoteControllerTest
 {
     @Mock
     private PromotionRepository repository;
-    @Mock
-    private RedisTemplate<String, Promotion> template;
     private Promotion expected = new Promotion("1",
             "new stuff",
             toList(new Product("3L","productName")));
@@ -41,7 +37,7 @@ class PromoteControllerTest
     {
         when(repository.findById(anyString())).thenReturn(Optional.of(expected));
         System.out.println(expected);
-        var subject = new PromoteController(repository,template);
+        var subject = new PromoteController(repository);
 
         subject.savePromotion(expected);
         assertEquals(expected,subject.getPromotion(expected.id()));
