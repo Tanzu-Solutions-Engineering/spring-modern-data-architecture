@@ -8,12 +8,14 @@
 package com.vmware.retail.caching;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 @ConfigurationProperties(prefix = "spring.redis.cluster")
+@Profile("redis")
 public class RedisClusterConfigurationProperties {
     /*
      * spring.redis.cluster.nodes[0] = 127.0.0.1:7379

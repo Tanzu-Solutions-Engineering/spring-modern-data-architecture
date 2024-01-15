@@ -10,7 +10,6 @@ package com.vmware.retail.caching.consumers;
 import com.vmware.retail.domain.Promotion;
 import com.vmware.retail.repository.PromotionRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
@@ -21,14 +20,12 @@ import java.util.function.Consumer;
  */
 @Component
 @Slf4j
-public record SavePromotionConsumer(PromotionRepository promotionRepository,
-                                    RedisTemplate redisTemplate) implements Consumer<Promotion> {
+public record SavePromotionConsumer(PromotionRepository promotionRepository) implements Consumer<Promotion> {
 
     @Override
     public void accept(Promotion promotion) {
         log.info("Saving Promotion: {}",promotion);
         promotionRepository.save(promotion);
 
-        this.redisTemplate.convertAndSend(promotion.id(),promotion);
     }
 }

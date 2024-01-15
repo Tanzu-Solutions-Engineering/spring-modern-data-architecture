@@ -14,11 +14,11 @@ cf marketplace
 ## GemFire for Redis
 
 #small
-cf create-service p-cloudcache dev-plan-small  retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
+cf create-service p-cloudcache extra-small retail-gf-redis -c '{"gemfire_for_redis_enabled":"true","gemfire_for_redis_redundant_copies":2,"gemfire_for_redis_region_name": "GF_REDIS"}' -t redis
 
-## My SQL
+##  SQL
 
-cf create-service p.mysql db-small retail-sql
+cf create-service postgres on-demand-postgres-small retail-sql
 
 
 ## RabbitMQ
