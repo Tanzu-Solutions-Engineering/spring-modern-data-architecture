@@ -1,0 +1,1 @@
+kubectl exec -it gf-redis-locator-0 -- gfsh -e "connect --locator=gf-redis-locator-0.gf-redis-locator.retail-demo.svc.cluster.local[10334]" -e "create region --name=CustomerFavorites --type=PARTITION" -e "create region --name=Product --type=PARTITION" -e "create region --name=Promotion --type=PARTITION"

@@ -1,0 +1,1 @@
+kubectl exec -it postgres-db-0 -c pg-container -- psql -d postgres-db -U pgadmin

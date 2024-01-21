@@ -19,6 +19,8 @@ spec:
         - env:
             - name: spring.rabbitmq.host
               value: rabbitmq
+            - name: spring.profiles.active
+              value: gemfire
             - name: spring.rabbitmq.username
               valueFrom:
                 secretKeyRef:
@@ -29,8 +31,11 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-default-user
                   key: password
-            - name: spring.redis.cluster.nodes
-              value: gf-redis-server-0:6379,gf-redis-server-1:6379
+            - name: spring.data.gemfire.pool.default.locators
+              valueFrom:
+                configMapKeyRef:
+                  name: gf-redis-config
+                  key: locators
 #          readinessProbe:
 #            httpGet:
 #              path: /actuator/health

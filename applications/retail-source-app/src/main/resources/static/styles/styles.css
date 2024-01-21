@@ -1,0 +1,136 @@
+body {
+
+    font: 14px/20px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 10px;
+    color: #ffffff;
+    background-color: #1A2A31;
+    border: 15px solid #ffffff;
+    margin: 0;
+}
+
+h2,h3,h4 {
+ color: #00f5ff
+}
+
+/* ----------------- */
+/* ------ Menu------ */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+/* ----------------- */
+#dataRows {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 460px;
+  color: #1A2A31
+}
+
+#dataRows table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 460px;
+  color: #1A2A31
+}
+
+
+#dataRows td, #dataRows th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#dataRows tr:nth-child(even){background-color: #f2f2f2;}
+#dataRows tr:nth-child(odd){color: #f2f2f2;}
+
+#dataRows tr:hover {background-color: #ddd;}
+
+#dataRows th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #80EB6E;
+  color: #1A2A31;
+}
+
+a {
+    color: #76949F;
+    text-decoration: none;
+}
+
+.error
+{
+	color: red;
+}
+
+:root {
+    --spring-blue: #34b8d6;
+    --spring-green: #24bf4b;
+    --spring-black: #1b1f23;
+    --spring-off-black: #262a2d;
+    --spring-light-grey: #babbbd;
+    --vmware-purple: #553ea3;
+    --white: white;
+
+    --gradient-bg-right: linear-gradient(
+        to right,
+        var(--spring-green) 0%,
+        var(--spring-green) 70%,
+        #242c2c 70%,
+        #242c2c 100%
+    );
+
+}
+.promotions-container a {
+    color: var(--white);
+}
+
+.promotions-container a:hover {
+    text-decoration: none;
+}
+
+.promotion {
+    background-color: var(--spring-blue);
+    color: var(--white);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: left;
+    margin: 15px;
+    padding: 15px;
+    text-transform: capitalize;
+}
+
+.promotion-action {
+    display: flex;
+    align-items: left;
+    font-size: 10px;
+}
+.promotion-action i {
+    font-size: 15px;
+}
+.promotions-header {
+    display: flex;
+    flex: 1;
+    justify-content: left;
+}

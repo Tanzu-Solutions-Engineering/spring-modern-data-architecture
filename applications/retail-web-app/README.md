@@ -26,7 +26,7 @@ java  --add-opens java.base/sun.nio.ch=ALL-UNNAMED -jar applications/spring-gf-r
 ```
 
 ```shell
-java -jar applications/retail-web-app/target/retail-web-app-0.0.1-SNAPSHOT.jar --retail.customer.id=nyla
+java -jar applications/retail-web-app/target/retail-web-app-0.1.0-SNAPSHOT.jar --retail.customer.id=nyla
 ```
 
 
@@ -40,6 +40,6 @@ mvn spring-boot:build-image
 ```
 
 ```shell
-docker tag retail-web-app:0.0.1-SNAPSHOT cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
-docker push cloudnativedata/retail-web-app:0.0.1-SNAPSHOT
+docker tag retail-web-app:0.1.0-SNAPSHOT cloudnativedata/retail-web-app:0.1.0-SNAPSHOT
+docker push cloudnativedata/retail-web-app:0.1.0-SNAPSHOT
 ```

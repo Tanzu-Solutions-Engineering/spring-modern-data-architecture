@@ -1,0 +1,16 @@
+apiVersion: sql.tanzu.vmware.com/v1
+kind: Postgres
+metadata:
+  name: postgres-db
+spec:
+#  storageClassName: standard
+  storageSize: 10G
+  serviceType: ClusterIP
+  resources:
+    data:
+      limits:
+        cpu: 800m
+        memory: 800Mi
+      requests:
+        cpu: 800m
+        memory: 800Mi

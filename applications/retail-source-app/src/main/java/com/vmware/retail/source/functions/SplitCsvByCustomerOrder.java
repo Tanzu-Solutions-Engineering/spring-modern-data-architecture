@@ -68,7 +68,6 @@ public class SplitCsvByCustomerOrder implements Consumer<String> {
 
         String customerId = csvReader.get(0, customerIdCol, CsvReader.DataType.String);
 
-        // return csvList.stream().map(csvCustomerOrder -> streamBridge.apply(csvCustomerOrder)).toList();
         csvList.forEach(outCsv -> {
             rabbitTemplate.convertAndSend(exchange, customerId, this.streamBridge.apply(outCsv));
         });

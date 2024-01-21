@@ -1,31 +1,11 @@
-# Run App
 
 
-```shell
-java -jar applications/retail-source-app/target/retail-source-app-0.0.2-SNAPSHOT.jar
-```
-
-## Docker building image
-
-```shell
-mvn install
-cd applications/retail-source-app
-mvn spring-boot:build-image
-```
-
-```shell
-docker tag retail-source-app:0.0.2-SNAPSHOT cloudnativedata/retail-source-app:0.0.2-SNAPSHOT
-docker push cloudnativedata/retail-source-app:0.0.2-SNAPSHOT
-```
-
-
-# Testing 
-
-## Products
-
-
-```json
-[
+curl -X 'POST' \
+  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.products' \
+  -H 'accept: */*' \
+  -H 'rabbitContentType: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '[
 	{"id" : "sku1", "name" : "Peanut butter"},
 	{"id" : "sku2", "name" : "Jelly"},
 	{"id" : "sku3", "name" : "Bread"},
@@ -584,18 +564,120 @@ docker push cloudnativedata/retail-source-app:0.0.2-SNAPSHOT
 	{"id" : "sku556", "name" : "Tortilla Chips"},
 	{"id" : "sku557", "name" : "Tuna"},
 	{"id" : "sku558", "name" : "Vegetable Oil"}
-]
+]'
+
+
+# Clean
+curl -X 'POST' \
+  'http://172.16.100.83:8080/customer/favorites/favorite' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "nyla",
+  "favorites": [
+  ]
+}'
+
+  curl -X 'POST' \
+  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.customer.orders&routingKey=nyla' \
+  -H 'accept: */*' \
+  -H 'rabbitContentType: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"id":4,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1},
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku2","quantity":1}
+  ]}'
+
+No recommendations
+
+### Buy Peanut Butter and Jelly
+
+- Goto Exchanges -> retail.customer.orders
+
+```shell
+  curl -X 'POST' \
+  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.customer.orders&routingKey=nyla' \
+  -H 'accept: */*' \
+  -H 'rabbitContentType: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"id":1,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1},
+    {"productId":"sku3","quantity":1},
+    {"productId":"sku2","quantity":1}
+  ]}'
 ```
 
-## Orders
-
-Headers
-
-orderId, customer,productId,quantity
+- Click publish message
 
 
-```csv
-"5","nyla","sku4","1"
-"5","nyla","sku1","1"
-"5","nyla","sku2","1"
+Recommendation should be Peanut butter
+
+
+
+### Buy Peant
+
+
+
+```shell
+  curl -X 'POST' \
+  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.customer.orders&routingKey=nyla' \
+  -H 'accept: */*' \
+  -H 'rabbitContentType: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"id":3,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku1","quantity":1},
+    {"productId":"sku3","quantity":1},
+    {"productId":"sku4","quantity":1}
+  ]}'
+```
+
+Recommendation should include Peanut butter/Jelly
+
+---------------
+
+
+# CleanUp
+
+Remove Cached Customer Favorites
+
+```shell
+curl -X 'POST' \
+  'http://172.16.100.83:8080/customer/favorites/favorite' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "nyla",
+  "favorites": [
+  ]
+}'
+```
+
+
+
+
+
+
+
+
+---------------
+
+
+### Buy Milk
+
+
+
+```shell
+  curl -X 'POST' \
+  'http://analytics-cloud/amqp/{exchange}/{routingKey}?exchange=retail.customer.orders&routingKey=nyla' \
+  -H 'accept: */*' \
+  -H 'rabbitContentType: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"id":3,"customerIdentifier":{"customerId":"nyla"},
+  "productOrders":[
+    {"productId":"sku4","quantity":1}
+  ]}'
 ```

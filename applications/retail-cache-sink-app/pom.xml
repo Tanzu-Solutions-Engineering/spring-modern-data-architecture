@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.vmware</groupId>
 	<artifactId>retail-cache-sink-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.2-SNAPSHOT</version>
 	<name>retail-cache-sink-app </name>
 	<description>retail-cache-sink-app </description>
 	<properties>

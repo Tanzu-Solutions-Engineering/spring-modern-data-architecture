@@ -4,6 +4,108 @@
   ~  * SPDX-License-Identifier: GPL-3.0
   ~  */
   -->
-<ul>
-    <li><a href="/swagger-ui.html">Swagger-UI</a></li>
-</ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+        .dataTable {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        .dataTable td, .dataTable th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+
+        .dataTable tr:nth-child(even){background-color: #f2f2f2;}
+
+        .dataTable tr:hover {background-color: #ddd;}
+
+        .dataTable th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+          $("#loadButton").click(function(){
+
+           var productCsv = $('#productsCsv').val();
+           //alert(productCsv);
+            $.ajax({
+              url:"products/csv",
+              type:"POST",
+              data:productCsv,
+              contentType:"text/csv; charset=utf-8",
+              dataType:"text",
+              success: function(result,status,xhr){
+                $("#status").html(status);
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+                 alert(xhr.status);
+                    alert(thrownError);
+              }
+            });
+          });
+          //----------------------------
+          $("#orderButton").click(function(){
+
+           var ordersCsv = $('#ordersCsv').val();
+
+           //clear status
+           $("#status").html("");
+
+            $.ajax({
+              url:"orders/csv",
+              type:"POST",
+              data:ordersCsv,
+              contentType:"text/csv; charset=utf-8",
+              dataType:"text",
+              success: function(result,status,xhr){
+                $("#status").html(status);
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+                 alert(xhr.status);
+                    alert(thrownError);
+              }
+            });
+          });
+
+        });
+    </script>
+</head>
+    <body>
+    <h1>Retail Source</h1>
+
+    <ul>
+        <li><a href="/swagger-ui.html">Swagger-UI</a></li>
+    </ul>
+
+    <button id="loadButton">Load Product</button>
+    <div id="status"></div>
+    <h2>Products</h2>
+    <p>
+    <div>&quot;id&quot;,&quot;name&quot;</div>
+<textarea id="productsCsv" rows="5" cols="50">"sku1", "Peanut butter"
+"sku2", "Jelly"
+"sku3", "Bread"
+"sku4", "Milk"</textarea>
+    </p>
+    <div>
+        <button id="orderButton">Submit Order</button>
+        <h2>Orders</h2>
+        <div>&quot;id&quot;,&quot;user&quot;,&quot;id&quot;,&quot;quantity&quot;</div>
+<textarea id="ordersCsv" rows="5" cols="50">"1","nyla","sku1","1"
+"1","nyla","sku2","1"</textarea>
+
+    </div>
+    </body>
+</html>

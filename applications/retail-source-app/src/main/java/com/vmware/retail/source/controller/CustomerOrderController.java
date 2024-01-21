@@ -20,13 +20,14 @@ import java.util.function.Consumer;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("retail")
+@RequestMapping("orders")
 @Slf4j
 public class CustomerOrderController {
 
     private final Consumer<String> splitCsvByCustomerOrder;
 
-    @PostMapping("orders")
+    @PostMapping
+    @RequestMapping("csv")
     public void processCsvOrders(@RequestBody String csvOrders) {
         try {
             splitCsvByCustomerOrder.accept(csvOrders);

@@ -31,7 +31,7 @@ kubectl create secret docker-registry regsecret \
 --docker-password=$HARBOR_PASSWORD -n sql-system
 
 
-helm pull oci://registry.tanzu.vmware.com/tanzu-sql-postgres/vmware-sql-postgres-operator --version v2.1.0 --untar --untardir /tmp
+helm pull oci://registry.tanzu.vmware.com/tanzu-sql-postgres/vmware-sql-postgres-operator --version v2.2.0 --untar --untardir /tmp
 
 kubectl create namespace sql-system
 

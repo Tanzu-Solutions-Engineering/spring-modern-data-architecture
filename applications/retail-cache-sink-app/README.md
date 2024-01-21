@@ -47,6 +47,6 @@ mvn spring-boot:build-image
 ```
 
 ```shell
-docker tag retail-cache-sink-app:0.0.1-SNAPSHOT cloudnativedata/retail-cache-sink-app:0.0.1-SNAPSHOT
-docker push cloudnativedata/retail-cache-sink-app:0.0.1-SNAPSHOT
+docker tag retail-cache-sink-app:0.1.2-SNAPSHOT cloudnativedata/retail-cache-sink-app:0.1.2-SNAPSHOT
+docker push cloudnativedata/retail-cache-sink-app:0.1.2-SNAPSHOT
 ```
