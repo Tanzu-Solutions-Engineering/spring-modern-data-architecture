@@ -7,6 +7,11 @@ set -x #echo on
 kubectl create namespace cert-manager
 kubectl create namespace sql-system
 
+kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+kubectl apply -f deployments/cloud/k8/dataServices/postgres/storage-class.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/4951bdd726dd09b9659a49dcadfb6b0cb3f7863f/deployments/cloud/k8/dataServices/postgres/storage-class.yaml
+
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
 
 sleep 5
