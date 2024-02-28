@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: "2024-02-28T15:09:35Z"
   labels:
     addonmanager.kubernetes.io/mode: EnsureExists
-  name: standard-wait-4-customer
+  name: tanzu-data-services
   resourceVersion: "297"
   uid: 6c6ecd01-863b-47a0-ba97-9d73aa51cfe2
 provisioner: k8s.io/minikube-hostpath
