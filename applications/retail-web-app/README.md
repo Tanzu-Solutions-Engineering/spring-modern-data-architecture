@@ -26,7 +26,7 @@ java  --add-opens java.base/sun.nio.ch=ALL-UNNAMED -jar applications/spring-gf-r
 ```
 
 ```shell
-java -jar applications/retail-web-app/target/retail-web-app-0.1.0-SNAPSHOT.jar --retail.customer.id=nyla
+java -jar applications/retail-web-app/target/retail-web-app-0.1.0-SNAPSHOT.jar --spring.profile.active=gemfire --spring.data.gemfire.pool.default.locators=localhost[10334] --retail.customer.id=nyla
 ```
 
 

@@ -11,6 +11,9 @@ import com.vmware.retail.domain.Product;
 import com.vmware.retail.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Locale;
+
 /**
  * ProductController
  *
@@ -30,5 +33,12 @@ public record ProductController(ProductRepository repository)
     public Product getProductById(@PathVariable String id)
     {
         return repository.findById(id).orElse(null);
+    }
+
+    @GetMapping("product/name/{name}")
+    public List<Product> getProductsByNameContaining(String name) {
+        if(name != null)
+            name = name.toLowerCase(Locale.ROOT);
+        return repository.findByNameContaining(name);
     }
 }

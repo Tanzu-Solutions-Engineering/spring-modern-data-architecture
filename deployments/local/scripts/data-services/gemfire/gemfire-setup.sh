@@ -5,7 +5,6 @@
 #  */
 #
 
-export GEMFIRE_HOME=/Users/devtools/repositories/IMDG/gemfire/vmware-gemfire-10.0.2
 cd $GEMFIRE_HOME/bin
 
 $GEMFIRE_HOME/bin/gfsh -e "start locator --name=locator"

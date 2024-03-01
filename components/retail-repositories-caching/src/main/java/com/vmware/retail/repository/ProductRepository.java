@@ -11,6 +11,8 @@ import com.vmware.retail.domain.Product;
 import org.springframework.data.keyvalue.repository.KeyValueRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * ProductRepository
  *
@@ -20,5 +22,6 @@ import org.springframework.stereotype.Repository;
     public interface ProductRepository
             extends KeyValueRepository<Product,String>
     {
+        List<Product> findByNameContaining(String name);
     }
 

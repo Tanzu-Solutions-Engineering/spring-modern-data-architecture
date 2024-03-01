@@ -10,6 +10,7 @@ package com.vmware.retail.controller;
 import com.vmware.retail.domain.Product;
 import com.vmware.retail.repository.ProductRepository;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -17,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
@@ -28,18 +31,38 @@ class ProductControllerTest
 
     @Mock
     private ProductRepository repository;
+    private Product product = JavaBeanGeneratorCreator.of(Product.class).create();
+    private ProductController subject;
+    private String name = "Pistachios";
+
+    @BeforeEach
+    void setUp() {
+        subject = new ProductController(repository);
+    }
+
+    @Test
+    void findByNameContainingWhenNameNull() {
+        assertDoesNotThrow(()-> subject.getProductsByNameContaining(null));
+    }
+
+    @Test
+    void findByNameContaining() {
+        var expected = asList(product);
+        when(repository.findByNameContaining(anyString())).thenReturn(expected);
+        var actual = subject.getProductsByNameContaining(name);
+
+        assertEquals(expected, actual);
+    }
 
     @Test
     void given_product_When_saveProduct_Then_GetProduct_Equals_Saved()
     {
-        var product = JavaBeanGeneratorCreator.of(Product.class).create();
         when(repository.findById(anyString())).thenReturn(Optional.of(product));
-
-        var subject = new ProductController(repository);
 
         subject.saveProduct(product);
 
         assertEquals(product,subject.getProductById(product.id()));
         verify(repository).save(any());
     }
+
 }

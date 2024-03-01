@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.GemFireCache;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -36,6 +37,9 @@ import java.util.function.Consumer;
 @Slf4j
 @ClientCacheApplication(subscriptionEnabled = true)
 public class GemFireConfig {
+
+    @Value("${spring.data.gemfire.pool.default.locators}")
+    private String locators;
 
     public GemFireConfig(){
         log.info("Created");

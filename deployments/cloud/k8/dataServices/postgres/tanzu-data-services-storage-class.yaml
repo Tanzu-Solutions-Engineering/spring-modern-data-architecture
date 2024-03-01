@@ -1,16 +1,12 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"true"},"labels":{"addonmanager.kubernetes.io/mode":"EnsureExists"},"name":"standard"},"provisioner":"k8s.io/minikube-hostpath"}
-    storageclass.kubernetes.io/is-default-class: "true"
-  creationTimestamp: "2024-02-28T15:09:35Z"
-  labels:
-    addonmanager.kubernetes.io/mode: EnsureExists
   name: tanzu-data-services
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+  creationTimestamp: "2024-02-28T15:09:35Z"
   resourceVersion: "297"
-  uid: 6c6ecd01-863b-47a0-ba97-9d73aa51cfe2
-provisioner: k8s.io/minikube-hostpath
+provisioner: k8s.io/tanzu-data-services
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
