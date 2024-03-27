@@ -36,7 +36,7 @@ public record ProductController(ProductRepository repository)
     }
 
     @GetMapping("product/name/{name}")
-    public List<Product> getProductsByNameContaining(String name) {
+    public List<Product> getProductsByNameContaining(@PathVariable String name) {
         if(name != null)
             name = name.toLowerCase(Locale.ROOT);
         return repository.findByNameContaining(name);

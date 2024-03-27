@@ -1,6 +1,5 @@
 <html>
     <head>
-<!--        <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="styles/styles.css">
 
@@ -64,6 +63,29 @@
 
         }
         </script>
+
+        <script>
+            $(document).ready(function(){
+              $("button").click(function(){
+                //clear panels
+                $("#productsPanel").html("");
+                var productName = $("#productSearch").val();
+                var urlForProductContainsSearch = "products/product/name/"+productName;
+                $.get(urlForProductContainsSearch, function(products, status){
+
+                    var tableHTML = "<table class='dataRows'><tr><th>Id</th><th>Name</th></tr>";
+                    for (let x in products) {
+                        product = products[x];
+
+                        tableHTML +="<tr>"+"<td>"+product.id+"</td>"+"<td>"+product.name+"</td>"+"</tr>";
+                     }
+                     tableHTML +="</table>";
+
+                    $("#productsPanel").html(tableHTML);
+                });
+              });
+            });
+        </script>
     </head>
 
     <body>
@@ -96,7 +118,13 @@
                 </table>
             </div>
         </div>
+        <div>
+            <br/>
+            <button>Find Products</button><input id="productSearch" name="productSearch" type="text"/>
+        </div>
+        <p id="productsPanel">
 
+        </p>
 
 
     <script>

@@ -10,6 +10,29 @@ body {
     margin: 0;
 }
 
+.dataTable {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+.dataTable td, .dataTable th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+.dataTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.dataTable tr:hover {background-color: #ddd;}
+
+.dataTable th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+
 h2,h3,h4 {
  color: #00f5ff
 }
@@ -38,6 +61,39 @@ li a {
 
 li a:hover {
   background-color: #111;
+}
+/* ----------------- */
+.dataRows {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 460px;
+  color: #1A2A31
+}
+
+.dataRows table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 460px;
+  color: #1A2A31
+}
+
+
+.dataRows td, .dataRows th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.dataRows tr:nth-child(even){background-color: #f2f2f2;}
+.dataRows tr:nth-child(odd){color: #f2f2f2;}
+
+.dataRows tr:hover {background-color: #ddd;}
+
+.dataRows th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #80EB6E;
+  color: #1A2A31;
 }
 /* ----------------- */
 #dataRows {
