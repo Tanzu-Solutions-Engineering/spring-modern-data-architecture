@@ -21,12 +21,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
+import org.springframework.data.gemfire.config.annotation.EnableSecurity;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
 
 
 @Profile("gemfire")
 @EnableGemfireRepositories(basePackageClasses = {CustomerFavoriteGemFireRepository.class,
         PromotionGemFireRepository.class, ProductGemFireRepository.class})
+@EnableSecurity
 @Configuration
 @Slf4j
 @ClientCacheApplication

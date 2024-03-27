@@ -35,6 +35,7 @@ cf service-key retail-rabbitmq retail-rabbitmq-key | grep dashboard_url && cf se
 
 The first app we are going to push is the retail source app.
 
+--spring.profiles.active=gemfire
 
 ```shell
 cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml -p applications/retail-source-app/target/retail-source-app-0.0.1-SNAPSHOT.jar
