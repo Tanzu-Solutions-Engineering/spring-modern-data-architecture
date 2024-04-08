@@ -1,6 +1,6 @@
 applications:
   - name: jdbc-sql-console-app
-    memory: 700M
+    memory: 14000M
     log-rate-limit-per-second: -1
     services:
       - retail-sql
