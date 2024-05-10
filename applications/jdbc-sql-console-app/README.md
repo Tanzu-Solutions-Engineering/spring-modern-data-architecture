@@ -1,21 +1,45 @@
 # jdbc-sql-console-app
 
 
-Spring Boot application to perform SQL on an a given database
+Spring Boot application that provides a GUI to perform SQL on in Postgres or MySQL databases.
+
+
+![UI](docs/img/img.png)
 
 
 ## Configuration
 
-Adding the following spring properties
+
+| Properties                 | Notes                                                             |
+|----------------------------|-------------------------------------------------------------------|
+| spring.datasource.url      | Database connection string  Ex: jdbc:mysql://<HOST>:<PORT>/mysql" |
+| spring.datasource.username | Database account name credentials                                 |
+| spring.datasource.password | Database account password credentials                             |
+
+
+
+Running the console
 
 ```shell
-java -jar target/jdbc-sql-console-app-0.0.1-SNAPSHOT.jar --spring.datasource.url="jdbc:mysql://<HOST>:<PORT>/mysql" --spring.datasource.username=${USER} --spring.datasource.password=${MYSQL_DB_PASSWORD}
+java -jar target/jdbc-sql-console-app-0.0.2-SNAPSHOT.jar --spring.datasource.url="jdbc:mysql://<HOST>:<PORT>/mysql" --spring.datasource.username=${USER} --spring.datasource.password=${MYSQL_DB_PASSWORD}
 ```
+
+Running on Docker
+
+```properties
+docker run -p 7280:7280 cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT --server.port=7280 --spring.datasource.url=jdbc:postgresql://host.docker.internal:5432/postgres --spring.datasource.username=postgres
+```
+
 
 ## Tutorial 
 
-You access as Swagger UI to executed query
+You access UI to execute queries
 
+```shell
+open http://localhost:<Port>/
+```
+
+Example
 ```shell
 open http://localhost:7280
 ```
