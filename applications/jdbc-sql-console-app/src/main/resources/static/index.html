@@ -4,6 +4,135 @@
   ~  * SPDX-License-Identifier: GPL-3.0
   ~  */
   -->
-<ul>
-    <li><a href="/swagger-ui.html">Swagger-UI</a></li>
-</ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+        .groove {border-style: groove; width: min-content;}
+        .key { font-weight: bold;}
+        .string { color: blue;}
+        h1 { color: teal; }
+        .labelTable {
+
+               font-family: Arial, Helvetica, sans-serif;
+               border-collapse: collapse;
+             }
+
+             .title
+             {
+                 font-weight: bold;
+             }
+
+              .labelTable td {
+               border: 1px solid #ddd;
+               padding: 8px;
+               width: 200px;
+             }
+
+             .fieldLabel {
+               padding-top: 12px;
+               padding-bottom: 12px;
+               text-align: left;
+               background-color: #659EC7;
+               color: white;
+             }
+
+         .dataTable {
+           font-family: Arial, Helvetica, sans-serif;
+           border-collapse: collapse;
+           width: 100%;
+         }
+
+         .dataTable td, .dataTable th {
+           border: 1px solid #ddd;
+           padding: 8px;
+         }
+
+         .dataTable tr:nth-child(even){background-color: #f2f2f2;}
+
+         .dataTable tr:hover {background-color: #ddd;}
+
+         .dataTable th {
+           padding-top: 12px;
+           padding-bottom: 12px;
+           text-align: left;
+           background-color: #659EC7;
+           color: white;
+         }
+    </style>
+    <script>
+        function decorateString(text)
+        {
+          if(text == undefined)
+            return "&nbsp;";
+          else
+            return new String(text);
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+          $("button").click(function(){
+
+           //clear results
+           $("#resultsPanel").html("");
+            var sqlText =  $("#sql").val();
+
+
+            $.ajax({
+              url:         "query",
+              type:        "POST",
+              data:        sqlText,
+              contentType: "text/plain; charset=utf-8",
+              dataType:    "text",
+              success:     function(data, status){
+
+                var prettyJson = syntaxHighlight(data);
+                $("#resultsPanel").html(prettyJson);
+            }
+            });
+
+          });
+        });
+    </script>
+    <script>
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                 json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+</head>
+    <body style="font-family: system-ui;">
+    <h1>JDBC SQL Console</h1>
+    <hr/>
+
+    <p>
+        <button>Execute Sql</button> <a href="/swagger-ui.html">Swagger</a>
+    </p>
+    <div>
+        <textarea id="sql" name="sql" rows="10" cols="50"></textarea>
+    </div>
+    <br/>
+    <br/>
+    <div class="groove" id="resultsPanel">
+    </div>
+
+    </body>
+</html>

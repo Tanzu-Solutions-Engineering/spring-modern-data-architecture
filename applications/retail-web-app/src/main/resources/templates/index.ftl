@@ -49,7 +49,7 @@
          var product = {};
 
          promotionHTML += "<table id='dataRows'>";
-         promotionHTML += "<tr><th>Product</th></tr>";
+         promotiostetunHTML += "<tr><th>Product</th></tr>";
 
          for (let x in promotion.products) {
             product = promotion.products[x];
