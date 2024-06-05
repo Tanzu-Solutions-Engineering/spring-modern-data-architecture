@@ -19,11 +19,27 @@ cf set-org-quota data-showcase runaway
 
 ```json
 [
-  { "sku1" : "Peanut butter"},
-  { "sku2" : "Jelly"},
-  { "sku3" : "Bread"},
-  { "sku4" : "Milk"}
+  {
+    "id": "sku1",
+    "name": "Peanut butter"
+  },
+  {
+    "id": "sku2",
+    "name": "Jelly"
+  },
+  {
+    "id": "sku3",
+    "name": "Bread"
+  },
+  {
+    "id": "sku4",
+    "name": "Milk"
+  }
 ]
+```
+
+```shell
+cf logs retail-web-app
 ```
 
 

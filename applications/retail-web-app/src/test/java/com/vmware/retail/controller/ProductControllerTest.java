@@ -35,7 +35,7 @@ class ProductControllerTest
     private Product product = JavaBeanGeneratorCreator.of(Product.class).create();
     private ProductController subject;
     private String name = "Pistachios";
-    private List<Product> products = asList(product);
+    private Product[] products = {product};
 
     @BeforeEach
     void setUp() {
@@ -72,6 +72,6 @@ class ProductControllerTest
 
         subject.saveProducts(products);
 
-        verify(repository).saveAll(any());
+        verify(repository).save(any());
     }
 }
