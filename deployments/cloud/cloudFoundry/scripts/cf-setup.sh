@@ -100,15 +100,15 @@ done
 cf push retail-cache-sink-app -f deployments/cloud/cloudFoundry/apps/retail-cache-sink-app/retail-cache-sink-app.yaml -p applications/retail-cache-sink-app/target/retail-cache-sink-app-0.1.2-SNAPSHOT.jar
 
 # retail-source-app
-cf push retail-source-app -f deployments/cloud/cloudFoundry/apps/retail-source-app/retail-source-app.yaml -p applications/retail-source-app/target/retail-source-app-0.0.2-SNAPSHOT.jar
+./deployments/cloud/cloudFoundry/apps/retail-source-app/cf-push.sh
 
 
 # retail-web-app
-cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml -p applications/retail-web-app/target/retail-web-app-0.1.0-SNAPSHOT.jar
+cf push retail-web-app -f deployments/cloud/cloudFoundry/apps/retail-web-app/retail-web-app.yaml -p applications/retail-web-app/target/retail-web-app-0.1.1-SNAPSHOT.jar
 
 
 # retail-analytics-app
-cf push retail-analytics-app -f deployments/cloud/cloudFoundry/apps/retail-analytics-app/retail-analytics-app-postgres.yaml -p applications/retail-analytics-app/target/retail-analytics-app-0.0.3-SNAPSHOT.jar
+./deployments/cloud/cloudFoundry/apps/retail-analytics-app/cf-push.sh
 
 
 # jdbc-sql-console-app

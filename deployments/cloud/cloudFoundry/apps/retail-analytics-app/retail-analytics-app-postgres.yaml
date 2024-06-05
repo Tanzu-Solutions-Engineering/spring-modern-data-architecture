@@ -1,0 +1,17 @@
+applications:
+  - name: retail-analytics-app
+    memory: 1400M
+    log-rate-limit-per-second: -1
+    services:
+      - retail-rabbitmq
+      - retail-sql
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'
+      spring.profiles.active: 'postgres,rabbit-product-quorum'
+
+      spring.datasource.url: ${vcap.services.postgres.credentials.jdbcUrl}
+      spring.datasource.username: ${vcap.services.postgres.credentials.username}
+      spring.datasource.password: ${vcap.services.postgres.credentials.password}
+#      spring.rabbitmq.host: ${vcap.services.rabbitmq.credentials.hostname}
+#      spring.rabbitmq.password: ${vcap.services.rabbitmq.credentials.password}
+#      spring.rabbitmq.virtual-host: ${vcap.services.rabbitmq.credentials.vhost}

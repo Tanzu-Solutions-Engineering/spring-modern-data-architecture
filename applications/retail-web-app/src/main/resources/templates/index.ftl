@@ -49,7 +49,7 @@
          var product = {};
 
          promotionHTML += "<table id='dataRows'>";
-         promotiostetunHTML += "<tr><th>Product</th></tr>";
+         promotionHTML += "<tr><th>Product</th></tr>";
 
          for (let x in promotion.products) {
             product = promotion.products[x];
@@ -95,6 +95,10 @@
         <ul>
             <li><a href="/swagger-ui.html">Swagger-UI</a></li>
         </ul>
+            <div>
+                <br/>
+                <button>Find Products</button><input id="productSearch" name="productSearch" type="text"/>
+            </div>
 
         <div id="promotionsPanel" style="display: none">
             <hr/>
@@ -117,10 +121,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div>
-            <br/>
-            <button>Find Products</button><input id="productSearch" name="productSearch" type="text"/>
         </div>
         <p id="productsPanel">
 

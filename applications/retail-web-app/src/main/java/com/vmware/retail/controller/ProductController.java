@@ -24,10 +24,15 @@ import java.util.Locale;
 public record ProductController(ProductRepository repository)
 {
     @PostMapping("product")
-    public void saveProduct(Product product)
+    public void saveProduct(@RequestBody Product product)
     {
         repository.save(product);
     }
+
+
+
+
+
 
     @GetMapping("product/{id}")
     public Product getProductById(@PathVariable String id)
@@ -40,5 +45,10 @@ public record ProductController(ProductRepository repository)
         if(name != null)
             name = name.toLowerCase(Locale.ROOT);
         return repository.findByNameContaining(name);
+    }
+
+    @PostMapping
+    public void saveProducts(@RequestBody List<Product> products) {
+        repository.saveAll(products);
     }
 }

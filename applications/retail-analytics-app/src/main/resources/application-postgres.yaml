@@ -2,10 +2,10 @@ retail:
   favorites:
     top:
       sql: "SELECT data, total_quantity
-        from products p,
+        from retail.products p,
            (SELECT sum(quantity) total_quantity,
                 product_id
-        FROM customer_orders
+        FROM retail.customer_orders
         WHERE customer_id = ?
         GROUP BY product_id order by total_quantity
         DESC
@@ -19,7 +19,7 @@ retail:
                 SELECT c.original_SKU as original_SKU, c.bought_with as bought_with, count(*) as times_bought_together
                 FROM (
                   SELECT a.product_id as original_SKU, b.product_id as bought_with
-                  FROM customer_orders a
+                  FROM retail.customer_orders a
                   INNER join customer_orders b
                   ON a.order_id = b.order_id AND a.product_id != b.product_id ) c
                 GROUP BY c.original_SKU, c.bought_with
@@ -27,7 +27,7 @@ retail:
                 ORDER BY times_bought_together desc
                 FETCH FIRST 10 rows only) top_associations,
                 (select product_id, sum(quantity) as product_cnt
-                      from customer_orders
+                      from retail.customer_orders
                       group by product_id) count_by_product,
                 products p
                 where count_by_product.product_id = top_associations.original_SKU
@@ -36,7 +36,7 @@ retail:
                 and  p.id = top_associations.bought_with"
   product:
     save:
-      sql: "INSERT INTO products(id, data) 
+      sql: "INSERT INTO retail.products(id, data) 
                 VALUES (:id,to_json(:data::json))
                 ON CONFLICT (id)
                 DO

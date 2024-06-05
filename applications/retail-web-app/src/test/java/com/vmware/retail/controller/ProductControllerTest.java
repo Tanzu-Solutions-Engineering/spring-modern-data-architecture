@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
@@ -34,6 +35,7 @@ class ProductControllerTest
     private Product product = JavaBeanGeneratorCreator.of(Product.class).create();
     private ProductController subject;
     private String name = "Pistachios";
+    private List<Product> products = asList(product);
 
     @BeforeEach
     void setUp() {
@@ -65,4 +67,11 @@ class ProductControllerTest
         verify(repository).save(any());
     }
 
+    @Test
+    void saveProducts() {
+
+        subject.saveProducts(products);
+
+        verify(repository).saveAll(any());
+    }
 }

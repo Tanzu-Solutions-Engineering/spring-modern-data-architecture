@@ -1,0 +1,11 @@
+applications:
+  - name:  gemfire-console
+    memory: 1400M
+    disk_quota: 2048M
+    log-rate-limit-per-second: -1
+#    services:
+#      - retail-gemfire
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+}}'
+      JDK_JAVA_OPTIONS: '--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED'
+      JAVA_TOOL_OPTIONS: ''
