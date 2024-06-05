@@ -1,6 +1,6 @@
 applications:
   - name: retail-analytics-app
-    memory: 14000M
+    memory: 1400M
     log-rate-limit-per-second: -1
     services:
       - retail-rabbitmq
