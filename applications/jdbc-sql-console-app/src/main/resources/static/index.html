@@ -89,6 +89,12 @@
 
                 var prettyJson = syntaxHighlight(data);
                 $("#resultsPanel").html(prettyJson);
+            },
+            error: function (request, status, error) {
+              var htmlError = "<div style='color:red'>"+
+                               request.responseText+
+                               "</div>";
+                 $("#resultsPanel").html(htmlError);
             }
             });
 

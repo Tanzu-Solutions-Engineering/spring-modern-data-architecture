@@ -20,7 +20,7 @@ retail:
                 FROM (
                   SELECT a.product_id as original_SKU, b.product_id as bought_with
                   FROM retail.customer_orders a
-                  INNER join customer_orders b
+                  INNER join retail.customer_orders b
                   ON a.order_id = b.order_id AND a.product_id != b.product_id ) c
                 GROUP BY c.original_SKU, c.bought_with
                 having original_SKU in (:productIds)  and bought_with not in (:productIds)
