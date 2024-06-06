@@ -52,6 +52,9 @@ Register
 ```properties
 sink.retail-analytics=https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/releases/download/cloud-foundry-6-5-2024/retail-analytics-app-0.0.3-SNAPSHOT.jar
 source.retail-source=https://github.com/Tanzu-Solutions-Engineering/spring-modern-data-architecture/releases/download/cloud-foundry-6-5-2024/retail-source-app-0.0.2-SNAPSHOT.jar
+sink.gemfire=docker://gemfire/gemfire-sink-rabbit:1.0.1
+source.gemfire=docker://gemfire/gemfire-source-rabbit:1.0.1
+
 ```
 
 ```properties
@@ -60,6 +63,7 @@ deployer.retail-source.cloudfoundry.env=JBP_CONFIG_OPEN_JDK_JRE='{ jre: { versio
 deployer.retail-analytics.bootVersion=3
 deployer.retail-source.bootVersion=3
 ```
+
 
 
 cf set-env  HnpEBN0-retail-source-retail-analytics-v3 JBP_CONFIG_OPEN_JDK_JRE '{ jre: { version: 17.+}}'
@@ -78,3 +82,4 @@ cf bind-service HnpEBN0-retail-source-retail-analytics-v3  retail-sql
 ```json
 select data->>'id' as id, data->>'name' as name from retail.products
 ```
+

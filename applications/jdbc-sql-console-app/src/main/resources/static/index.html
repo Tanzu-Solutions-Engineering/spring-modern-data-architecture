@@ -9,7 +9,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <style>
-        .groove {border-style: groove; width: min-content;}
+        .groove {border-style: groove; width: fit-content;}
         .key { font-weight: bold;}
         .string { color: blue;}
         h1 { color: teal; }
@@ -88,6 +88,9 @@
               success:     function(data, status){
 
                 var prettyJson = syntaxHighlight(data);
+
+                prettyJson = prettyJson.replace(/},{/g, "},<br/>{");
+
                 $("#resultsPanel").html(prettyJson);
             },
             error: function (request, status, error) {
@@ -120,7 +123,7 @@
                 } else if (/null/.test(match)) {
                     cls = 'null';
                 }
-                return '<span class="' + cls + '">' + match + '</span>';
+                return ' <span class="' + cls + '">' + match + '</span>';
             });
         }
     </script>
