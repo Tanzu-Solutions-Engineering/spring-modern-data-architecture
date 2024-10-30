@@ -68,3 +68,14 @@ docker build  --platform linux/amd64,linux/arm64 -t jdbc-sql-console-app:0.0.2-S
 docker tag jdbc-sql-console-app:0.0.2-SNAPSHOT cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT
 docker push cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT
 ```
+
+------------------------------------------------------------
+
+# Cloud Foundry
+
+
+Push Applications
+jdbc-sql-console-app
+```shell
+cf push jdbc-sql-console-app -f deployments/cloud/cloudFoundry/apps/jdbc-sql-console-app/jdbc-sql-console-app-postgres.yaml -p applications/jdbc-sql-console-app/target/jdbc-sql-console-app-0.0.2-SNAPSHOT.jar
+```

@@ -1,0 +1,40 @@
+---
+apiVersion: with.sql.tanzu.vmware.com/v1
+kind: MySQL
+metadata:
+  name: mysql-ha-sample
+spec:
+  storageSize: 1Gi
+  imagePullSecretName: tanzu-image-registry
+  storageClassName: standard
+  serviceType: LoadBalancer
+  highAvailability:
+    enabled: true
+  resources:
+    mysql:
+      requests:
+        cpu: 750m
+        memory: 500Mi
+      limits:
+        cpu: '1.0'
+        memory: 800Mi
+    metrics:
+      requests:
+        cpu: 100m
+        memory: 32Mi
+      limits:
+        cpu: 250m
+        memory: 75Mi
+---
+apiVersion: with.sql.tanzu.vmware.com/v1
+kind: MySQLBackupSchedule
+metadata:
+  name: backupschedule-sample
+spec:
+  backupTemplate:
+    spec:
+      location:
+        name: mysql-ha-sample
+      instance:
+        name: mysql-sample
+  schedule: "@daily"

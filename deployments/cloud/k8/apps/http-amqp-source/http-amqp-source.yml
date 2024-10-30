@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run:  http-amqp-source
+    app.kubernetes.io/name: http-amqp-source
+  name:  http-amqp-source
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  http-amqp-source
+  template:
+    metadata:
+      labels:
+        name:  http-amqp-source
+      annotations:
+        sidecar.opentelemetry.io/inject: "true"
+        instrumentation.opentelemetry.io/inject-java: "opentelemetry-operator-system/otelinst"
+    spec:
+      containers:
+        - env:
+            - name: spring.rabbitmq.host
+              value: rabbitmq
+            - name: server.port
+              value: "8080"
+            - name: spring_rabbitmq_username
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: username
+            - name: spring.rabbitmq.password
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-default-user
+                  key: password
+          image: cloudnativedata/http-amqp-source:0.0.1-SNAPSHOT
+          name: http-amqp-source
+#          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-amqp-source-service
+spec:
+  selector:
+    name:  http-amqp-source
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
