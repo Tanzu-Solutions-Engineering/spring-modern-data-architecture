@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.vmware</groupId>
 	<artifactId>jdbc-sql-console-app</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>jdbc-sql-console-app</name>
 	<description>jdbc-sql-console-app</description>
 	<properties>

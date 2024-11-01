@@ -21,13 +21,13 @@ Spring Boot application that provides a GUI to perform SQL on in Postgres or MyS
 Running the console
 
 ```shell
-java -jar target/jdbc-sql-console-app-0.0.2-SNAPSHOT.jar --spring.datasource.url="jdbc:mysql://<HOST>:<PORT>/mysql" --spring.datasource.username=${USER} --spring.datasource.password=${MYSQL_DB_PASSWORD}
+java -jar target/jdbc-sql-console-app-0.0.3-SNAPSHOT.jar --spring.datasource.url="jdbc:mysql://<HOST>:<PORT>/mysql" --spring.datasource.username=${USER} --spring.datasource.password=${MYSQL_DB_PASSWORD}
 ```
 
 Running on Docker
 
 ```properties
-docker run -p 7280:7280 cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT --server.port=7280 --spring.datasource.url=jdbc:postgresql://host.docker.internal:5432/postgres --spring.datasource.username=postgres
+docker run -p 7280:7280 cloudnativedata/jdbc-sql-console-app:0.0.3-SNAPSHOT --server.port=7280 --spring.datasource.url=jdbc:postgresql://host.docker.internal:5432/postgres --spring.datasource.username=postgres
 ```
 
 
@@ -61,12 +61,12 @@ curl -X 'POST' \
 mvn install
 cd applications/jdbc-sql-console-app
 mvn package
-docker build  --platform linux/amd64,linux/arm64 -t jdbc-sql-console-app:0.0.2-SNAPSHOT .
+docker build  --platform linux/amd64,linux/arm64 -t jdbc-sql-console-app:0.0.3-SNAPSHOT .
 ```
 
 ```shell
-docker tag jdbc-sql-console-app:0.0.2-SNAPSHOT cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT
-docker push cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT
+docker tag jdbc-sql-console-app:0.0.3-SNAPSHOT cloudnativedata/jdbc-sql-console-app:0.0.3-SNAPSHOT
+docker push cloudnativedata/jdbc-sql-console-app:0.0.3-SNAPSHOT
 ```
 
 ------------------------------------------------------------
@@ -77,5 +77,5 @@ docker push cloudnativedata/jdbc-sql-console-app:0.0.2-SNAPSHOT
 Push Applications
 jdbc-sql-console-app
 ```shell
-cf push jdbc-sql-console-app -f deployments/cloud/cloudFoundry/apps/jdbc-sql-console-app/jdbc-sql-console-app-postgres.yaml -p applications/jdbc-sql-console-app/target/jdbc-sql-console-app-0.0.2-SNAPSHOT.jar
+cf push jdbc-sql-console-app -f deployments/cloud/cloudFoundry/apps/jdbc-sql-console-app/jdbc-sql-console-app-postgres.yaml -p applications/jdbc-sql-console-app/target/jdbc-sql-console-app-0.0.3-SNAPSHOT.jar
 ```

@@ -29,8 +29,15 @@ public class ExecuteSqlController {
     private final JdbcTemplate jdbcTemplate;
 
     @PostMapping
-    public void query(@RequestBody String sql) {
-             jdbcTemplate.execute(sql);
+    public List<Map<String, Object>> execute(@RequestBody String sql) {
 
+        var input = sql.trim().toLowerCase();
+        if(!input.startsWith("select"))
+        {
+            int update = jdbcTemplate.update(sql);
+            return List.of(Map.of("update",update));
+        }
+
+        return jdbcTemplate.queryForList(sql);
     }
 }
