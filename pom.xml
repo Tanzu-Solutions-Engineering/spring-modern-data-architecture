@@ -20,6 +20,7 @@
         <module>applications/retail-cache-sink-app</module>
         <module>applications/jdbc-sql-console-app</module>
         <module>applications/valkey-console-app</module>
+        <module>components/retail-repositories-valkey</module>
 <!--        <module>applications/spring-gf-locator</module>-->
 <!--        <module>applications/spring-gf-redis-server</module>-->
     </modules>
